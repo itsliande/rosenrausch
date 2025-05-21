@@ -73,12 +73,29 @@ footer {
     font-weight: bold;
 }
 
+.event-title {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.event-description {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.95em;
+}
+
 .event-preview {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+}
+
+.event-details {
+    padding: 20px 15px;
 }
 
 .event-dropdown {
@@ -113,6 +130,7 @@ footer {
     height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .event-date {
@@ -120,7 +138,7 @@ footer {
 }
 
 .event-details {
-    padding: 15px;
+    padding: 20px 15px;
     background: #f8f8f8;
     border-top: 1px solid #eee;
 }

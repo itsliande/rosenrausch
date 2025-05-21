@@ -22,12 +22,13 @@ function renderAppointments() {
         eventElement.innerHTML = `
             <div class="link-content event-banner" data-event-index="${index}">
                 <div class="event-preview">
-                    <span>${event.title}</span>
+                    <h2 class="event-title">${event.title}</h2>
                     <span class="event-date">${event.date}</span>
                 </div>
             </div>
             <div class="event-dropdown" style="display: none;">
                 <div class="event-details">
+                    <div class="event-description">${event.shortInfo}</div>
                     ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
                     <div class="event-additional-info">
                         <p><strong>Uhrzeit:</strong> ${event.time}</p>
