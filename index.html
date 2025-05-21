@@ -62,10 +62,10 @@
             </a>
         </div>
         
-        <section id="music-player" class="content-section">
-            <h2>Musik</h2>
+        <div id="music-player">
+            <h2 style="color: #E9D5FF; margin-bottom: 20px; text-align: center;">Meine Musik</h2>
             <div id="audio-player-container"></div>
-        </section>
+        </div>
     </div>
     
     <div class="copyright">
@@ -80,10 +80,13 @@
     <script src="js/audio-player.js"></script>
     <script>
         new CookieConsent();
-        const player = new AudioPlayer();
-        player.init('audio-player-container');
-        player.addTrack('Demo Track 1', 'path/to/audio1.mp3');
-        player.addTrack('Demo Track 2', 'path/to/audio2.mp3');
+        document.addEventListener('DOMContentLoaded', function() {
+            const player = new AudioPlayer();
+            player.init('audio-player-container');
+            // Beispiel-Tracks (später durch echte ersetzen)
+            player.addTrack('Rosenrausch - Track 1', 'https://example.com/track1.mp3');
+            player.addTrack('Rosenrausch - Track 2', 'https://example.com/track2.mp3');
+        });
     </script>
 </body>
 </html>

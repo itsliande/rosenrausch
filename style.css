@@ -180,52 +180,53 @@ h1 {
     cursor: pointer;
 }
 
-/* Audio Player */
+/* Audio Player Styles */
+#music-player {
+    margin-top: 30px;
+}
+
 .audio-player {
     background: rgba(91, 33, 182, 0.2);
     backdrop-filter: blur(12px);
-    padding: 15px;
+    padding: 20px;
     border-radius: 20px;
+    color: #E9D5FF;
     margin: 20px 0;
+    border: 1px solid rgba(168, 85, 247, 0.2);
 }
 
-.track-info {
-    margin-bottom: 10px;
+.now-playing {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.progress-bar {
-    background: rgba(255, 255, 255, 0.1);
-    height: 4px;
-    border-radius: 2px;
-    margin: 10px 0;
-}
-
-.progress {
-    background: #A855F7;
-    height: 100%;
-    width: 0;
-    border-radius: 2px;
+.track-title {
+    color: #A855F7;
+    font-weight: bold;
 }
 
 .controls {
     display: flex;
-    gap: 10px;
     justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
 }
 
 .controls button {
     background: rgba(168, 85, 247, 0.3);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
     color: #E9D5FF;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 16px;
 }
 
 .controls button:hover {
     background: rgba(168, 85, 247, 0.5);
+    transform: translateY(-2px);
 }
 
 /* Calendar Styles */

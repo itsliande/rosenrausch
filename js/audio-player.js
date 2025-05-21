@@ -8,25 +8,27 @@ class AudioPlayer {
 
     init(containerId) {
         const container = document.getElementById(containerId);
+        if (!container) {
+            console.error('Container nicht gefunden:', containerId);
+            return;
+        }
+        
         container.innerHTML = `
             <div class="audio-player">
-                <div class="now-playing">Aktuelle Musik: <span class="track-title">-</span></div>
+                <div class="now-playing">
+                    Aktuelle Musik: <span class="track-title">Wähle einen Track</span>
+                </div>
                 <div class="controls">
                     <button class="prev-btn">⏮</button>
                     <button class="play-btn">▶</button>
                     <button class="next-btn">⏭</button>
                 </div>
-                <iframe src="${this.spotifyPreviewUrl}"
-                        width="100%"
-                        height="80"
-                        frameborder="0"
-                        allowtransparency="true"
-                        allow="encrypted-media">
-                </iframe>
             </div>
         `;
+        
         this.bindEvents(container);
         this.trackDisplay = container.querySelector('.track-title');
+        console.log('Audio Player initialisiert');
     }
 
     addTrack(title, url) {
