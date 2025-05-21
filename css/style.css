@@ -129,8 +129,7 @@ footer {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    margin: 30px 0 15px 0;  /* Vergrößerter Abstand oben (30px) */
 }
 
 .event-date {
