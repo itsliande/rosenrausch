@@ -1,20 +1,13 @@
 const appointments = [
     {
-        title: "Live-Stream",
-        date: "15. Mai",
+        title: "Festival Unter Leuten",
+        date: "07.06.2025",
         time: "20:00",
-        description: "Gaming Stream auf Twitch",
+        location: "Meißen, Stadtpark",
+        description: "Das Unter Leuten Festival in Meißen",
         image: "images/stream.jpg",
-        link: "https://twitch.tv/rosenrausch"
+        link: ""
     },
-    {
-        title: "Neue Single Release",
-        date: "20. Mai",
-        time: "00:00",
-        description: "Release auf allen Plattformen",
-        image: "images/single.jpg",
-        link: "https://spotify.com/rosenrausch"
-    }
 ];
 
 function showEventDetails(index) {
@@ -31,6 +24,7 @@ function showEventDetails(index) {
         ${imageHtml}
         <p class="mb-2"><strong>Datum:</strong> ${event.date}</p>
         <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
+        <p class="mb-2"><strong>Ort:</strong> ${event.location}</p>
         <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
         ${linkHtml}
     `;
