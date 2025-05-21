@@ -2,7 +2,7 @@ const appointments = [
     {
         title: "Festival Unter Leuten",
         date: "07.06.2025",
-        shortInfo: "Live-Auftritt beim Unter Leuten Festival am 07.06.25",  // Neue Kurzinfo
+        shortInfo: "",
         time: "20:00",
         location: "Meißen, Stadtpark",
         description: "Das Unter Leuten Festival in Meißen",
