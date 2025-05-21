@@ -3,7 +3,7 @@ class AudioPlayer {
         this.audio = new Audio();
         this.playlist = [];
         this.currentTrack = 0;
-        this.spotifyPreviewUrl = 'https://open.spotify.com/embed/artist/6LLYzhQh2x8UvS6V0zoSAz';
+        this.spotifyPreviewUrl = 'https://open.spotify.com/embed/playlist/6LLYzhQh2x8UvS6V0zoSAz?utm_source=generator';
     }
 
     init(containerId) {
@@ -24,12 +24,14 @@ class AudioPlayer {
                     <button class="next-btn">⏭</button>
                 </div>
                 <div class="spotify-embed">
-                    <iframe src="${this.spotifyPreviewUrl}"
-                            width="100%"
-                            height="80"
-                            frameborder="0"
-                            allowtransparency="true"
-                            allow="encrypted-media">
+                    <iframe style="border-radius:12px" 
+                            src="${this.spotifyPreviewUrl}"
+                            width="100%" 
+                            height="352" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
                     </iframe>
                 </div>
             </div>
