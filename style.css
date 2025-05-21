@@ -136,6 +136,14 @@ h1 {
     transform: translateX(5px);
 }
 
+.copyright {
+    text-align: center;
+    color: rgba(233, 213, 255, 0.5);
+    padding: 20px 0;
+    font-size: 0.8em;
+    margin-top: auto;
+}
+
 @media (max-width: 520px) {
     .container {
         padding: 15px;
