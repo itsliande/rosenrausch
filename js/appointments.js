@@ -17,48 +17,32 @@ function renderAppointments() {
 
     appointments.forEach((event, index) => {
         const eventElement = document.createElement('div');
-        eventElement.className = 'event-container';
+        eventElement.className = 'link-button event-container';
         eventElement.innerHTML = `
-            <div class="event-banner" data-event-index="${index}">
-                <h3>${event.title}</h3>
+            <div class="link-content event-banner" data-event-index="${index}">
+                <span>${event.title}</span>
+                <span>${event.date}</span>
             </div>
             <div class="event-dropdown">
-                <!-- Wird dynamisch gefüllt -->
+                <div class="dropdown-content">
+                    ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
+                    <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
+                    <p class="mb-2"><strong>Ort:</strong> ${event.location}</p>
+                    <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
+                    ${event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : ''}
+                </div>
             </div>
         `;
         container.appendChild(eventElement);
-    });
 
-    // Event-Listener hinzufügen
-    document.querySelectorAll('.event-banner').forEach((banner, index) => {
-        banner.addEventListener('click', () => showEventDetails(index));
+        const banner = eventElement.querySelector('.event-banner');
+        banner.addEventListener('click', () => {
+            eventElement.classList.toggle('active');
+            const dropdown = eventElement.querySelector('.event-dropdown');
+            dropdown.style.maxHeight = eventElement.classList.contains('active') ? 
+                `${dropdown.scrollHeight}px` : '0';
+        });
     });
-}
-
-function showEventDetails(index) {
-    const event = appointments[index];
-    const banner = document.querySelector(`[data-event-index="${index}"]`);
-    const dropdown = banner.nextElementSibling;
-    
-    // Toggle active class
-    banner.classList.toggle('active');
-    dropdown.classList.toggle('active');
-    
-    // Nur beim ersten Öffnen den Inhalt laden
-    if (!dropdown.hasAttribute('data-loaded')) {
-        let linkHtml = event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : '';
-        let imageHtml = event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : '';
-        
-        dropdown.innerHTML = `
-            ${imageHtml}
-            <p class="mb-2"><strong>Datum:</strong> ${event.date}</p>
-            <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
-            <p class="mb-2"><strong>Ort:</strong> ${event.location}</p>
-            <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
-            ${linkHtml}
-        `;
-        dropdown.setAttribute('data-loaded', 'true');
-    }
 }
 
 // Seite initialisieren

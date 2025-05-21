@@ -77,7 +77,7 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #f8f8f8;
     margin-top: -5px;
     padding: 0 15px;
 }
@@ -87,6 +87,10 @@ footer {
     padding: 15px;
     border: 1px solid #ddd;
     border-top: none;
+}
+
+.dropdown-content {
+    padding: 15px;
 }
 
 .event-banner {
@@ -107,11 +111,23 @@ footer {
     transform: translateY(-50%) rotate(180deg);
 }
 
+.event-container {
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.event-container.active .event-banner {
+    background-color: #e0e0e0;
+}
+
+.event-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
 #appointments-container {
     max-width: 800px;
     margin: 0 auto;
-}
-
-.event-container {
-    margin-bottom: 10px;
 }
