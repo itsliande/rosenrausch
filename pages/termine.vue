@@ -4,7 +4,16 @@
       <ProfileHeader />
     </div>
     
-    <h1 class="text-2xl font-bold mb-2">Termine</h1>
+    <div class="mb-6 flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Termine</h1>
+      <button 
+        @click="openNewEventForm"
+        class="bg-rose-600 text-white px-4 py-2 rounded-md hover:bg-rose-700"
+      >
+        Neuer Termin
+      </button>
+    </div>
+
     <p class="text-gray-600 mb-6">Klicken Sie auf einen Termin für mehr Informationen</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -23,6 +32,14 @@
         </div>
       </NuxtLink>
     </div>
+
+    <EventForm
+      v-if="showEventForm"
+      :event="selectedEvent"
+      :isEdit="isEditing"
+      @close="closeEventForm"
+      @submit="handleEventSubmit"
+    />
   </div>
 </template>
 
@@ -47,5 +64,43 @@ const formatDate = (date: Date) => {
 
 const formatTime = (date: Date) => {
   return new Date(date).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })
+}
+
+const showEventForm = ref(false)
+const isEditing = ref(false)
+const selectedEvent = ref(null)
+
+const openNewEventForm = () => {
+  selectedEvent.value = null
+  isEditing.value = false
+  showEventForm.value = true
+}
+
+const openEditEventForm = (event: any) => {
+  selectedEvent.value = event
+  isEditing.value = true
+  showEventForm.value = true
+}
+
+const closeEventForm = () => {
+  showEventForm.value = false
+  selectedEvent.value = null
+}
+
+const handleEventSubmit = (eventData: any) => {
+  if (isEditing.value) {
+    // Update existing event
+    const index = events.value.findIndex(e => e.id === selectedEvent.value.id)
+    if (index !== -1) {
+      events.value[index] = { ...events.value[index], ...eventData }
+    }
+  } else {
+    // Add new event
+    events.value.push({
+      id: Date.now(), // Einfache ID-Generierung
+      ...eventData
+    })
+  }
+  closeEventForm()
 }
 </script>
