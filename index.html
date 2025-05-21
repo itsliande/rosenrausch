@@ -61,11 +61,6 @@
                 <span class="link-description">Folge mir auch auf TikTok!</span>
             </a>
         </div>
-        
-        <div id="music-player">
-            <h2 style="color: #E9D5FF; margin-bottom: 20px; text-align: center;">Meine Musik</h2>
-            <div id="audio-player-container"></div>
-        </div>
     </div>
     
     <div class="copyright">
@@ -77,16 +72,8 @@
     </div>
     
     <script src="js/cookie-consent.js"></script>
-    <script src="js/audio-player.js"></script>
     <script>
         new CookieConsent();
-        document.addEventListener('DOMContentLoaded', function() {
-            const player = new AudioPlayer();
-            player.init('audio-player-container');
-            // Beispiel-Tracks (später durch echte ersetzen)
-            player.addTrack('Rosenrausch - Track 1', 'https://example.com/track1.mp3');
-            player.addTrack('Rosenrausch - Track 2', 'https://example.com/track2.mp3');
-        });
     </script>
 </body>
 </html>
