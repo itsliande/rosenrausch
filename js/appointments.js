@@ -9,16 +9,6 @@ const appointments = [
         image: "images/festival.jpg",
         link: ""
     },
-    {
-        title: "test",
-        date: "07.06.2025",
-        shortInfo: "",
-        time: "00:00",
-        location: "Gay",
-        description: "Das Unter Leuten Festival in Meißen",
-        image: "images/festival.jpg",
-        link: "https://www.google.de"
-    },
 ];
 
 function renderAppointments() {
