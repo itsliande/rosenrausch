@@ -116,7 +116,7 @@ footer {
 }
 
 .event-container {
-    margin-bottom: 10px;
+    margin-bottom: 25px; /* Vergrößerter Abstand zwischen Events */
     border-radius: 8px;
     overflow: hidden;
 }

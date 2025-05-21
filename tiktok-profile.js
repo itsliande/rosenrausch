@@ -1,5 +1,5 @@
 // TikTok Username
-const TIKTOK_USERNAME = 'dein_tiktok_username';
+const TIKTOK_USERNAME = 'rosen.rausch';
 
 const TikTokProfileLoader = {
     async loadProfilePic() {
