@@ -5,7 +5,7 @@ const appointments = [
         time: "20:00",
         location: "Meißen, Stadtpark",
         description: "Das Unter Leuten Festival in Meißen",
-        image: "images/stream.jpg",
+        image: "images/festival.jpg",
         link: ""
     },
 ];
@@ -17,7 +17,7 @@ function showEventDetails(index) {
     const popupDetails = document.getElementById('popupDetails');
     
     let linkHtml = event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : '';
-    let imageHtml = event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : '';
+    let imageHtml = event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : '';
     
     popupTitle.textContent = event.title;
     popupDetails.innerHTML = `
