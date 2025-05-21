@@ -23,6 +23,15 @@ class AudioPlayer {
                     <button class="play-btn">▶</button>
                     <button class="next-btn">⏭</button>
                 </div>
+                <div class="spotify-embed">
+                    <iframe src="${this.spotifyPreviewUrl}"
+                            width="100%"
+                            height="80"
+                            frameborder="0"
+                            allowtransparency="true"
+                            allow="encrypted-media">
+                    </iframe>
+                </div>
             </div>
         `;
         
