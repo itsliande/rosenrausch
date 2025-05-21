@@ -19,22 +19,22 @@ function renderAppointments() {
         const eventElement = document.createElement('div');
         eventElement.className = 'link-button event-container';
         
-        // Kurzansicht (immer sichtbar)
         eventElement.innerHTML = `
             <div class="link-content event-banner" data-event-index="${index}">
                 <div class="event-preview">
                     <span>${event.title}</span>
                     <span class="event-date">${event.date}</span>
                 </div>
-                <div class="event-short-info">${event.shortInfo || ''}</div>
             </div>
-            <div class="event-dropdown">
-                ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
-                <div class="event-additional-info">
-                    <p><strong>Uhrzeit:</strong> ${event.time}</p>
-                    <p><strong>Ort:</strong> ${event.location}</p>
-                    <p><strong>Beschreibung:</strong> ${event.description}</p>
-                    ${event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : ''}
+            <div class="event-dropdown" style="display: none;">
+                <div class="event-details">
+                    ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
+                    <div class="event-additional-info">
+                        <p><strong>Uhrzeit:</strong> ${event.time}</p>
+                        <p><strong>Ort:</strong> ${event.location}</p>
+                        <p><strong>Beschreibung:</strong> ${event.description}</p>
+                        ${event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : ''}
+                    </div>
                 </div>
             </div>
         `;
@@ -43,13 +43,23 @@ function renderAppointments() {
         const banner = eventElement.querySelector('.event-banner');
         const dropdown = eventElement.querySelector('.event-dropdown');
         
-        // Initial geschlossen
-        dropdown.style.maxHeight = '0';
-        
         banner.addEventListener('click', () => {
+            const isActive = eventElement.classList.contains('active');
             eventElement.classList.toggle('active');
-            dropdown.style.maxHeight = eventElement.classList.contains('active') ? 
-                `${dropdown.scrollHeight}px` : '0';
+            
+            if (!isActive) {
+                dropdown.style.display = 'block';
+                setTimeout(() => {
+                    dropdown.style.maxHeight = dropdown.scrollHeight + 'px';
+                    dropdown.style.opacity = '1';
+                }, 10);
+            } else {
+                dropdown.style.maxHeight = '0';
+                dropdown.style.opacity = '0';
+                setTimeout(() => {
+                    dropdown.style.display = 'none';
+                }, 300);
+            }
         });
     });
 }

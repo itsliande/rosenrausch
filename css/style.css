@@ -84,17 +84,17 @@ footer {
 .event-dropdown {
     max-height: 0;
     overflow: hidden;
-    transition: all 0.3s ease-out;
     opacity: 0;
-    visibility: hidden;
+    transition: all 0.3s ease-out;
     background: #f8f8f8;
     padding: 0;
+    margin-top: -100%; /* Versteckt den Inhalt initial */
 }
 
 .event-container.active .event-dropdown {
-    max-height: 1000px;
+    max-height: 2000px;
     opacity: 1;
-    visibility: visible;
+    margin-top: 0;
     padding: 15px;
 }
 
