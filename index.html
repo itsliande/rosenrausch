@@ -62,26 +62,10 @@
             </a>
         </div>
         
-        <div class="upcoming-events">
-            <h2>Nächste Termine</h2>
-            <div class="event">
-                <div class="event-date">15. Mai</div>
-                <div class="event-details">
-                    <h3>Live-Stream</h3>
-                    <p>Gaming Stream auf Twitch</p>
-                </div>
-            </div>
-            <div class="event">
-                <div class="event-date">20. Mai</div>
-                <div class="event-details">
-                    <h3>Neue Single Release</h3>
-                    <p>Release auf allen Plattformen</p>
-                </div>
-            </div>
-            <a href="termine.html" class="view-all-events">Alle Termine ansehen</a>
-        </div>
-
-        <div id="audio-player-container"></div>
+        <section id="music-player" class="content-section">
+            <h2>Musik</h2>
+            <div id="audio-player-container"></div>
+        </section>
     </div>
     
     <div class="copyright">
@@ -98,6 +82,8 @@
         new CookieConsent();
         const player = new AudioPlayer();
         player.init('audio-player-container');
+        player.addTrack('Demo Track 1', 'path/to/audio1.mp3');
+        player.addTrack('Demo Track 2', 'path/to/audio2.mp3');
     </script>
 </body>
 </html>

@@ -10,6 +10,7 @@ class AudioPlayer {
         const container = document.getElementById(containerId);
         container.innerHTML = `
             <div class="audio-player">
+                <div class="now-playing">Aktuelle Musik: <span class="track-title">-</span></div>
                 <div class="controls">
                     <button class="prev-btn">⏮</button>
                     <button class="play-btn">▶</button>
@@ -25,6 +26,7 @@ class AudioPlayer {
             </div>
         `;
         this.bindEvents(container);
+        this.trackDisplay = container.querySelector('.track-title');
     }
 
     addTrack(title, url) {
@@ -63,7 +65,9 @@ class AudioPlayer {
 
     loadAndPlayTrack() {
         if (this.playlist.length > 0) {
-            this.audio.src = this.playlist[this.currentTrack].url;
+            const currentTrack = this.playlist[this.currentTrack];
+            this.audio.src = currentTrack.url;
+            this.trackDisplay.textContent = currentTrack.title;
             this.audio.play();
         }
     }
