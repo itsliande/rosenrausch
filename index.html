@@ -61,10 +61,35 @@
                 <span class="link-description">Folge mir auch auf TikTok!</span>
             </a>
         </div>
+        
+        <div class="upcoming-events">
+            <h2>Nächste Termine</h2>
+            <div class="event">
+                <div class="event-date">15. Mai</div>
+                <div class="event-details">
+                    <h3>Live-Stream</h3>
+                    <p>Gaming Stream auf Twitch</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="audio-player-container"></div>
     </div>
+    
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="privacy.html">Datenschutz</a> | 
+            <a href="imprint.html">Impressum</a>
+        </div>
     </div>
-    <script src="tiktok-profile.js"></script>
+    
+    <script src="js/cookie-consent.js"></script>
+    <script src="js/audio-player.js"></script>
+    <script>
+        new CookieConsent();
+        const player = new AudioPlayer();
+        player.init('audio-player-container');
+    </script>
 </body>
 </html>
