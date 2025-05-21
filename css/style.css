@@ -84,16 +84,18 @@ footer {
 .event-dropdown {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    opacity: 0;
+    visibility: hidden;
     background: #f8f8f8;
-    padding: 0 15px;
+    padding: 0;
 }
 
-.event-dropdown.active {
-    max-height: 1000px; /* Großer Wert für variable Inhaltshöhe */
+.event-container.active .event-dropdown {
+    max-height: 1000px;
+    opacity: 1;
+    visibility: visible;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-top: none;
 }
 
 .event-container {
@@ -129,6 +131,12 @@ footer {
 
 .event-additional-info p {
     margin: 8px 0;
+}
+
+.event-short-info {
+    padding: 0 15px 15px;
+    color: #666;
+    font-size: 0.9em;
 }
 
 #appointments-container {

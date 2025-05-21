@@ -20,18 +20,14 @@ function renderAppointments() {
         eventElement.className = 'link-button event-container';
         
         // Kurzansicht (immer sichtbar)
-        const previewHtml = `
+        eventElement.innerHTML = `
             <div class="link-content event-banner" data-event-index="${index}">
                 <div class="event-preview">
                     <span>${event.title}</span>
                     <span class="event-date">${event.date}</span>
                 </div>
-                <div class="event-short-info">${event.shortInfo}</div>
+                <div class="event-short-info">${event.shortInfo || ''}</div>
             </div>
-        `;
-
-        // Detailansicht (ausgeklappt)
-        const detailsHtml = `
             <div class="event-dropdown">
                 ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
                 <div class="event-additional-info">
@@ -42,14 +38,16 @@ function renderAppointments() {
                 </div>
             </div>
         `;
-
-        eventElement.innerHTML = previewHtml + detailsHtml;
         container.appendChild(eventElement);
 
         const banner = eventElement.querySelector('.event-banner');
+        const dropdown = eventElement.querySelector('.event-dropdown');
+        
+        // Initial geschlossen
+        dropdown.style.maxHeight = '0';
+        
         banner.addEventListener('click', () => {
             eventElement.classList.toggle('active');
-            const dropdown = eventElement.querySelector('.event-dropdown');
             dropdown.style.maxHeight = eventElement.classList.contains('active') ? 
                 `${dropdown.scrollHeight}px` : '0';
         });
