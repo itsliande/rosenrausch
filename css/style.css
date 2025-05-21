@@ -72,3 +72,37 @@ footer {
     margin-bottom: 10px;
     font-weight: bold;
 }
+
+.event-dropdown {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background-color: rgba(255, 255, 255, 0.95);
+    margin-top: -5px;
+    padding: 0 15px;
+}
+
+.event-dropdown.active {
+    max-height: 1000px; /* Großer Wert für variable Inhaltshöhe */
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
+.event-banner {
+    cursor: pointer;
+    position: relative;
+}
+
+.event-banner:after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+}
+
+.event-banner.active:after {
+    transform: translateY(-50%) rotate(180deg);
+}
