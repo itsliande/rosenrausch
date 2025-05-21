@@ -3,27 +3,22 @@ class AudioPlayer {
         this.audio = new Audio();
         this.playlist = [];
         this.currentTrack = 0;
+        this.spotifyPreviewUrl = 'https://open.spotify.com/embed/artist/6LLYzhQh2x8UvS6V0zoSAz';
     }
 
     init(containerId) {
         const container = document.getElementById(containerId);
         container.innerHTML = `
             <div class="audio-player">
-                <div class="track-info">
-                    <span class="track-title">-</span>
-                    <div class="progress-bar">
-                        <div class="progress"></div>
-                    </div>
-                </div>
-                <div class="controls">
-                    <button class="prev">⏮</button>
-                    <button class="play">▶</button>
-                    <button class="next">⏭</button>
-                </div>
+                <iframe src="${this.spotifyPreviewUrl}"
+                        width="100%"
+                        height="80"
+                        frameborder="0"
+                        allowtransparency="true"
+                        allow="encrypted-media">
+                </iframe>
             </div>
         `;
-
-        this.bindEvents(container);
     }
 
     addTrack(title, url) {

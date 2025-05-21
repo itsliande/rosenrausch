@@ -17,11 +17,32 @@
             <h1>TERMINE</h1>
         </div>
         <div class="legal-content">
-            <p>Aktuelle Termine werden hier bald angezeigt...</p>
+            <div class="events-list">
+                <div class="event">
+                    <div class="event-date">15. Mai</div>
+                    <div class="event-details">
+                        <h3>Live-Stream</h3>
+                        <p>Gaming Stream auf Twitch</p>
+                    </div>
+                </div>
+                <div class="event">
+                    <div class="event-date">20. Mai</div>
+                    <div class="event-details">
+                        <h3>Neue Single Release</h3>
+                        <p>Release auf allen Plattformen</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="calendar-container" id="calendar"></div>
         </div>
     </div>
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
     </div>
+    <script src="js/calendar.js"></script>
+    <script>
+        new Calendar(document.getElementById('calendar'));
+    </script>
 </body>
 </html>
