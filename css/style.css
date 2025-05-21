@@ -106,3 +106,12 @@ footer {
 .event-banner.active:after {
     transform: translateY(-50%) rotate(180deg);
 }
+
+#appointments-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.event-container {
+    margin-bottom: 10px;
+}

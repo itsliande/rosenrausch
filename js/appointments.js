@@ -10,6 +10,31 @@ const appointments = [
     },
 ];
 
+// Neue Funktion zum Rendern der Events
+function renderAppointments() {
+    const container = document.getElementById('appointments-container');
+    if (!container) return;
+
+    appointments.forEach((event, index) => {
+        const eventElement = document.createElement('div');
+        eventElement.className = 'event-container';
+        eventElement.innerHTML = `
+            <div class="event-banner" data-event-index="${index}">
+                <h3>${event.title}</h3>
+            </div>
+            <div class="event-dropdown">
+                <!-- Wird dynamisch gefüllt -->
+            </div>
+        `;
+        container.appendChild(eventElement);
+    });
+
+    // Event-Listener hinzufügen
+    document.querySelectorAll('.event-banner').forEach((banner, index) => {
+        banner.addEventListener('click', () => showEventDetails(index));
+    });
+}
+
 function showEventDetails(index) {
     const event = appointments[index];
     const banner = document.querySelector(`[data-event-index="${index}"]`);
@@ -35,3 +60,6 @@ function showEventDetails(index) {
         dropdown.setAttribute('data-loaded', 'true');
     }
 }
+
+// Seite initialisieren
+document.addEventListener('DOMContentLoaded', renderAppointments);

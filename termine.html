@@ -72,89 +72,18 @@
             <h1>TERMINE</h1>
         </div>
         <div class="legal-content">
-            <div class="links">
-                <div id="appointmentsList"></div>
-                </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        const appointmentsList = document.getElementById('appointmentsList');
-                        appointments.forEach((event, index) => {
-                            appointmentsList.innerHTML += `
-                                <div class="link-button" onclick="showEventDetails(${index})">
-                                    <div class="link-content">
-                                        <span>${event.title}</span>
-                                        <span>${event.date}</span>
-                                    </div>
-                                    <span class="link-description">${event.description}</span>
-                                </div>
-                            `;
-                        });
-                    });
-                </script>
+            <div id="appointments-container">
+                <!-- Events werden hier dynamisch eingefügt -->
             </div>
         </div>
     </div>
 
-    <!-- Popup Template -->
-    <div id="eventPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-popup" onclick="closePopup()">&times;</span>
-            <h3 id="popupTitle" class="text-xl font-semibold mb-4"></h3>
-            <div id="popupDetails" class="mb-4"></div>
-        </div>
-    </div>
-
-    <script>
-        function showEventDetails(index) {
-            const events = [
-                {
-                    title: 'Live-Stream',
-                    date: '15. Mai',
-                    time: '20:00',
-                    description: 'Gaming Stream auf Twitch',
-                    image: 'twitch-stream.jpg',
-                    link: 'https://www.twitch.tv/rosenrausch'
-                },
-                {
-                    title: 'Neue Single Release',
-                    date: '20. Mai',
-                    time: '00:00',
-                    description: 'Release auf allen Plattformen',
-                    image: 'single-release.jpg',
-                    link: 'https://rosenrausch.de/music'
-                }
-            ];
-
-            const event = events[index];
-            const popup = document.getElementById('eventPopup');
-            const popupTitle = document.getElementById('popupTitle');
-            const popupDetails = document.getElementById('popupDetails');
-            
-            popupTitle.textContent = event.title;
-            popupDetails.innerHTML = `
-                <img src="${event.image}" alt="${event.title}" class="event-image">
-                <p class="mb-2"><strong>Datum:</strong> ${event.date}</p>
-                <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
-                <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
-                <a href="${event.link}" class="event-link" target="_blank">Zum Event</a>
-            `;
-            
-            popup.classList.add('active');
-        }
-
-        function closePopup() {
-            const popup = document.getElementById('eventPopup');
-            popup.classList.remove('active');
-        }
-
-        // Schließe Popup wenn außerhalb geklickt wird
-        document.getElementById('eventPopup').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePopup();
-            }
-        });
-    </script>
     <script src="js/appointments.js"></script>
+    <script>
+        // Initialisierung der Events beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', renderAppointments);
+    </script>
+
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
     </div>
