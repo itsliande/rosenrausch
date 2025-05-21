@@ -36,6 +36,28 @@
             cursor: pointer;
             font-size: 1.5rem;
         }
+        
+        .event-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .event-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: #5B21B6;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        
+        .event-link:hover {
+            background: #7C3AED;
+        }
     </style>
 </head>
 <body>
@@ -51,14 +73,14 @@
         </div>
         <div class="legal-content">
             <div class="links">
-                <div class="link-button" onclick="showEventDetails('Live-Stream', '15. Mai', '20:00', 'Gaming Stream auf Twitch')">
+                <div class="link-button" onclick="showEventDetails(0)">
                     <div class="link-content">
                         <span>Live-Stream</span>
                         <span>15. Mai</span>
                     </div>
                     <span class="link-description">Gaming Stream auf Twitch</span>
                 </div>
-                <div class="link-button" onclick="showEventDetails('Neue Single Release', '20. Mai', '00:00', 'Release auf allen Plattformen')">
+                <div class="link-button" onclick="showEventDetails(1)">
                     <div class="link-content">
                         <span>Neue Single Release</span>
                         <span>20. Mai</span>
@@ -79,16 +101,38 @@
     </div>
 
     <script>
-        function showEventDetails(title, date, time, description) {
+        function showEventDetails(index) {
+            const events = [
+                {
+                    title: 'Live-Stream',
+                    date: '15. Mai',
+                    time: '20:00',
+                    description: 'Gaming Stream auf Twitch',
+                    image: 'twitch-stream.jpg',
+                    link: 'https://www.twitch.tv/rosenrausch'
+                },
+                {
+                    title: 'Neue Single Release',
+                    date: '20. Mai',
+                    time: '00:00',
+                    description: 'Release auf allen Plattformen',
+                    image: 'single-release.jpg',
+                    link: 'https://rosenrausch.de/music'
+                }
+            ];
+
+            const event = events[index];
             const popup = document.getElementById('eventPopup');
             const popupTitle = document.getElementById('popupTitle');
             const popupDetails = document.getElementById('popupDetails');
             
-            popupTitle.textContent = title;
+            popupTitle.textContent = event.title;
             popupDetails.innerHTML = `
-                <p class="mb-2"><strong>Datum:</strong> ${date}</p>
-                <p class="mb-2"><strong>Uhrzeit:</strong> ${time}</p>
-                <p class="mb-2"><strong>Beschreibung:</strong> ${description}</p>
+                <img src="${event.image}" alt="${event.title}" class="event-image">
+                <p class="mb-2"><strong>Datum:</strong> ${event.date}</p>
+                <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
+                <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
+                <a href="${event.link}" class="event-link" target="_blank">Zum Event</a>
             `;
             
             popup.classList.add('active');
@@ -106,6 +150,7 @@
             }
         });
     </script>
+    <script src="js/appointments.js"></script>
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
     </div>
