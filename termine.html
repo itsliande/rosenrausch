@@ -73,20 +73,24 @@
         </div>
         <div class="legal-content">
             <div class="links">
-                <div class="link-button" onclick="showEventDetails(0)">
-                    <div class="link-content">
-                        <span>Live-Stream</span>
-                        <span>15. Mai</span>
-                    </div>
-                    <span class="link-description">Gaming Stream auf Twitch</span>
+                <div id="appointmentsList"></div>
                 </div>
-                <div class="link-button" onclick="showEventDetails(1)">
-                    <div class="link-content">
-                        <span>Neue Single Release</span>
-                        <span>20. Mai</span>
-                    </div>
-                    <span class="link-description">Release auf allen Plattformen</span>
-                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const appointmentsList = document.getElementById('appointmentsList');
+                        appointments.forEach((event, index) => {
+                            appointmentsList.innerHTML += `
+                                <div class="link-button" onclick="showEventDetails(${index})">
+                                    <div class="link-content">
+                                        <span>${event.title}</span>
+                                        <span>${event.date}</span>
+                                    </div>
+                                    <span class="link-description">${event.description}</span>
+                                </div>
+                            `;
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
