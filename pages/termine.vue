@@ -4,7 +4,8 @@
       <ProfileHeader />
     </div>
     
-    <h1 class="text-2xl font-bold mb-6">Termine</h1>
+    <h1 class="text-2xl font-bold mb-2">Termine</h1>
+    <p class="text-gray-600 mb-6">Klicken Sie auf einen Termin für mehr Informationen</p>
     
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <NuxtLink 
@@ -22,12 +23,6 @@
         </div>
       </NuxtLink>
     </div>
-
-    <CalendarEntryPopup 
-      :event="selectedEvent"
-      :isVisible="showPopup"
-      @close="closePopup"
-    />
   </div>
 </template>
 
@@ -45,18 +40,6 @@ const events = ref([
   },
   // weitere Events...
 ])
-
-const showPopup = ref(false)
-const selectedEvent = ref(null)
-
-const showEventDetails = (event: any) => {
-  selectedEvent.value = event
-  showPopup.value = true
-}
-
-const closePopup = () => {
-  showPopup.value = false
-}
 
 const formatDate = (date: Date) => {
   return new Date(date).toLocaleDateString('de-DE')
