@@ -73,10 +73,20 @@ footer {
     font-weight: bold;
 }
 
+.event-preview {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
 .event-dropdown {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
+    background: #f8f8f8;
+    padding: 0 15px;
 }
 
 .event-dropdown.active {
@@ -84,32 +94,6 @@ footer {
     padding: 15px;
     border: 1px solid #ddd;
     border-top: none;
-}
-
-.dropdown-content {
-    padding: 15px;
-}
-
-.event-banner {
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-}
-
-.event-banner:after {
-    content: '▼';
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-}
-
-.event-banner.active:after {
-    transform: translateY(-50%) rotate(180deg);
 }
 
 .event-container {
@@ -137,6 +121,14 @@ footer {
     padding: 15px;
     background: #f8f8f8;
     border-top: 1px solid #eee;
+}
+
+.event-additional-info {
+    margin-top: 10px;
+}
+
+.event-additional-info p {
+    margin: 8px 0;
 }
 
 #appointments-container {

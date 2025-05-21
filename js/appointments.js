@@ -20,18 +20,18 @@ function renderAppointments() {
         eventElement.className = 'link-button event-container';
         eventElement.innerHTML = `
             <div class="link-content event-banner" data-event-index="${index}">
-                <span>${event.title}</span>
-                <span class="event-date">${event.date}</span>
+                <div class="event-preview">
+                    <span>${event.title}</span>
+                    <span class="event-date">${event.date}</span>
+                </div>
             </div>
             <div class="event-dropdown">
-                <div class="dropdown-content">
-                    <div class="event-details">
-                        ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
-                        <p class="mb-2"><strong>Uhrzeit:</strong> ${event.time}</p>
-                        <p class="mb-2"><strong>Ort:</strong> ${event.location}</p>
-                        <p class="mb-2"><strong>Beschreibung:</strong> ${event.description}</p>
-                        ${event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : ''}
-                    </div>
+                ${event.image ? `<img src="${event.image}" alt="Event Bild" class="event-image">` : ''}
+                <div class="event-additional-info">
+                    <p><strong>Uhrzeit:</strong> ${event.time}</p>
+                    <p><strong>Ort:</strong> ${event.location}</p>
+                    <p><strong>Beschreibung:</strong> ${event.description}</p>
+                    ${event.link ? `<a href="${event.link}" target="_blank" class="event-link">Event Link</a>` : ''}
                 </div>
             </div>
         `;
@@ -41,11 +41,8 @@ function renderAppointments() {
         banner.addEventListener('click', () => {
             eventElement.classList.toggle('active');
             const dropdown = eventElement.querySelector('.event-dropdown');
-            if (eventElement.classList.contains('active')) {
-                dropdown.style.maxHeight = dropdown.scrollHeight + "px";
-            } else {
-                dropdown.style.maxHeight = "0";
-            }
+            dropdown.style.maxHeight = eventElement.classList.contains('active') ? 
+                `${dropdown.scrollHeight}px` : '0';
         });
     });
 }
