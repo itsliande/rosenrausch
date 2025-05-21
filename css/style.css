@@ -77,9 +77,6 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease-out;
-    background-color: #f8f8f8;
-    margin-top: -5px;
-    padding: 0 15px;
 }
 
 .event-dropdown.active {
@@ -96,6 +93,10 @@ footer {
 .event-banner {
     cursor: pointer;
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
 }
 
 .event-banner:after {
@@ -113,6 +114,7 @@ footer {
 
 .event-container {
     margin-bottom: 10px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -125,6 +127,16 @@ footer {
     height: auto;
     border-radius: 8px;
     margin-bottom: 15px;
+}
+
+.event-date {
+    color: #666;
+}
+
+.event-details {
+    padding: 15px;
+    background: #f8f8f8;
+    border-top: 1px solid #eee;
 }
 
 #appointments-container {
