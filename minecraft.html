@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rosenrausch Minecraft Server</title>
     <link rel="stylesheet" href="style.css">
+    <script src="js/audio-player.js" defer></script>
 </head>
 <body>
     <nav class="navbar">
         <a href="index.html" class="nav-item">Soziale Medien</a>
         <a href="minecraft.html" class="nav-item active">Minecraft</a>
+        <a href="termine.html" class="nav-item">Termine</a>
     </nav>
     <div class="container">
         <div class="profile">
@@ -34,8 +36,14 @@
             </a>
         </div>
     </div>
+    <div id="audio-container"></div>
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
     </div>
+    <script>
+        const player = new AudioPlayer();
+        player.init('audio-container');
+        player.addTrack('Minecraft Ambient', 'audio/minecraft-ambient.mp3');
+    </script>
 </body>
 </html>
