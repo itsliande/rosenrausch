@@ -104,25 +104,26 @@ h1 {
     border: 1px solid rgba(168, 85, 247, 0.1);
 }
 
-.link-button:hover {
-    transform: translateY(-3px);
-    background: rgba(168, 85, 247, 0.15);
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
-}
-
-.link-description {
-    font-size: 0.8em;
-    color: #B794F4;
-    margin-top: 4px;
-    opacity: 0.8;
-}
-
 .link-content {
     display: flex;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 4px;
+}
+
+.link-description {
+    font-size: 0.85em;
+    color: #9F7AEA;
+    opacity: 0.8;
+    display: block;
+}
+
+.link-button:hover {
+    transform: translateY(-3px);
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
 }
 
 .icon {
