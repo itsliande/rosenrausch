@@ -5,6 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termine - Rosenrausch</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .popup.active {
+            display: flex;
+        }
+        
+        .popup-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .close-popup {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -14,18 +46,19 @@
     </nav>
     <div class="container">
         <div class="profile">
+            <img src="profile.jpg" alt="Profilbild" class="profile-img">
             <h1>TERMINE</h1>
         </div>
         <div class="legal-content">
             <div class="links">
-                <div class="link-button">
+                <div class="link-button" onclick="showEventDetails('Live-Stream', '15. Mai', '20:00', 'Gaming Stream auf Twitch')">
                     <div class="link-content">
                         <span>Live-Stream</span>
                         <span>15. Mai</span>
                     </div>
                     <span class="link-description">Gaming Stream auf Twitch</span>
                 </div>
-                <div class="link-button">
+                <div class="link-button" onclick="showEventDetails('Neue Single Release', '20. Mai', '00:00', 'Release auf allen Plattformen')">
                     <div class="link-content">
                         <span>Neue Single Release</span>
                         <span>20. Mai</span>
@@ -35,6 +68,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Popup Template -->
+    <div id="eventPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+            <h3 id="popupTitle" class="text-xl font-semibold mb-4"></h3>
+            <div id="popupDetails" class="mb-4"></div>
+        </div>
+    </div>
+
+    <script>
+        function showEventDetails(title, date, time, description) {
+            const popup = document.getElementById('eventPopup');
+            const popupTitle = document.getElementById('popupTitle');
+            const popupDetails = document.getElementById('popupDetails');
+            
+            popupTitle.textContent = title;
+            popupDetails.innerHTML = `
+                <p class="mb-2"><strong>Datum:</strong> ${date}</p>
+                <p class="mb-2"><strong>Uhrzeit:</strong> ${time}</p>
+                <p class="mb-2"><strong>Beschreibung:</strong> ${description}</p>
+            `;
+            
+            popup.classList.add('active');
+        }
+
+        function closePopup() {
+            const popup = document.getElementById('eventPopup');
+            popup.classList.remove('active');
+        }
+
+        // Schließe Popup wenn außerhalb geklickt wird
+        document.getElementById('eventPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+    </script>
     <div class="copyright">
         © 2025 Rosenrausch. Alle Rechte vorbehalten.
     </div>
