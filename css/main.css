@@ -363,6 +363,8 @@ h1 {
         background: rgba(91, 33, 182, 0.98);
         transform: translateY(100%);
         transition: transform 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
     }
 
     .calendar-dropdown.active .calendar-options {
@@ -373,6 +375,8 @@ h1 {
         padding: 15px;
         margin-bottom: 10px;
         font-size: 1.1em;
+        position: relative;
+        z-index: 1001;
     }
 
     .event-meta {
@@ -398,4 +402,10 @@ h1 {
     .calendar-option:active {
         background: rgba(168, 85, 247, 0.4);
     }
+}
+
+.calendar-trigger {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
