@@ -93,19 +93,19 @@ class EventManager {
                         </a>
                     `).join('') : ''}
                     <div class="calendar-dropdown">
-                        <button class="event-button calendar-trigger">
+                        <button type="button" class="event-button calendar-trigger">
                             <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
                         </button>
                         <div class="calendar-options">
-                            <a href="#" onclick="event.preventDefault(); addToCalendar('${event.title}', '${event.date}', '${event.time}', 'google')" class="calendar-option">
+                            <button type="button" class="calendar-option" data-calendar="google">
                                 <i class="fab fa-google"></i> Google Kalender
-                            </a>
-                            <a href="#" onclick="event.preventDefault(); addToCalendar('${event.title}', '${event.date}', '${event.time}', 'apple')" class="calendar-option">
+                            </button>
+                            <button type="button" class="calendar-option" data-calendar="apple">
                                 <i class="fab fa-apple"></i> Apple Kalender
-                            </a>
-                            <a href="#" onclick="event.preventDefault(); addToCalendar('${event.title}', '${event.date}', '${event.time}', 'ics')" class="calendar-option">
+                            </button>
+                            <button type="button" class="calendar-option" data-calendar="ics">
                                 <i class="far fa-calendar"></i> ICS Download
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -116,28 +116,32 @@ class EventManager {
             this.toggleEvent(element);
         });
 
-        // Verbesserte Event-Listener für Calendar-Dropdown
+        // Event-Handler für den Kalender
         const calendarTrigger = element.querySelector('.calendar-trigger');
-        const handleCalendarClick = (e) => {
+        const calendarOptions = element.querySelector('.calendar-options');
+
+        calendarTrigger.addEventListener('click', (e) => {
             e.stopPropagation();
             const dropdown = e.currentTarget.closest('.calendar-dropdown');
-            
-            // Schließe andere aktive Dropdowns
-            if (this.activeDropdown && this.activeDropdown !== dropdown) {
-                this.activeDropdown.classList.remove('active');
-            }
-            
             dropdown.classList.toggle('active');
-            this.activeDropdown = dropdown.classList.contains('active') ? dropdown : null;
-            
-            // Verhindere Scrollen im Hintergrund auf Mobilgeräten
-            if (this.isMobile) {
-                document.body.style.overflow = dropdown.classList.contains('active') ? 'hidden' : '';
-            }
-        };
+        });
 
-        calendarTrigger.addEventListener('click', handleCalendarClick);
-        calendarTrigger.addEventListener('touchend', handleCalendarClick);
+        // Event-Handler für die Kalender-Optionen
+        calendarOptions.querySelectorAll('.calendar-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const calendarType = e.currentTarget.dataset.calendar;
+                addToCalendar(event.title, event.date, event.time, calendarType);
+                e.currentTarget.closest('.calendar-dropdown').classList.remove('active');
+            });
+        });
+
+        // Schließen des Dropdowns beim Klick außerhalb
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.calendar-dropdown')) {
+                element.querySelector('.calendar-dropdown')?.classList.remove('active');
+            }
+        });
 
         return element;
     }

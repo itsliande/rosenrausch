@@ -372,11 +372,28 @@ h1 {
     }
 
     .calendar-option {
-        padding: 15px;
-        margin-bottom: 10px;
-        font-size: 1.1em;
-        position: relative;
-        z-index: 1001;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px 15px;
+        color: #E9D5FF;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        text-align: left;
+        font-size: inherit;
+    }
+
+    .calendar-option:last-child {
+        margin-bottom: 0;
+    }
+
+    .calendar-option:hover {
+        background: rgba(168, 85, 247, 0.3);
     }
 
     .event-meta {
