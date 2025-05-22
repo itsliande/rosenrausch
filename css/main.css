@@ -247,6 +247,24 @@ h1 {
     transform: translateY(-2px);
 }
 
+.event-image {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    margin: 20px 0;
+    object-fit: cover;
+    max-height: 300px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 520px) {
+    .event-image {
+        border-radius: 10px;
+        margin: 15px 0;
+    }
+}
+
 #appointments-container {
     max-width: 680px;
     margin: 0 auto;
