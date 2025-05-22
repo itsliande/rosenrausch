@@ -92,77 +92,12 @@ class EventManager {
                             <i class="fas ${link.icon}"></i> ${link.label}
                         </a>
                     `).join('') : ''}
-                    <div class="calendar-dropdown">
-                        <button type="button" class="event-button calendar-trigger">
-                            <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
-                        </button>
-                        <div class="calendar-overlay"></div>
-                        <div class="calendar-options">
-                            <button type="button" class="calendar-option" data-calendar="google">
-                                <i class="fab fa-google"></i> Google Kalender
-                            </button>
-                            <button type="button" class="calendar-option" data-calendar="apple">
-                                <i class="fab fa-apple"></i> Apple Kalender
-                            </button>
-                            <button type="button" class="calendar-option" data-calendar="ics">
-                                <i class="far fa-calendar"></i> ICS Download
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         `;
 
         element.querySelector('.event-header').addEventListener('click', () => {
             this.toggleEvent(element);
-        });
-
-        // Event-Handler für den Kalender
-        const calendarTrigger = element.querySelector('.calendar-trigger');
-        const calendarOverlay = element.querySelector('.calendar-overlay');
-
-        const closeAllDropdowns = () => {
-            document.querySelectorAll('.calendar-dropdown.active').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-            document.body.style.overflow = '';
-        };
-
-        calendarTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            closeAllDropdowns();
-            const dropdown = e.currentTarget.closest('.calendar-dropdown');
-            dropdown.classList.add('active');
-            if (this.isMobile) {
-                document.body.style.overflow = 'hidden';
-            }
-        });
-
-        // Schließen beim Klick auf Overlay oder außerhalb
-        [calendarOverlay, document].forEach(elem => {
-            elem.addEventListener('click', (e) => {
-                if (!e.target.closest('.calendar-options') && 
-                    !e.target.closest('.calendar-trigger')) {
-                    closeAllDropdowns();
-                }
-            });
-        });
-
-        // Event-Handler für die Kalender-Optionen
-        element.querySelector('.calendar-options').querySelectorAll('.calendar-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const calendarType = e.currentTarget.dataset.calendar;
-                addToCalendar(event.title, event.date, event.time, calendarType);
-                e.currentTarget.closest('.calendar-dropdown').classList.remove('active');
-            });
-        });
-
-        // Schließen des Dropdowns beim Klick außerhalb
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-dropdown')) {
-                element.querySelector('.calendar-dropdown')?.classList.remove('active');
-            }
         });
 
         return element;
@@ -196,62 +131,6 @@ class EventManager {
             .forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
-    }
-}
-
-// Verbessere die addToCalendar Funktion für Mobile
-function addToCalendar(title, date, time, type) {
-    const dateTime = new Date(`${date}T${time}`);
-    const endTime = new Date(dateTime.getTime() + 2 * 60 * 60 * 1000);
-    
-    const formatDateTime = (date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-    
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    
-    const calendarUrls = {
-        google: isAndroid 
-            ? `content://com.android.calendar/time/${dateTime.getTime()}`
-            : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
-        apple: isIOS
-            ? `webcal://calendar.google.com/calendar/ical/${encodeURIComponent(title)}/basic.ics`
-            : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
-        ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-DTSTART:${formatDateTime(dateTime)}
-DTEND:${formatDateTime(endTime)}
-SUMMARY:${title}
-DESCRIPTION:${title}
-END:VEVENT
-END:VCALENDAR`
-    };
-
-    if (type === 'apple' && isIOS) {
-        // Erstelle temporäre .ics Datei für iOS
-        const blob = new Blob([calendarUrls.ics], { type: 'text/calendar;charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        window.location.href = url;
-        setTimeout(() => {
-            window.URL.revokeObjectURL(url);
-        }, 100);
-    } else if (type === 'ics' || (type === 'apple' && !isIOS)) {
-        const element = document.createElement('a');
-        element.setAttribute('href', calendarUrls.ics);
-        element.setAttribute('download', `${title}.ics`);
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
-    } else {
-        window.location.href = calendarUrls[type];
-    }
-
-    // Schließe das Modal nach der Aktion auf Mobilgeräten
-    const dropdown = document.querySelector('.calendar-dropdown.active');
-    if (dropdown) {
-        dropdown.classList.remove('active');
-        document.body.style.overflow = '';
     }
 }
 
