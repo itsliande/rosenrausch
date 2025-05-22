@@ -96,6 +96,7 @@ class EventManager {
                         <button type="button" class="event-button calendar-trigger">
                             <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
                         </button>
+                        <div class="calendar-overlay"></div>
                         <div class="calendar-options">
                             <button type="button" class="calendar-option" data-calendar="google">
                                 <i class="fab fa-google"></i> Google Kalender
@@ -118,16 +119,37 @@ class EventManager {
 
         // Event-Handler für den Kalender
         const calendarTrigger = element.querySelector('.calendar-trigger');
-        const calendarOptions = element.querySelector('.calendar-options');
+        const calendarOverlay = element.querySelector('.calendar-overlay');
+
+        const closeAllDropdowns = () => {
+            document.querySelectorAll('.calendar-dropdown.active').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            document.body.style.overflow = '';
+        };
 
         calendarTrigger.addEventListener('click', (e) => {
             e.stopPropagation();
+            closeAllDropdowns();
             const dropdown = e.currentTarget.closest('.calendar-dropdown');
-            dropdown.classList.toggle('active');
+            dropdown.classList.add('active');
+            if (this.isMobile) {
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        // Schließen beim Klick auf Overlay oder außerhalb
+        [calendarOverlay, document].forEach(elem => {
+            elem.addEventListener('click', (e) => {
+                if (!e.target.closest('.calendar-options') && 
+                    !e.target.closest('.calendar-trigger')) {
+                    closeAllDropdowns();
+                }
+            });
         });
 
         // Event-Handler für die Kalender-Optionen
-        calendarOptions.querySelectorAll('.calendar-option').forEach(option => {
+        element.querySelector('.calendar-options').querySelectorAll('.calendar-option').forEach(option => {
             option.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const calendarType = e.currentTarget.dataset.calendar;
