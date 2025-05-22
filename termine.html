@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Termine - Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
-    <style>
-        /* Alte Popup Styles können entfernt werden */
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -15,26 +13,15 @@
         <a href="minecraft.html" class="nav-item">Minecraft</a>
         <a href="termine.html" class="nav-item active">Termine</a>
     </nav>
+    
     <div class="container">
         <div class="profile">
             <img src="profile.jpg" alt="Profilbild" class="profile-img">
             <h1>TERMINE</h1>
         </div>
-        <div id="appointments-container"></div>
+        <div id="events-container"></div>
     </div>
 
     <script src="js/appointments.js"></script>
-    <script>
-        // Initialisierung der Events beim Laden der Seite
-        document.addEventListener('DOMContentLoaded', renderAppointments);
-    </script>
-
-    <div class="copyright">
-        © 2025 Rosenrausch. Alle Rechte vorbehalten.
-        <div class="legal-links">
-            <a href="privacy.html">Datenschutz</a> | 
-            <a href="impressum.html">Impressum</a>
-        </div>
-    </div>
 </body>
 </html>
