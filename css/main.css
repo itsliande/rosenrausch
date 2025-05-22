@@ -6,10 +6,10 @@
 }
 
 html {
-    height: -webkit-fill-available;
     height: 100%;
-    background: linear-gradient(135deg, #2D1B69 0%, #1A1033 100%);
-    background-attachment: fixed;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background: #2D1B69;
     overflow-x: hidden;
 }
 
@@ -21,7 +21,9 @@ body {
     padding: 0;
     position: relative;
     overflow-x: hidden;
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+    background: linear-gradient(135deg, #2D1B69 0%, #1A1033 100%) fixed;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Container und Layout */
