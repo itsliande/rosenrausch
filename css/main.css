@@ -139,39 +139,52 @@ h1 {
 
 /* Event Styles */
 .event-container {
+    background: rgba(91, 33, 182, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.1);
+    border-radius: 20px;
     margin-bottom: 25px;
-    border-radius: 8px;
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.event-container:hover {
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
 }
 
 .event-preview {
-    width: 100%;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
 }
 
 .event-title {
-    margin: 0;
-    font-size: 1.2em;
-    font-weight: bold;
     color: #E9D5FF;
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0;
+}
+
+.event-date {
+    color: #9F7AEA;
+    font-size: 0.9em;
 }
 
 .event-description {
-    margin-bottom: 20px;
     color: #9F7AEA;
     font-size: 0.95em;
+    line-height: 1.5;
+    margin-bottom: 15px;
 }
 
 .event-dropdown {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transition: all 0.3s ease-out;
-    background: rgba(91, 33, 182, 0.1);
-    padding: 0;
+    transition: all 0.4s ease-out;
+    padding: 0 20px;
     margin-top: -100%;
 }
 
@@ -179,15 +192,32 @@ h1 {
     max-height: 2000px;
     opacity: 1;
     margin-top: 0;
-    padding: 15px;
+    padding: 0 20px 20px;
 }
 
 .event-image {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin: 30px 0 15px 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin: 15px 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.event-additional-info {
+    background: rgba(91, 33, 182, 0.05);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.event-additional-info p {
+    color: #9F7AEA;
+    margin: 8px 0;
+}
+
+#appointments-container {
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 /* Audio Player */
