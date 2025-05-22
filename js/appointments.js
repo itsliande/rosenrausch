@@ -28,6 +28,21 @@ class EventManager {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
         this.activeEvent = null;
+        this.activeDropdown = null;
+        this.isMobile = window.innerWidth <= 520;
+        
+        // Close calendar dropdown on backdrop click (mobile)
+        document.addEventListener('click', (e) => {
+            if (this.isMobile && e.target.classList.contains('calendar-options')) {
+                const dropdown = e.target.closest('.calendar-dropdown');
+                if (dropdown) dropdown.classList.remove('active');
+            }
+        });
+
+        // Update isMobile on resize
+        window.addEventListener('resize', () => {
+            this.isMobile = window.innerWidth <= 520;
+        });
     }
 
     formatDate(dateStr) {
@@ -105,13 +120,28 @@ class EventManager {
         element.querySelector('.calendar-trigger').addEventListener('click', (e) => {
             e.stopPropagation();
             const dropdown = e.target.closest('.calendar-dropdown');
+            
+            // Schließe andere aktive Dropdowns
+            if (this.activeDropdown && this.activeDropdown !== dropdown) {
+                this.activeDropdown.classList.remove('active');
+            }
+            
             dropdown.classList.toggle('active');
+            this.activeDropdown = dropdown.classList.contains('active') ? dropdown : null;
+            
+            // Verhindere Scrollen im Hintergrund auf Mobilgeräten
+            if (this.isMobile) {
+                document.body.style.overflow = dropdown.classList.contains('active') ? 'hidden' : '';
+            }
         });
 
-        // Schließe Dropdown wenn außerhalb geklickt wird
+        // Schließe Dropdown bei Klick außerhalb
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.calendar-dropdown')) {
-                element.querySelector('.calendar-dropdown').classList.remove('active');
+            const clickedDropdown = e.target.closest('.calendar-dropdown');
+            if (!clickedDropdown && this.activeDropdown) {
+                this.activeDropdown.classList.remove('active');
+                this.activeDropdown = null;
+                document.body.style.overflow = '';
             }
         });
 
@@ -149,6 +179,7 @@ class EventManager {
     }
 }
 
+// Verbessere die addToCalendar Funktion für Mobile
 function addToCalendar(title, date, time, type) {
     const dateTime = new Date(`${date}T${time}`);
     const endTime = new Date(dateTime.getTime() + 2 * 60 * 60 * 1000);
@@ -179,6 +210,13 @@ END:VCALENDAR`
         document.body.removeChild(element);
     } else {
         window.open(calendarUrls[type], '_blank');
+    }
+
+    // Schließe das Modal nach der Aktion auf Mobilgeräten
+    const dropdown = document.querySelector('.calendar-dropdown.active');
+    if (dropdown) {
+        dropdown.classList.remove('active');
+        document.body.style.overflow = '';
     }
 }
 
