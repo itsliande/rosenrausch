@@ -6,58 +6,7 @@
     <title>Termine - Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
-        .popup {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        
-        .popup.active {
-            display: flex;
-        }
-        
-        .popup-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-        
-        .close-popup {
-            position: absolute;
-            right: 1rem;
-            top: 1rem;
-            cursor: pointer;
-            font-size: 1.5rem;
-        }
-        
-        .event-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .event-link {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background: #5B21B6;
-            color: white;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s;
-        }
-        
-        .event-link:hover {
-            background: #7C3AED;
-        }
+        /* Alte Popup Styles können entfernt werden */
     </style>
 </head>
 <body>
@@ -71,11 +20,7 @@
             <img src="profile.jpg" alt="Profilbild" class="profile-img">
             <h1>TERMINE</h1>
         </div>
-        <div class="legal-content">
-            <div id="appointments-container" style="display: flex; flex-direction: column; gap: 20px;"></div>
-                <!-- Events werden hier dynamisch eingefügt -->
-            </div>
-        </div>
+        <div id="appointments-container"></div>
     </div>
 
     <script src="js/appointments.js"></script>
