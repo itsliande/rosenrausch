@@ -7,7 +7,18 @@ const events = [
         location: "Meißen, Stadtpark",
         description: "Das Unter Leuten Festival in Meißen",
         image: "images/festival.jpg",
-        ticketLink: "https://ticket-link.de",
+        links: [
+            {
+                url: "https://ticket-link.de",
+                label: "Tickets kaufen",
+                icon: "fa-ticket-alt"
+            },
+            {
+                url: "https://festival-info.de",
+                label: "Mehr Informationen",
+                icon: "fa-info-circle"
+            }
+        ],
         price: "25€",
         category: "Festival"
     }
@@ -61,14 +72,27 @@ class EventManager {
                 <div class="event-description">${event.description}</div>
                 ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
                 <div class="event-actions">
-                    ${event.ticketLink ? `
-                    <a href="${event.ticketLink}" class="event-button" target="_blank">
-                        <i class="fas fa-ticket-alt"></i> Tickets
-                    </a>
-                    ` : ''}
-                    <button class="event-button" onclick="addToCalendar('${event.title}', '${event.date}', '${event.time}')">
-                        <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
-                    </button>
+                    ${event.links ? event.links.map(link => `
+                        <a href="${link.url}" class="event-button" target="_blank">
+                            <i class="fas ${link.icon}"></i> ${link.label}
+                        </a>
+                    `).join('') : ''}
+                    <div class="calendar-dropdown">
+                        <button class="event-button">
+                            <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
+                        </button>
+                        <div class="calendar-options">
+                            <a href="#" onclick="addToCalendar('${event.title}', '${event.date}', '${event.time}', 'google')" class="calendar-option">
+                                <i class="fab fa-google"></i> Google Kalender
+                            </a>
+                            <a href="#" onclick="addToCalendar('${event.title}', '${event.date}', '${event.time}', 'apple')" class="calendar-option">
+                                <i class="fab fa-apple"></i> Apple Kalender
+                            </a>
+                            <a href="#" onclick="addToCalendar('${event.title}', '${event.date}', '${event.time}', 'ics')" class="calendar-option">
+                                <i class="far fa-calendar"></i> ICS Download
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
@@ -111,13 +135,37 @@ class EventManager {
     }
 }
 
-function addToCalendar(title, date, time) {
+function addToCalendar(title, date, time, type) {
     const dateTime = new Date(`${date}T${time}`);
     const endTime = new Date(dateTime.getTime() + 2 * 60 * 60 * 1000);
     
-    const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${dateTime.toISOString().replace(/[-:]/g, '').split('.')[0]}Z/${endTime.toISOString().replace(/[-:]/g, '').split('.')[0]}Z`;
+    const formatDateTime = (date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     
-    window.open(calendarUrl, '_blank');
+    const calendarUrls = {
+        google: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
+        apple: `webcal://p133-caldav.icloud.com/published/2/MTM0NTI4MDgwMTM0NTI4MMGxv5D0dR7QC3JHrm1VSXGWwE7UqwCAAtjxE_UryPWT9cXEVgxN_sgG8OAxd9rIlOuaKqPHhG5xG5rIlOuaKqPHhG5xG5`,
+        ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+URL:${document.URL}
+DTSTART:${formatDateTime(dateTime)}
+DTEND:${formatDateTime(endTime)}
+SUMMARY:${title}
+END:VEVENT
+END:VCALENDAR`
+    };
+
+    if (type === 'ics') {
+        const element = document.createElement('a');
+        element.setAttribute('href', calendarUrls.ics);
+        element.setAttribute('download', `${title}.ics`);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    } else {
+        window.open(calendarUrls[type], '_blank');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

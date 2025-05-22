@@ -511,3 +511,48 @@ footer {
     max-width: 800px;
     margin: 0 auto;
 }
+
+/* Kalender-Dropdown Styles */
+.calendar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.calendar-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(91, 33, 182, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 5px;
+    z-index: 1000;
+    min-width: 200px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.calendar-dropdown:hover .calendar-options {
+    display: block;
+}
+
+.calendar-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    color: #E9D5FF;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.calendar-option:hover {
+    background: rgba(168, 85, 247, 0.3);
+}
+
+.calendar-option i {
+    width: 20px;
+    text-align: center;
+}
