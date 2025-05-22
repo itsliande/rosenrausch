@@ -344,6 +344,11 @@ h1 {
     width: 100%;
     justify-content: center;
     text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    height: 100%;
+    min-height: 48px;
 }
 
 .calendar-options {

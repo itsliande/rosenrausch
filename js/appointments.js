@@ -206,15 +206,16 @@ function addToCalendar(title, date, time, type) {
     
     const formatDateTime = (date) => date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isAndroid = /Android/i.test(navigator.userAgent);
     
     const calendarUrls = {
-        google: isMobile 
-            ? `googlegcal://www.google.com/calendar/event?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`
+        google: isAndroid 
+            ? `content://com.android.calendar/time/${dateTime.getTime()}`
             : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
-        apple: isMobile && /iPhone|iPad|iPod/i.test(navigator.userAgent)
-            ? `calshow://`  // Öffnet die Kalender-App auf iOS
-            : `webcal://p133-caldav.icloud.com/published/2/MTM0NTI4MDgwMTM0NTI4MMGxv5D0dR7QC3JHrm1VSXGWwE7UqwCAAtjxE_UryPWT9cXEVgxN_sgG8OAxd9rIlOuaKqPHhG5xG5rIlOuaKqPHhG5xG5`,
+        apple: isIOS
+            ? `calshow://${dateTime.getTime()}`
+            : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
         ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
