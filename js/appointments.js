@@ -214,22 +214,36 @@ function addToCalendar(title, date, time, type) {
             ? `content://com.android.calendar/time/${dateTime.getTime()}`
             : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
         apple: isIOS
-            ? `calshow://${dateTime.getTime()}`
-            : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
-        ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+            ? `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-URL:${document.URL}
 DTSTART:${formatDateTime(dateTime)}
 DTEND:${formatDateTime(endTime)}
 SUMMARY:${title}
 DESCRIPTION:${title}
-LOCATION:${event.location || ''}
+END:VEVENT
+END:VCALENDAR`
+            : null,
+        ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:${formatDateTime(dateTime)}
+DTEND:${formatDateTime(endTime)}
+SUMMARY:${title}
+DESCRIPTION:${title}
 END:VEVENT
 END:VCALENDAR`
     };
 
-    if (type === 'ics') {
+    if (type === 'apple' && isIOS) {
+        const element = document.createElement('a');
+        element.setAttribute('href', calendarUrls.apple);
+        element.setAttribute('target', '_blank');
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    } else if (type === 'ics' || (type === 'apple' && !isIOS)) {
         const element = document.createElement('a');
         element.setAttribute('href', calendarUrls.ics);
         element.setAttribute('download', `${title}.ics`);
