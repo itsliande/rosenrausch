@@ -214,16 +214,8 @@ function addToCalendar(title, date, time, type) {
             ? `content://com.android.calendar/time/${dateTime.getTime()}`
             : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
         apple: isIOS
-            ? `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-DTSTART:${formatDateTime(dateTime)}
-DTEND:${formatDateTime(endTime)}
-SUMMARY:${title}
-DESCRIPTION:${title}
-END:VEVENT
-END:VCALENDAR`
-            : null,
+            ? `webcal://calendar.google.com/calendar/ical/${encodeURIComponent(title)}/basic.ics`
+            : `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${formatDateTime(dateTime)}/${formatDateTime(endTime)}`,
         ics: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
@@ -236,13 +228,13 @@ END:VCALENDAR`
     };
 
     if (type === 'apple' && isIOS) {
-        const element = document.createElement('a');
-        element.setAttribute('href', calendarUrls.apple);
-        element.setAttribute('target', '_blank');
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click();
-        document.body.removeChild(element);
+        // Erstelle temporäre .ics Datei für iOS
+        const blob = new Blob([calendarUrls.ics], { type: 'text/calendar;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        window.location.href = url;
+        setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+        }, 100);
     } else if (type === 'ics' || (type === 'apple' && !isIOS)) {
         const element = document.createElement('a');
         element.setAttribute('href', calendarUrls.ics);
