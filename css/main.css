@@ -512,7 +512,7 @@ footer {
     margin: 0 auto;
 }
 
-/* Kalender-Dropdown Styles */
+/* Kalender-Dropdown Styles - Überarbeitet */
 .calendar-dropdown {
     position: relative;
     display: inline-block;
@@ -521,19 +521,20 @@ footer {
 .calendar-options {
     display: none;
     position: absolute;
-    top: 100%;
+    bottom: 100%;
     left: 0;
     background: rgba(91, 33, 182, 0.95);
     backdrop-filter: blur(12px);
     border-radius: 15px;
     padding: 10px;
-    margin-top: 5px;
+    margin-bottom: 10px;
     z-index: 1000;
     min-width: 200px;
     border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 }
 
-.calendar-dropdown:hover .calendar-options {
+.calendar-dropdown.active .calendar-options {
     display: block;
 }
 
@@ -541,11 +542,16 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px;
+    padding: 12px 15px;
     color: #E9D5FF;
     text-decoration: none;
     transition: all 0.3s ease;
     border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.calendar-option:last-child {
+    margin-bottom: 0;
 }
 
 .calendar-option:hover {
@@ -555,4 +561,5 @@ footer {
 .calendar-option i {
     width: 20px;
     text-align: center;
+    font-size: 1.1em;
 }

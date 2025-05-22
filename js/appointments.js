@@ -78,7 +78,7 @@ class EventManager {
                         </a>
                     `).join('') : ''}
                     <div class="calendar-dropdown">
-                        <button class="event-button">
+                        <button class="event-button calendar-trigger">
                             <i class="far fa-calendar-plus"></i> Zum Kalender hinzufügen
                         </button>
                         <div class="calendar-options">
@@ -99,6 +99,20 @@ class EventManager {
 
         element.querySelector('.event-header').addEventListener('click', () => {
             this.toggleEvent(element);
+        });
+
+        // Füge Event-Listener für Calendar-Dropdown hinzu
+        element.querySelector('.calendar-trigger').addEventListener('click', (e) => {
+            e.stopPropagation();
+            const dropdown = e.target.closest('.calendar-dropdown');
+            dropdown.classList.toggle('active');
+        });
+
+        // Schließe Dropdown wenn außerhalb geklickt wird
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.calendar-dropdown')) {
+                element.querySelector('.calendar-dropdown').classList.remove('active');
+            }
         });
 
         return element;
