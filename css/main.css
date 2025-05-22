@@ -340,6 +340,12 @@ h1 {
     width: 100%;
 }
 
+.calendar-trigger {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+}
+
 .calendar-options {
     display: none;
     position: absolute;
