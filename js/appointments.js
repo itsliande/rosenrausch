@@ -3,7 +3,7 @@ const events = [
         id: 1,
         title: "Festival Unter Leuten",
         date: "2025-06-07",
-        time: "20:00",
+        time: "ca. 22:00",
         location: "Internationaler Garten Meißen\nGroßenhainer Straße 161, 01662 Meißen",
         description: "Das Unter Leuten Festival in Meißen",
         image: "images/festival.jpg",
@@ -19,7 +19,7 @@ const events = [
                 icon: "fa-info-circle"
             }
         ],
-        price: "25€",
+        price: "20€-55€",
         category: "Festival"
     }
 ];
