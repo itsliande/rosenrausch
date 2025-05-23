@@ -84,7 +84,10 @@ class EventManager {
                         <span>${event.category}</span>
                     </div>
                 </div>
-                <div class="event-description">${event.description}</div>
+                <div class="event-description">
+                    <h3 class="event-description-title">Beschreibung</h3>
+                    ${event.description}
+                </div>
                 ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
                 <div class="event-actions">
                     ${event.links ? event.links.map(link => `

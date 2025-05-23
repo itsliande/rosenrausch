@@ -216,26 +216,27 @@ h1 {
     color: #A855F7;
 }
 
+.event-info-item div,
 .event-info-item span {
     color: #E9D5FF;
-}
-
-.event-description-title {
-    color: #A855F7;
-    font-size: 1.1em;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    font-weight: 600;
+    line-height: 1.4;
 }
 
 .event-description {
     color: #E9D5FF;
     line-height: 1.6;
-    margin: 20px 0;
+    margin: 0;
     padding: 15px;
     background: rgba(91, 33, 182, 0.1);
     border-radius: 15px;
     white-space: pre-line;
+}
+
+.event-description-title {
+    color: #A855F7;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .event-actions {
