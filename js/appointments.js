@@ -5,7 +5,7 @@ const events = [
         date: "2025-06-07",
         time: "ca. 22:00",
         location: "Internationaler Garten Meißen\nGroßenhainer Straße 161, 01662 Meißen",
-        description: "Das Unter Leuten Festival in Meißen",
+        description: "Die angaben von Uhrzeit und Datum Gelten nur für Rosenrausch nicht für das gesamte Festival",
         image: "images/festival.jpg",
         links: [
             {
@@ -84,6 +84,7 @@ class EventManager {
                         <span>${event.category}</span>
                     </div>
                 </div>
+                <h3 class="event-description-title">Beschreibung</h3>
                 <div class="event-description">${event.description}</div>
                 ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
                 <div class="event-actions">
