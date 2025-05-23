@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rosenrausch Team</title>
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .team-section {
-            margin-bottom: 40px;
-            background: rgba(91, 33, 182, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
-            border: 1px solid rgba(168, 85, 247, 0.1);
         }
 
-        .team-section h2 {
+        .team-container h1 {
+            text-align: center;
             color: #A855F7;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            margin-bottom: 40px;
         }
 
         .team-grid {
@@ -91,79 +86,12 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="nav-item">Soziale Medien</a>
-        <a href="minecraft.html" class="nav-item">Minecraft</a>
-        <a href="termine.html" class="nav-item">Termine</a>
-    </nav>
-
-    <div class="container">
-        <div class="profile">
-            <img src="profile.jpg" alt="Rosenrausch Team" class="profile-img">
-            <h1>UNSER TEAM</h1>
-        </div>
-
-        <div class="team-section">
-            <h2>IT Management</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="images/team/max.jpg" alt="Max Weber">
-                    <h3>Max Weber</h3>
-                    <div class="role">IT Director</div>
-                    <div class="bio">
-                        Verantwortlich für die gesamte IT-Infrastruktur und technische Entwicklung.
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="team-section">
-            <h2>Content Creation</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="images/team/lisa.jpg" alt="Lisa Schmidt">
-                    <h3>Lisa Schmidt</h3>
-                    <div class="role">Content Manager</div>
-                    <div class="bio">
-                        Kreative Leitung für Social Media Content und Marketing-Strategien.
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="team-section">
-            <h2>Event Management</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="images/team/sarah.jpg" alt="Sarah Meyer">
-                    <h3>Sarah Meyer</h3>
-                    <div class="role">Event Coordinator</div>
-                    <div class="bio">
-                        Organisation und Durchführung von Events und Community-Treffen.
-                    </div>
-                    <div class="social-links">
-                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
-                    </div>
-                </div>
-            </div>
+    <div class="team-container">
+        <h1>Unser Team</h1>
+        <div class="team-grid">
+            <!-- Team-Mitglieder werden hier durch JavaScript eingefügt -->
         </div>
     </div>
-
-    <div class="copyright">
-        © 2025 Rosenrausch. Alle Rechte vorbehalten.
-        <div class="legal-links">
-            <a href="privacy.html">Datenschutz</a> | 
-            <a href="impressum.html">Impressum</a>
-        </div>
-    </div>
+    <script src="js/team.js"></script>
 </body>
 </html>
