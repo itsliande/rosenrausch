@@ -4,26 +4,47 @@ async function renderTeam() {
         const data = await response.json();
         
         const teamContainer = document.querySelector('.team-grid');
+        teamContainer.innerHTML = ''; // Clear existing content
         
-        data.team.forEach(member => {
-            const memberElement = document.createElement('div');
-            memberElement.className = 'team-member';
+        data.categories.forEach(category => {
+            // Create category section
+            const categorySection = document.createElement('div');
+            categorySection.className = 'team-category';
             
-            memberElement.innerHTML = `
-                <img src="${member.image}" alt="${member.name}">
-                <h3>${member.name}</h3>
-                <div class="role">${member.role}</div>
-                <div class="bio">${member.bio}</div>
-                <div class="social-links">
-                    ${member.social.map(social => `
-                        <a href="${social.url}" target="_blank">
-                            <i class="fab fa-${social.platform}"></i>
-                        </a>
-                    `).join('')}
-                </div>
-            `;
+            // Add category header
+            const categoryHeader = document.createElement('h2');
+            categoryHeader.className = 'category-title';
+            categoryHeader.textContent = category.name;
+            categorySection.appendChild(categoryHeader);
             
-            teamContainer.appendChild(memberElement);
+            // Create members grid for this category
+            const membersGrid = document.createElement('div');
+            membersGrid.className = 'category-members';
+            
+            // Add members
+            category.members.forEach(member => {
+                const memberElement = document.createElement('div');
+                memberElement.className = 'team-member';
+                
+                memberElement.innerHTML = `
+                    <img src="${member.image}" alt="${member.name}">
+                    <h3>${member.name}</h3>
+                    <div class="role">${member.role}</div>
+                    <div class="bio">${member.bio}</div>
+                    <div class="social-links">
+                        ${member.social.map(social => `
+                            <a href="${social.url}" target="_blank">
+                                <i class="fab fa-${social.platform}"></i>
+                            </a>
+                        `).join('')}
+                    </div>
+                `;
+                
+                membersGrid.appendChild(memberElement);
+            });
+            
+            categorySection.appendChild(membersGrid);
+            teamContainer.appendChild(categorySection);
         });
     } catch (error) {
         console.error('Fehler beim Laden der Team-Daten:', error);

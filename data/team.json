@@ -1,34 +1,44 @@
 {
-  "team": [
+  "categories": [
     {
-      "name": "Max Mustermann",
-      "role": "Geschäftsführer",
-      "image": "images/team/person1.jpg",
-      "bio": "Experte für Blumenarrangements mit über 10 Jahren Erfahrung. Spezialisiert auf Hochzeitsdekorationen und Events.",
-      "social": [
+      "name": "IT Management",
+      "members": [
         {
-          "platform": "instagram",
-          "url": "https://instagram.com/username"
-        },
-        {
-          "platform": "linkedin",
-          "url": "https://linkedin.com/in/username"
+          "name": "Max Mustermann",
+          "role": "IT Manager",
+          "image": "images/team/person1.jpg",
+          "bio": "Verantwortlich für die gesamte IT-Infrastruktur und Entwicklung.",
+          "social": [
+            {
+              "platform": "github",
+              "url": "https://github.com/username"
+            },
+            {
+              "platform": "linkedin",
+              "url": "https://linkedin.com/in/username"
+            }
+          ]
         }
       ]
     },
     {
-      "name": "Anna Schmidt",
-      "role": "Kreativdirektorin",
-      "image": "images/team/person2.jpg",
-      "bio": "Floristin mit Leidenschaft für nachhaltige Blumenkunst. Verantwortlich für kreative Konzepte und Designentwicklung.",
-      "social": [
+      "name": "Content Creation",
+      "members": [
         {
-          "platform": "instagram",
-          "url": "https://instagram.com/username"
-        },
-        {
-          "platform": "pinterest",
-          "url": "https://pinterest.com/username"
+          "name": "Anna Schmidt",
+          "role": "Content Manager",
+          "image": "images/team/person2.jpg",
+          "bio": "Leitet das Content-Team und entwickelt Kreativkonzepte.",
+          "social": [
+            {
+              "platform": "instagram",
+              "url": "https://instagram.com/username"
+            },
+            {
+              "platform": "tiktok",
+              "url": "https://tiktok.com/@username"
+            }
+          ]
         }
       ]
     }

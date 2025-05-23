@@ -4,7 +4,33 @@
     padding: 40px 20px;
 }
 
-.team-grid {
+.team-category {
+    margin-bottom: 40px;
+}
+
+.category-title {
+    color: #A855F7;
+    font-size: 2em;
+    margin-bottom: 25px;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.category-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 2px;
+}
+
+.category-members {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
