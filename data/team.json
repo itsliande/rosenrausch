@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "name": "Artist",
+      "name": "🌷Artist🌷",
       "members": [
         {
           "name": "Rosenrausch",
@@ -11,7 +11,7 @@
           "social": [
             {
               "platform": "Website",
-              "url": "rosenrausch.xyz"
+              "url": "https://rosenrausch.xyz"
             }
           ]
         }
@@ -41,7 +41,7 @@
           "name": "Lian",
           "role": "Website Management",
           "image": "images/team/person2.jpg",
-          "bio": "Kümmet sich um das erstellen und die Wartung der Website. und um den content der website.",
+          "bio": "Kümmert sich um das erstellen und die Wartung der Website. und um den content der website.",
           "social": [
             {
               "platform": "Discord",
@@ -69,23 +69,6 @@
       ]
     },
     {
-      "name": "Discord Moderation",
-      "members": [
-        {
-          "name": "Lily",
-          "role": "Discord Moderation",
-          "image": "images/team/person2.jpg",
-          "bio": "Kümmtert sich um den Discord Server.",
-          "social": [
-            {
-              "platform": "Discord",
-              "url": "https://discord.com/users/963523751641776189"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "name": "Tiktok Moderation",
       "members": [
         {
@@ -96,7 +79,7 @@
           "social": [
             {
               "platform": "N/A",
-              "url": "rosenrausch.xyz"
+              "url": "https://rosenrausch.xyz"
             }
           ]
         }
