@@ -34,7 +34,7 @@ async function renderTeam() {
                     <div class="social-links">
                         ${member.social.map(social => `
                             <a href="${social.url}" target="_blank">
-                                <i class="fa-${social.platform}"></i>
+                                <i class="${social.platform}"></i>
                             </a>
                         `).join('')}
                     </div>
