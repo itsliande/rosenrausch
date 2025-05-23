@@ -231,7 +231,11 @@ h1 {
 .event-description {
     color: #E9D5FF;
     line-height: 1.6;
-    margin: 0 0 20px 0;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(91, 33, 182, 0.1);
+    border-radius: 15px;
+    white-space: pre-line;
 }
 
 .event-actions {

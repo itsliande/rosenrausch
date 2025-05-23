@@ -71,7 +71,7 @@ class EventManager {
                 <div class="event-details">
                     <div class="event-info-item">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>${event.location}</span>
+                        <div style="white-space: pre-line">${event.location}</div>
                     </div>
                     ${event.price ? `
                     <div class="event-info-item">
@@ -84,7 +84,6 @@ class EventManager {
                         <span>${event.category}</span>
                     </div>
                 </div>
-                <h3 class="event-description-title">Beschreibung</h3>
                 <div class="event-description">${event.description}</div>
                 ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
                 <div class="event-actions">
