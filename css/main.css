@@ -233,10 +233,10 @@ h1 {
     white-space: pre-line;
 }
 
-.description-title {
+.event-description-title {
     color: #A855F7;
     font-size: 1.1em;
-    margin: 0 0 8px 0;
+    margin: 0 0 2px 0;
     font-weight: 600;
 }
 
