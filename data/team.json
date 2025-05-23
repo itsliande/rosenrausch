@@ -23,7 +23,7 @@
         {
           "name": "Cenny",
           "role": "Discord Management, Minecraft Managment Leitung",
-          "image": "images/team/person2.jpg",
+          "image": "images/team/Cenny.png",
           "bio": "Kümmert sich um den Discord und Minecraft Server.",
           "social": [
             {
@@ -40,7 +40,7 @@
         {
           "name": "Lian",
           "role": "Website Management",
-          "image": "images/team/person2.jpg",
+          "image": "images/team/platzhalter.png",
           "bio": "Kümmert sich um das erstellen und die Wartung der Website. und um den content der website.",
           "social": [
             {
@@ -57,7 +57,7 @@
         {
           "name": "Ryu",
           "role": "Minecraft Management, Manager von Cenny",
-          "image": "images/team/person2.jpg",
+          "image": "images/team/platzhalter.png",
           "bio": "Ist Cennys Manager und kümmert sich somit auch um den Minecraft Server.",
           "social": [
             {
@@ -74,7 +74,7 @@
         {
           "name": "NONE",
           "role": "N/A",
-          "image": "images/team/person2.jpg",
+          "image": "images/team/platzhalter.png",
           "bio": "N/A",
           "social": [
             {
