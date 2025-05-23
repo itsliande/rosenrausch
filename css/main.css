@@ -233,7 +233,12 @@ h1 {
     white-space: pre-line;
 }
 
-/* Entferne die event-description-title Klasse, da sie nicht mehr benötigt wird */
+.description-title {
+    color: #A855F7;
+    font-size: 1.1em;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+}
 
 .event-actions {
     display: flex;
