@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rosenrausch Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .team-container {
             max-width: 1200px;
@@ -12,7 +13,7 @@
         }
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             padding: 20px;
         }
@@ -34,8 +35,27 @@
             color: #333;
             margin-bottom: 5px;
         }
-        .team-member p {
+        .team-member .role {
+            color: #e91e63;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .team-member .bio {
             color: #666;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        .social-links {
+            margin-top: 15px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        .social-links a:hover {
+            color: #e91e63;
         }
     </style>
 </head>
@@ -44,31 +64,45 @@
         <h1>Unser Team</h1>
         <div class="team-grid">
             <div class="team-member">
-                <img src="path/to/member1.jpg" alt="Teammitglied 1">
-                <h3>Vorname Nachname</h3>
-                <p>Position</p>
-                <p>Kontakt: email@example.com</p>
-            </div>
-            
-            <div class="team-member">
-                <img src="path/to/member2.jpg" alt="Teammitglied 2">
-                <h3>Vorname Nachname</h3>
-                <p>Position</p>
-                <p>Kontakt: email@example.com</p>
-            </div>
-
-            <div class="team-member">
-                <img src="path/to/member3.jpg" alt="Teammitglied 3">
-                <h3>Vorname Nachname</h3>
-                <p>Position</p>
-                <p>Kontakt: email@example.com</p>
+                <img src="images/team/person1.jpg" alt="Max Mustermann">
+                <h3>Max Mustermann</h3>
+                <div class="role">Geschäftsführer</div>
+                <div class="bio">
+                    Experte für Blumenarrangements mit über 10 Jahren Erfahrung.
+                    Spezialisiert auf Hochzeitsdekorationen und Events.
+                </div>
+                <div class="social-links">
+                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/in/username" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
             </div>
 
             <div class="team-member">
-                <img src="path/to/member4.jpg" alt="Teammitglied 4">
-                <h3>Vorname Nachname</h3>
-                <p>Position</p>
-                <p>Kontakt: email@example.com</p>
+                <img src="images/team/person2.jpg" alt="Anna Schmidt">
+                <h3>Anna Schmidt</h3>
+                <div class="role">Kreativdirektorin</div>
+                <div class="bio">
+                    Floristin mit Leidenschaft für nachhaltige Blumenkunst.
+                    Verantwortlich für kreative Konzepte und Designentwicklung.
+                </div>
+                <div class="social-links">
+                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://pinterest.com/username" target="_blank"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <img src="images/team/person3.jpg" alt="Laura Weber">
+                <h3>Laura Weber</h3>
+                <div class="role">Event Managerin</div>
+                <div class="bio">
+                    Organisationstalent mit Fokus auf Großveranstaltungen und Hochzeiten.
+                    Expertise in Eventplanung und Kundenberatung.
+                </div>
+                <div class="social-links">
+                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook"></i></a>
+                </div>
             </div>
         </div>
     </div>
