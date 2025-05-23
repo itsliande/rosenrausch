@@ -227,7 +227,7 @@ h1 {
     color: #E9D5FF;
     line-height: 1.6;
     margin: 0;
-    padding: 5px;
+    padding: 15px;
     background: rgba(91, 33, 182, 0.1);
     border-radius: 10px;
     white-space: pre-line;
@@ -236,8 +236,9 @@ h1 {
 .event-description-title {
     color: #A855F7;
     font-size: 1.1em;
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;  /* Abstand von 4px auf 2px reduziert */
     font-weight: 600;
+    padding: 0;
 }
 
 .event-actions {
