@@ -200,7 +200,7 @@ h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    margin-bottom: 8px;  /* von 15px auf 8px reduziert */
+    margin-bottom: 15px;  /* von 15px auf 8px reduziert */
 }
 
 .event-info-item {
@@ -230,7 +230,6 @@ h1 {
     padding: 15px;
     background: rgba(91, 33, 182, 0.1);
     border-radius: 10px;
-    white-space: pre-line;
 }
 
 .event-description-title {
