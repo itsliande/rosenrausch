@@ -85,7 +85,6 @@ class EventManager {
                     </div>
                 </div>
                 <div class="event-description">
-                    <h3 class="event-description-title">Beschreibung</h3>
                     ${event.description}
                 </div>
                 ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
