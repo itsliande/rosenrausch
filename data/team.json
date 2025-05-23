@@ -18,11 +18,11 @@
       ]
     },
     {
-      "name": "Moderation Discord",
+      "name": "Discord Management",
       "members": [
         {
           "name": "Cenny",
-          "role": "Discord Moderation, Minecraft Managment Leitung",
+          "role": "Discord Management, Minecraft Managment Leitung",
           "image": "images/team/person2.jpg",
           "bio": "Kümmtert sich um den Discord und Minecraft Server.",
           "social": [
@@ -31,57 +31,11 @@
               "url": "https://discord.com/users/955601882385096724"
             }
           ]
-        },
-        {
-          "name": "Lily",
-          "role": "Discord Moderation",
-          "image": "images/team/person2.jpg",
-          "bio": "Kümmtert sich um den Discord Server.",
-          "social": [
-            {
-              "platform": "Discord",
-              "url": "https://discord.com/users/963523751641776189"
-            }
-          ]
         }
       ]
     },
     {
-      "name": "Discord Managment",
-      "members": [
-        {
-          "name": "NONE",
-          "role": "N/A",
-          "image": "images/team/person2.jpg",
-          "bio": "N/A",
-          "social": [
-            {
-              "platform": "N/A",
-              "url": "rosenrausch.xyz"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Tiktok Moderation",
-      "members": [
-        {
-          "name": "NONE",
-          "role": "N/A",
-          "image": "images/team/person2.jpg",
-          "bio": "N/A",
-          "social": [
-            {
-              "platform": "N/A",
-              "url": "rosenrausch.xyz"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "It Managment",
+      "name": "IT Managment",
       "members": [
         {
           "name": "Lian",
@@ -109,6 +63,40 @@
             {
               "platform": "Discord",
               "url": "https://discord.com/users/1316061189846995008"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Discord Moderation",
+      "members": [
+        {
+          "name": "Lily",
+          "role": "Discord Moderation",
+          "image": "images/team/person2.jpg",
+          "bio": "Kümmtert sich um den Discord Server.",
+          "social": [
+            {
+              "platform": "Discord",
+              "url": "https://discord.com/users/963523751641776189"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tiktok Moderation",
+      "members": [
+        {
+          "name": "NONE",
+          "role": "N/A",
+          "image": "images/team/person2.jpg",
+          "bio": "N/A",
+          "social": [
+            {
+              "platform": "N/A",
+              "url": "rosenrausch.xyz"
             }
           ]
         }
