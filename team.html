@@ -4,106 +4,165 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rosenrausch Team</title>
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .team-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .team-section {
+            margin-bottom: 40px;
+            background: rgba(91, 33, 182, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
             padding: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.1);
         }
+
+        .team-section h2 {
+            color: #A855F7;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
         .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
+
         .team-member {
-            text-align: center;
-            background: #fff;
+            background: rgba(91, 33, 182, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            transition: all 0.3s ease;
         }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
+        }
+
         .team-member img {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
+            border: 3px solid rgba(168, 85, 247, 0.3);
             margin-bottom: 15px;
         }
+
         .team-member h3 {
-            color: #333;
+            color: #E9D5FF;
             margin-bottom: 5px;
+            font-size: 1.2em;
         }
+
         .team-member .role {
-            color: #e91e63;
-            font-weight: bold;
+            color: #A855F7;
+            font-size: 0.9em;
             margin-bottom: 10px;
         }
+
         .team-member .bio {
-            color: #666;
-            margin: 15px 0;
+            color: #9F7AEA;
             font-size: 0.9em;
+            line-height: 1.5;
+            margin: 10px 0;
         }
+
         .social-links {
             margin-top: 15px;
         }
+
         .social-links a {
-            margin: 0 10px;
-            color: #333;
-            text-decoration: none;
+            color: #E9D5FF;
+            margin: 0 8px;
             font-size: 1.2em;
+            transition: all 0.3s ease;
         }
+
         .social-links a:hover {
-            color: #e91e63;
+            color: #A855F7;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-    <div class="team-container">
-        <h1>Unser Team</h1>
-        <div class="team-grid">
-            <div class="team-member">
-                <img src="images/team/person1.jpg" alt="Max Mustermann">
-                <h3>Max Mustermann</h3>
-                <div class="role">Geschäftsführer</div>
-                <div class="bio">
-                    Experte für Blumenarrangements mit über 10 Jahren Erfahrung.
-                    Spezialisiert auf Hochzeitsdekorationen und Events.
-                </div>
-                <div class="social-links">
-                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://linkedin.com/in/username" target="_blank"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
+    <nav class="navbar">
+        <a href="index.html" class="nav-item">Soziale Medien</a>
+        <a href="minecraft.html" class="nav-item">Minecraft</a>
+        <a href="termine.html" class="nav-item">Termine</a>
+    </nav>
 
-            <div class="team-member">
-                <img src="images/team/person2.jpg" alt="Anna Schmidt">
-                <h3>Anna Schmidt</h3>
-                <div class="role">Kreativdirektorin</div>
-                <div class="bio">
-                    Floristin mit Leidenschaft für nachhaltige Blumenkunst.
-                    Verantwortlich für kreative Konzepte und Designentwicklung.
-                </div>
-                <div class="social-links">
-                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://pinterest.com/username" target="_blank"><i class="fab fa-pinterest"></i></a>
-                </div>
-            </div>
+    <div class="container">
+        <div class="profile">
+            <img src="profile.jpg" alt="Rosenrausch Team" class="profile-img">
+            <h1>UNSER TEAM</h1>
+        </div>
 
-            <div class="team-member">
-                <img src="images/team/person3.jpg" alt="Laura Weber">
-                <h3>Laura Weber</h3>
-                <div class="role">Event Managerin</div>
-                <div class="bio">
-                    Organisationstalent mit Fokus auf Großveranstaltungen und Hochzeiten.
-                    Expertise in Eventplanung und Kundenberatung.
-                </div>
-                <div class="social-links">
-                    <a href="https://instagram.com/username" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://facebook.com/username" target="_blank"><i class="fab fa-facebook"></i></a>
+        <div class="team-section">
+            <h2>IT Management</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/team/max.jpg" alt="Max Weber">
+                    <h3>Max Weber</h3>
+                    <div class="role">IT Director</div>
+                    <div class="bio">
+                        Verantwortlich für die gesamte IT-Infrastruktur und technische Entwicklung.
+                    </div>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="team-section">
+            <h2>Content Creation</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/team/lisa.jpg" alt="Lisa Schmidt">
+                    <h3>Lisa Schmidt</h3>
+                    <div class="role">Content Manager</div>
+                    <div class="bio">
+                        Kreative Leitung für Social Media Content und Marketing-Strategien.
+                    </div>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="team-section">
+            <h2>Event Management</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="images/team/sarah.jpg" alt="Sarah Meyer">
+                    <h3>Sarah Meyer</h3>
+                    <div class="role">Event Coordinator</div>
+                    <div class="bio">
+                        Organisation und Durchführung von Events und Community-Treffen.
+                    </div>
+                    <div class="social-links">
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="privacy.html">Datenschutz</a> | 
+            <a href="impressum.html">Impressum</a>
         </div>
     </div>
 </body>
