@@ -117,6 +117,23 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Other",
+      "members": [
+        {
+          "name": "Fynn",
+          "role": "Professional Analyst",
+          "image": "images/team/platzhalter.png",
+          "bio": "Analysiert Menschen bis auf das kleinste Detail und rosted sie moglicherwesie hin und wieder auch.",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/405057331525713920"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
