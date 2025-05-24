@@ -105,14 +105,14 @@
       "name": "Tiktok Moderation",
       "members": [
         {
-          "name": "NONE",
-          "role": "N/A",
+          "name": "Ace",
+          "role": "Tiktok Moderation",
           "image": "images/team/platzhalter.png",
-          "bio": "N/A",
+          "bio": "Moderiert den Tiktik live chat",
           "social": [
             {
               "platform": "fa-solid fa-globe",
-              "url": "https://rosenrausch.xyz"
+              "url": "https://discord.com/users/805898812589342771"
             }
           ]
         }
