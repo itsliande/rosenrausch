@@ -77,6 +77,23 @@
       ]
     },
     {
+      "name": "Discord Moderation",
+      "members": [
+        {
+          "name": "Lily",
+          "role": "Discord Moderation",
+          "image": "images/team/platzhalter.png",
+          "bio": "Kümmert sich um den Discord Server.",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/963523751641776189"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "Tiktok Moderation",
       "members": [
         {
