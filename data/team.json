@@ -46,6 +46,14 @@
             {
               "platform": "fa-brands fa-discord",
               "url": "https://discord.com/users/1234118238414180432"
+            },
+            {
+              "platform": "fa-brands fa-instagram",
+              "url": "https://www.instagram.com/itslian.de/profilecard/?igsh=c2lub2Q0dHQxeHZh"
+            },
+            {
+              "platform": "fa-solid fa-heart",
+              "url": "https://en.pronouns.page/@itslian"
             }
           ]
         }
