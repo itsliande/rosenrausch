@@ -105,6 +105,22 @@
       "name": "Tiktok Moderation",
       "members": [
         {
+          "name": "Vivi",
+          "role": "Tiktok Moderation",
+          "image": "images/team/vivi.png",
+          "bio": "Moderiert den Tiktok live chat",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/694600433381146695"
+            },
+            {
+              "platform": "fa-brands fa-tiktok",
+              "url": "https://www.tiktok.com/@viviennn.10"
+            }
+          ]
+        },
+        {
           "name": "Ace",
           "role": "Tiktok Moderation",
           "image": "images/team/platzhalter.png",
