@@ -45,6 +45,41 @@ body {
     position: sticky;
     top: 0;
     z-index: 1000;
+    flex-wrap: wrap; /* Elemente umbrechen auf kleineren Bildschirmen */
+    transition: all 0.3s ease;
+}
+
+/* Mobile Navigation Toggle Button */
+.mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(168, 85, 247, 0.3);
+    color: #E9D5FF;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    z-index: 1001;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle:hover {
+    background: rgba(168, 85, 247, 0.5);
+}
+
+/* Versteckte Nav-Items */
+.nav-hidden {
+    display: none;
+}
+
+/* Geöffnete Navbar */
+.nav-open {
+    flex-direction: column;
+    align-items: center;
 }
 
 .nav-item {
@@ -450,6 +485,7 @@ h1 {
     color: #A855F7;
 }
 
+/* Responsive Styles für verschiedene Bildschirmgrößen */
 @media (max-width: 768px) {
     .legal-content {
         padding: 20px;
@@ -466,5 +502,75 @@ h1 {
 
     .legal-content h3 {
         font-size: 16px;
+    }
+
+    /* Verbesserte Navigation */
+    .navbar {
+        padding: 15px 10px;
+        gap: 10px;
+    }
+
+    .nav-item {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+}
+
+/* Spezifische Anpassungen für sehr kleine Bildschirme */
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 5px;
+        gap: 5px;
+    }
+
+    .nav-item {
+        padding: 6px 10px;
+        font-size: 0.85em;
+        border-radius: 15px;
+    }
+
+    .container {
+        padding: 30px 15px;
+    }
+
+    .profile-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    h1 {
+        font-size: 22px;
+    }
+
+    .link-button {
+        padding: 15px 20px;
+    }
+
+    /* Zeige den mobile-nav-toggle auf kleinen Bildschirmen */
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    /* Anpassungen für die geöffnete Navbar */
+    .navbar.nav-open {
+        background: rgba(91, 33, 182, 0.95);
+        padding-top: 60px;
+    }
+
+    /* Fehlerseiten anpassen */
+    .error-code {
+        font-size: 90px;
+    }
+
+    .error-message {
+        font-size: 22px;
+    }
+
+    .error-container {
+        padding: 2rem;
+    }
+
+    .button-group {
+        flex-direction: column;
     }
 }
