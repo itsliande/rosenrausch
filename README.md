@@ -20,7 +20,10 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 - **Minecraft-Bereich**: Informationen zum Community-Server
 - **Terminkalender**: Aktuelle Veranstaltungen und Events
 - **Team-Übersicht**: Vorstellung der Teammitglieder
-- **Fehlerbehandlung**: Benutzerdefinierte 404-Seite mit intelligenter Fehlerbehandlung und benutzerfreundlicher Navigation
+- **Erweiterte Fehlerbehandlung**: 
+  - Benutzerdefinierte Fehlerseiten (404, 403, 401, 500, 418)
+  - Intelligente Fehlerbehandlung mit kontextbezogenen Hinweisen
+  - Easter Eggs mit wechselnden lustigen Sprüchen und Konami-Code
 
 ## Deployment
 

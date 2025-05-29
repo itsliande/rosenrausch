@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Seite nicht gefunden | Rosenrausch</title>
+    <title>401 - Nicht autorisiert | Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
         body {
@@ -38,9 +38,16 @@
             font-size: 120px;
             color: #A855F7;
             margin: 0;
-            animation: bounce 2s infinite;
+            animation: shake 2s infinite;
             text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
             font-weight: 800;
+            position: relative;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .error-message {
@@ -58,15 +65,6 @@
             opacity: 0.8;
             margin-bottom: 30px;
             line-height: 1.6;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
         }
 
         .button-group {
@@ -118,6 +116,20 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
+
+        /* Schloss-Animation */
+        .lock-icon {
+            font-size: 50px;
+            margin: 20px 0;
+            animation: lock-bounce 1.5s ease infinite;
+            display: inline-block;
+        }
+
+        @keyframes lock-bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body>
@@ -130,11 +142,10 @@
 
     <div class="content-wrapper">
         <div class="error-container">
-            <h1 class="error-code">404</h1>
-            <h2 class="error-message">Ups! Seite nicht gefunden</h2>
-            <p class="funny-text">Diese Seite scheint im digitalen Nirvana verschwunden zu sein.<br>
-            Vielleicht hast du dich vertippt oder die Seite ist umgezogen?<br>
-            Sogar Chuck Norris findet diese Seite nicht...</p>
+            <h1 class="error-code">401</h1>
+            <div class="lock-icon">🔒</div>
+            <h2 class="error-message">Nicht autorisiert</h2>
+            <p class="funny-text">Hey, wir kennen dich nicht! Hast du dein Passwort vergessen oder bist du vielleicht ein Spion?</p>
 
             <div class="button-group">
                 <a href="javascript:history.back()" class="back-button">Zurück zur letzten Seite</a>

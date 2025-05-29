@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Seite nicht gefunden | Rosenrausch</title>
+    <title>418 - I'm a teapot | Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
         body {
@@ -38,9 +38,55 @@
             font-size: 120px;
             color: #A855F7;
             margin: 0;
-            animation: bounce 2s infinite;
+            animation: steam 4s infinite;
             text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
             font-weight: 800;
+            position: relative;
+        }
+
+        @keyframes steam {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            25%, 75% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Teapot handle & spout */
+        .error-code::before,
+        .error-code::after {
+            content: '';
+            position: absolute;
+            background-color: #A855F7;
+            border-radius: 50%;
+        }
+
+        .error-code::before {
+            /* Handle */
+            width: 30px;
+            height: 60px;
+            border-radius: 15px 15px 0 0;
+            border-left: 6px solid #A855F7;
+            border-top: 6px solid #A855F7;
+            border-bottom: 0;
+            border-right: 0;
+            right: -20px;
+            top: 20px;
+            transform: rotate(30deg);
+        }
+
+        .error-code::after {
+            /* Spout */
+            width: 15px;
+            height: 40px;
+            border-radius: 10px;
+            left: -10px;
+            top: 50px;
+            transform: rotate(-30deg);
         }
 
         .error-message {
@@ -58,15 +104,6 @@
             opacity: 0.8;
             margin-bottom: 30px;
             line-height: 1.6;
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
         }
 
         .button-group {
@@ -118,6 +155,45 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
+
+        .teacup {
+            width: 100px;
+            height: 60px;
+            background-color: rgba(168, 85, 247, 0.3);
+            border-radius: 0 0 50% 50%;
+            position: relative;
+            margin: 20px auto;
+            animation: shake 2s infinite;
+        }
+
+        .teacup::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 35px;
+            background-color: transparent;
+            border: 4px solid rgba(168, 85, 247, 0.3);
+            border-radius: 50%;
+            right: -20px;
+            top: 5px;
+        }
+
+        .teacup::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 5px;
+            background-color: rgba(233, 213, 255, 0.5);
+            border-radius: 50%;
+            top: 20px;
+            left: 10px;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
     </style>
 </head>
 <body>
@@ -130,11 +206,10 @@
 
     <div class="content-wrapper">
         <div class="error-container">
-            <h1 class="error-code">404</h1>
-            <h2 class="error-message">Ups! Seite nicht gefunden</h2>
-            <p class="funny-text">Diese Seite scheint im digitalen Nirvana verschwunden zu sein.<br>
-            Vielleicht hast du dich vertippt oder die Seite ist umgezogen?<br>
-            Sogar Chuck Norris findet diese Seite nicht...</p>
+            <h1 class="error-code">418</h1>
+            <div class="teacup"></div>
+            <h2 class="error-message">I'm a teapot</h2>
+            <p class="funny-text">Ich bin eine Teekanne. Ehrlich gesagt kann ich keine Webseiten ausgeben, nur Tee.</p>
 
             <div class="button-group">
                 <a href="javascript:history.back()" class="back-button">Zurück zur letzten Seite</a>
