@@ -20,6 +20,7 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 - **Minecraft-Bereich**: Informationen zum Community-Server
 - **Terminkalender**: Aktuelle Veranstaltungen und Events
 - **Team-Übersicht**: Vorstellung der Teammitglieder
+- **Fehlerbehandlung**: Benutzerdefinierte 404-Seite für nicht gefundene Inhalte
 
 ## Deployment
 

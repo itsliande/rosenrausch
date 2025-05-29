@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oops! - Fehlerseite</title>
+    <link rel="stylesheet" href="css/main.css">
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -77,12 +78,27 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-item">Soziale Medien</a>
+        <a href="minecraft.html" class="nav-item">Minecraft</a>
+        <a href="termine.html" class="nav-item">Termine</a>
+        <a href="team.html" class="nav-item">Unser Team</a>
+    </nav>
     <div class="error-container">
         <h1 class="error-code">404</h1>
         <h2 class="error-message">Ups! Seite nicht gefunden</h2>
         <p class="funny-text">Hast du dich verlaufen? Keine Sorge, passiert den Besten!<br>
             Sogar Chuck Norris findet diese Seite nicht...</p>
         <button class="back-button" onclick="window.history.back()">Zurück zur sicheren Seite</button>
+        <a href="index.html" class="back-button" style="margin-left: 10px;">Zur Startseite</a>
+    </div>
+
+    <div class="copyright" style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: #E9D5FF;">
+        © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="privacy.html" style="color: #9F7AEA;">Datenschutz</a> | 
+            <a href="impressum.html" style="color: #9F7AEA;">Impressum</a>
+        </div>
     </div>
 </body>
 </html>
