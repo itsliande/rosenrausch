@@ -1,6 +1,6 @@
 # Rosenrausch Website
 
-Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media-Links und Informationen. Sie ist für GitHub Pages optimiert und bietet eine benutzerfreundliche Oberfläche für Fans und Community-Mitglieder.
+Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media-Links und Informationen. Sie ist für GitHub Pages optimiert und bietet eine benutzerfreundliche Oberfläche für Fans und Community-Mitglieder. Die Website verwendet keine Cookies oder Tracking-Mechanismen.
 
 ## Projektstruktur
 
