@@ -7,13 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fehlerseiten-Sprüche initialisieren
     initErrorPageQuotes();
 
-    // Klickzähler für Profilbild
-    let profileClickCount = 0;
-    let clickTimeout;
-
-    // Profilbild-Container finden
-    const profile = document.querySelector('.profile');
-
     // Funktion zur Initialisierung der Fehlerseiten-Sprüche
     function initErrorPageQuotes() {
         // Prüfen ob wir uns auf einer Fehlerseite befinden
@@ -121,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     konamiIndex++;
                     if (konamiIndex === konamiCode.length) {
                         // Konami-Code aktiviert - spezielle Nachricht anzeigen
-                        funnyTextElement.innerHTML = 'Du hast den Konami-Code gefunden! Leider können wir dir trotzdem nicht helfen, diese Seite zu finden. Versuch es mit cheatcodes.com';
+                        funnyTextElement.innerHTML = 'Du hast den Konami-Code gefunden! Leider können wir dir trotzdem nicht helfen, diese Seite zu finden.';
                         funnyTextElement.style.color = '#ff69b4';
                         document.body.style.background = 'linear-gradient(135deg, #ff3366 0%, #ff6b6b 100%) fixed';
                         setTimeout(() => {
@@ -134,64 +127,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
-    }
-
-    if (profile) {
-        // Event-Listener für Klicks hinzufügen
-        profile.addEventListener('click', function(e) {
-            // Nur zählen, wenn der Klick auf das Element selbst oder auf das Bild darin war
-            if (e.target === profile || e.target.classList.contains('profile-img')) {
-                profileClickCount++;
-
-            // Zurücksetzen des Zählers nach 2 Sekunden Inaktivität
-            clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(function() {
-                profileClickCount = 0;
-            }, 2000);
-
-            // Nach 3 Klicks Rosenblätter fallen lassen
-            if (profileClickCount === 3) {
-                createRosePetalShower();
-                profileClickCount = 0;
-            }
-            }
-        });
-    }
-
-    // Funktion zum Erstellen des Rosenblatt-Regens
-    function createRosePetalShower() {
-        // 20 Rosenblätter erstellen
-        for (let i = 0; i < 20; i++) {
-            setTimeout(() => {
-                createRosePetal();
-            }, i * 120); // Versetztes Erscheinen
-        }
-    }
-
-    // Funktion zum Erstellen eines einzelnen Rosenblatts
-    function createRosePetal() {
-        const petal = document.createElement('div');
-        petal.classList.add('rose-petal');
-
-        // Zufällige Position, Größe und Rotation
-        const size = Math.random() * 15 + 10; // 10-25px
-        const startPositionX = Math.random() * window.innerWidth;
-        const hue = Math.random() * 30 - 15; // Farbvariation von Rot
-
-        petal.style.left = `${startPositionX}px`;
-        petal.style.width = `${size}px`;
-        petal.style.height = `${size}px`;
-        petal.style.filter = `hue-rotate(${hue}deg)`;
-        petal.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5-10s
-
-        document.body.appendChild(petal);
-
-        // Entferne das Blatt nach der Animation
-        setTimeout(() => {
-            if (petal && petal.parentNode) {
-                petal.parentNode.removeChild(petal);
-            }
-        }, 10000);
     }
 
     // 404-Seite: Lustige Sprüche
@@ -208,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     konamiIndex++;
                     if (konamiIndex === konamiCode.length) {
                         // Konami-Code aktiviert - spezielle Nachricht anzeigen
-                        funnyTextElement.innerHTML = 'Du hast den Konami-Code gefunden! Leider können wir dir trotzdem nicht helfen, diese Seite zu finden. Versuch es mit cheatcodes.com';
+                        funnyTextElement.innerHTML = 'Du hast den Konami-Code gefunden! Leider können wir dir trotzdem nicht helfen, diese Seite zu finden.';
                         funnyTextElement.style.color = '#ff69b4';
                         konamiIndex = 0;
                     }
