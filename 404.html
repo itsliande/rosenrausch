@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops! - Fehlerseite</title>
+    <title>404 - Seite nicht gefunden | Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
             margin: 0;
             background: linear-gradient(135deg, #2D1B69 0%, #1A1033 100%) fixed;
-            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
 
         .error-container {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             background: rgba(91, 33, 182, 0.1);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             border: 1px solid rgba(168, 85, 247, 0.1);
+            max-width: 600px;
+            width: 100%;
         }
 
         .error-code {
@@ -33,10 +40,11 @@
             margin: 0;
             animation: bounce 2s infinite;
             text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            font-weight: 800;
         }
 
         .error-message {
-            font-size: 24px;
+            font-size: 28px;
             color: #E9D5FF;
             margin: 20px 0;
             font-weight: 700;
@@ -48,6 +56,8 @@
             color: #9F7AEA;
             font-style: italic;
             opacity: 0.8;
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
         @keyframes bounce {
@@ -59,8 +69,15 @@
             }
         }
 
-        .back-button {
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
             margin-top: 30px;
+        }
+
+        .back-button {
             padding: 12px 25px;
             background: rgba(168, 85, 247, 0.3);
             color: #E9D5FF;
@@ -69,11 +86,37 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .back-button:hover {
             background: rgba(168, 85, 247, 0.5);
             transform: translateY(-2px);
+        }
+
+        .copyright {
+            color: #E9D5FF;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        .legal-links a {
+            color: #9F7AEA;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .legal-links a:hover {
+            color: #E9D5FF;
+            text-decoration: underline;
+        }
+
+        .navbar {
+            background-color: rgba(26, 16, 51, 0.7);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
         }
     </style>
 </head>
@@ -84,21 +127,30 @@
         <a href="termine.html" class="nav-item">Termine</a>
         <a href="team.html" class="nav-item">Unser Team</a>
     </nav>
-    <div class="error-container">
-        <h1 class="error-code">404</h1>
-        <h2 class="error-message">Ups! Seite nicht gefunden</h2>
-        <p class="funny-text">Hast du dich verlaufen? Keine Sorge, passiert den Besten!<br>
-            Sogar Chuck Norris findet diese Seite nicht...</p>
-        <button class="back-button" onclick="window.history.back()">Zurück zur sicheren Seite</button>
-        <a href="index.html" class="back-button" style="margin-left: 10px;">Zur Startseite</a>
-    </div>
 
-    <div class="copyright" style="position: absolute; bottom: 20px; width: 100%; text-align: center; color: #E9D5FF;">
-        © 2025 Rosenrausch. Alle Rechte vorbehalten.
-        <div class="legal-links">
-            <a href="privacy.html" style="color: #9F7AEA;">Datenschutz</a> | 
-            <a href="impressum.html" style="color: #9F7AEA;">Impressum</a>
+    <div class="content-wrapper">
+        <div class="error-container">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-message">Ups! Seite nicht gefunden</h2>
+            <p class="funny-text">Diese Seite scheint im digitalen Nirvana verschwunden zu sein.<br>
+            Vielleicht hast du dich vertippt oder die Seite ist umgezogen?<br>
+            Sogar Chuck Norris findet diese Seite nicht...</p>
+
+            <div class="button-group">
+                <a href="javascript:history.back()" class="back-button">Zurück zur letzten Seite</a>
+                <a href="index.html" class="back-button">Zur Startseite</a>
+            </div>
         </div>
     </div>
+
+    <div class="copyright">
+        © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="privacy.html">Datenschutz</a> | 
+            <a href="impressum.html">Impressum</a>
+        </div>
+    </div>
+
+    <script src="js/404-handler.js"></script>
 </body>
 </html>
