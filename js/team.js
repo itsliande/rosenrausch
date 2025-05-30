@@ -17,6 +17,10 @@ async function renderTeam() {
             categoryHeader.textContent = category.name;
             categorySection.appendChild(categoryHeader);
             
+            // Create members container
+            const membersContainer = document.createElement('div');
+            membersContainer.className = 'category-members';
+            
             // Add members
             category.members.forEach(member => {
                 const memberElement = document.createElement('div');
@@ -36,9 +40,10 @@ async function renderTeam() {
                     </div>
                 `;
                 
-                categorySection.appendChild(memberElement);
+                membersContainer.appendChild(memberElement);
             });
             
+            categorySection.appendChild(membersContainer);
             teamContainer.appendChild(categorySection);
         });
     } catch (error) {
