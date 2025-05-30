@@ -31,25 +31,13 @@
     border-radius: 2px;
 }
 
-.module-view-grid {
-    display: block; /* Ändern von grid zu block */
-}
-
 .team-members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 300px)); /* Feste maximale Breite */
     gap: 25px;
     padding: 20px 0;
-    justify-items: center; /* Zentriert die Karten horizontal */
-    margin: 0 auto; /* Zentriert das Grid selbst */
-    max-width: 1200px; /* Maximale Breite des Grids */
-}
-
-.category-members {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-    padding: 20px;
+    justify-content: center; /* Zentriert das gesamte Grid */
+    margin: 0 auto;
 }
 
 .team-member {
@@ -60,5 +48,11 @@
     text-align: center;
     border: 1px solid rgba(168, 85, 247, 0.1);
     transition: all 0.4s ease;
-    width: 100%; /* Volle Breite innerhalb der Grid-Zelle */
-    max-width: 320px; /* Maximale Breite der Karte */
+    width: 100%;
+    box-sizing: border-box; /* Verhindert, dass Padding die Breite vergrößert */
+}
+
+.module-view-grid,
+.category-members {
+    display: none;
+}
