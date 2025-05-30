@@ -3,7 +3,7 @@ async function renderTeam() {
         const response = await fetch('/data/team.json');
         const data = await response.json();
         
-        const teamContainer = document.querySelector('.module-view-grid');
+        const teamContainer = document.querySelector('.team-grid');
         teamContainer.innerHTML = ''; // Clear existing content
         
         data.categories.forEach(category => {
@@ -16,6 +16,10 @@ async function renderTeam() {
             categoryHeader.className = 'category-title';
             categoryHeader.textContent = category.name;
             categorySection.appendChild(categoryHeader);
+            
+            // Create members grid for this category
+            const membersGrid = document.createElement('div');
+            membersGrid.className = 'category-members';
             
             // Add members
             category.members.forEach(member => {
@@ -36,9 +40,10 @@ async function renderTeam() {
                     </div>
                 `;
                 
-                categorySection.appendChild(memberElement);
+                membersGrid.appendChild(memberElement);
             });
             
+            categorySection.appendChild(membersGrid);
             teamContainer.appendChild(categorySection);
         });
     } catch (error) {
