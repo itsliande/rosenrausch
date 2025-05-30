@@ -12,7 +12,8 @@
 
 .profile h1 {
     margin-top: 20px;
-    color: #A855F7;
+    color: #9333EA;
+    text-shadow: 0 0 20px rgba(147, 51, 234, 0.2);
 }
 
 /* Kategorie Styles */
@@ -21,12 +22,13 @@
 }
 
 .category-title {
-    color: #A855F7;
+    color: #9333EA;
     font-size: 2em;
     text-align: center;
     margin-bottom: 30px;
     position: relative;
     padding-bottom: 15px;
+    text-shadow: 0 0 15px rgba(147, 51, 234, 0.15);
 }
 
 .category-title::after {
@@ -37,41 +39,42 @@
     transform: translateX(-50%);
     width: 100px;
     height: 3px;
-    background: rgba(168, 85, 247, 0.3);
+    background: linear-gradient(90deg, rgba(147, 51, 234, 0.1), rgba(147, 51, 234, 0.4), rgba(147, 51, 234, 0.1));
     border-radius: 2px;
 }
 
 /* Grid Layout */
 .members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
     justify-items: center;
     margin: 0 auto;
 }
 
 /* Einzel-Karten breiter machen */
 .members-grid:has(> :only-child) .team-member {
-    width: 400px;
+    width: 500px;
 }
 
 /* Mitglieder-Karten */
 .team-member {
-    background: rgba(91, 33, 182, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    border: 1px solid rgba(147, 51, 234, 0.2);
     border-radius: 20px;
-    padding: 30px;
-    width: 280px;
+    padding: 35px;
+    width: 350px;
     text-align: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.05);
 }
 
 .team-member:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
-    border-color: rgba(168, 85, 247, 0.4);
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.15);
+    border-color: rgba(147, 51, 234, 0.4);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .team-member img {
@@ -79,36 +82,47 @@
     height: 160px;
     border-radius: 50%;
     margin-bottom: 20px;
-    border: 4px solid rgba(168, 85, 247, 0.3);
+    border: 4px solid rgba(147, 51, 234, 0.3);
     transition: all 0.3s ease;
     object-fit: cover;
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.1);
 }
 
 .team-member:hover img {
-    border-color: rgba(168, 85, 247, 0.6);
+    border-color: rgba(147, 51, 234, 0.6);
     transform: scale(1.05);
 }
 
 .team-member h3 {
-    color: #A855F7;
+    color: #9333EA;
     margin-bottom: 12px;
     font-size: 1.4em;
     font-weight: 600;
+    text-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
 }
 
 .team-member .role {
-    color: #666;
+    color: #7C3AED;
     font-size: 1em;
     margin-bottom: 15px;
     line-height: 1.4;
     font-weight: 500;
+    opacity: 0.9;
+}
+
+.team-member:hover .role {
+    color: #6D28D9;
 }
 
 .team-member .bio {
-    color: #444;
+    color: #4B5563;
     margin-bottom: 25px;
     font-size: 0.95em;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+.team-member:hover .bio {
+    color: #374151;
 }
 
 .social-links {
@@ -119,24 +133,31 @@
 }
 
 .social-links a {
-    color: #A855F7;
+    color: #9333EA;
     font-size: 1.3em;
     transition: all 0.3s ease;
     padding: 8px;
     border-radius: 50%;
-    background: rgba(168, 85, 247, 0.1);
+    background: rgba(147, 51, 234, 0.1);
+    box-shadow: 0 2px 8px rgba(147, 51, 234, 0.05);
 }
 
 .social-links a:hover {
-    color: #7B2CBF;
-    background: rgba(168, 85, 247, 0.2);
+    color: #7C3AED;
+    background: rgba(147, 51, 234, 0.15);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.1);
 }
 
 /* Responsive Anpassungen */
 @media (max-width: 480px) {
     .members-grid:has(> :only-child) .team-member {
         width: 100%;
-        max-width: 340px;
+        max-width: 400px;
+    }
+    
+    .team-member {
+        width: 100%;
+        max-width: 350px;
     }
 }
