@@ -485,15 +485,6 @@ h1 {
     color: #A855F7;
 }
 
-/* Module View Styles */
-.module-view-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    width: 100%;
-    padding: 1rem;
-}
-
 /* Responsive Styles für verschiedene Bildschirmgrößen */
 @media (max-width: 768px) {
     .legal-content {
