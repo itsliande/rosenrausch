@@ -105,30 +105,6 @@
       "name": "Tiktok Moderation",
       "members": [
         {
-          "name": "Mia",
-          "role": "Tiktok Moderation",
-          "image": "images/team/platzhalter.png",
-          "bio": "Moderiert den Tiktok live chat",
-          "social": [
-            {
-              "platform": "fa-brands fa-tiktok",
-              "url": "https://www.tiktok.com/@rauschis_maskajagang"
-            }
-          ]
-        },
-        {
-          "name": "Emmy",
-          "role": "Tiktok Moderation",
-          "image": "images/team/platzhalter.png",
-          "bio": "Moderiert den Tiktok live chat",
-          "social": [
-            {
-              "platform": "fa-brands fa-tiktok",
-              "url": "https://www.tiktok.com/@emm_xly06"
-            }
-          ]
-        },
-        {
           "name": "Vivi",
           "role": "Tiktok Moderation",
           "image": "images/team/vivi.png",
@@ -153,10 +129,6 @@
             {
               "platform": "fa-brands fa-discord",
               "url": "https://discord.com/users/805898812589342771"
-            },
-            {
-              "platform": "fa-brands fa-tiktok",
-              "url": "https://www.tiktok.com/@ace161"
             }
           ]
         }
