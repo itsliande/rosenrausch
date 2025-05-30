@@ -50,59 +50,93 @@
     margin: 0 auto;
 }
 
+/* Einzel-Karten breiter machen */
+.members-grid:has(> :only-child) .team-member {
+    width: 400px;
+}
+
 /* Mitglieder-Karten */
 .team-member {
     background: rgba(91, 33, 182, 0.1);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(168, 85, 247, 0.1);
+    border: 1px solid rgba(168, 85, 247, 0.2);
     border-radius: 20px;
-    padding: 25px;
+    padding: 30px;
     width: 280px;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .team-member:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.4);
 }
 
 .team-member img {
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    margin-bottom: 15px;
-    border: 3px solid rgba(168, 85, 247, 0.3);
+    margin-bottom: 20px;
+    border: 4px solid rgba(168, 85, 247, 0.3);
+    transition: all 0.3s ease;
+    object-fit: cover;
+}
+
+.team-member:hover img {
+    border-color: rgba(168, 85, 247, 0.6);
+    transform: scale(1.05);
 }
 
 .team-member h3 {
     color: #A855F7;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 1.4em;
+    font-weight: 600;
 }
 
 .team-member .role {
     color: #666;
-    font-size: 0.9em;
+    font-size: 1em;
     margin-bottom: 15px;
+    line-height: 1.4;
+    font-weight: 500;
 }
 
 .team-member .bio {
     color: #444;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 0.95em;
+    line-height: 1.5;
 }
 
 .social-links {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
+    margin-top: auto;
 }
 
 .social-links a {
     color: #A855F7;
-    font-size: 1.2em;
-    transition: color 0.3s ease;
+    font-size: 1.3em;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+    background: rgba(168, 85, 247, 0.1);
 }
 
 .social-links a:hover {
     color: #7B2CBF;
+    background: rgba(168, 85, 247, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 480px) {
+    .members-grid:has(> :only-child) .team-member {
+        width: 100%;
+        max-width: 340px;
+    }
 }
