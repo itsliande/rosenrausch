@@ -4,8 +4,20 @@
     padding: 40px 20px;
 }
 
+.team-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .team-category {
+    width: 100%;
     margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .category-title {
@@ -35,6 +47,9 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center;
 }
 
 @media (max-width: 1200px) {
@@ -46,6 +61,7 @@
 @media (max-width: 768px) {
     .category-members {
         grid-template-columns: 1fr;
+        max-width: 500px;
     }
 }
 
