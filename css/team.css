@@ -1,25 +1,35 @@
+/* Container Styles */
 .team-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 20px;
 }
 
-.team-category {
+.profile {
+    text-align: center;
     margin-bottom: 40px;
-    width: 100%;
+}
+
+.profile h1 {
+    margin-top: 20px;
+    color: #A855F7;
+}
+
+/* Kategorie Styles */
+.team-category {
+    margin-bottom: 50px;
 }
 
 .category-title {
     color: #A855F7;
     font-size: 2em;
-    margin-bottom: 25px;
     text-align: center;
-    text-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+    margin-bottom: 30px;
     position: relative;
     padding-bottom: 15px;
 }
 
-.category-title:after {
+.category-title::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -31,28 +41,68 @@
     border-radius: 2px;
 }
 
-.team-members-grid {
+/* Grid Layout */
+.members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 300px)); /* Feste maximale Breite */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 25px;
-    padding: 20px 0;
-    justify-content: center; /* Zentriert das gesamte Grid */
+    justify-items: center;
     margin: 0 auto;
 }
 
+/* Mitglieder-Karten */
 .team-member {
     background: rgba(91, 33, 182, 0.1);
     backdrop-filter: blur(12px);
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
     border: 1px solid rgba(168, 85, 247, 0.1);
-    transition: all 0.4s ease;
-    width: 100%;
-    box-sizing: border-box; /* Verhindert, dass Padding die Breite vergrößert */
+    border-radius: 20px;
+    padding: 25px;
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-.module-view-grid,
-.category-members {
-    display: none;
+.team-member:hover {
+    transform: translateY(-5px);
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 3px solid rgba(168, 85, 247, 0.3);
+}
+
+.team-member h3 {
+    color: #A855F7;
+    margin-bottom: 10px;
+}
+
+.team-member .role {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.team-member .bio {
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a {
+    color: #A855F7;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #7B2CBF;
 }
