@@ -72,9 +72,9 @@
       "members": [
         {
           "name": "Ryu",
-          "role": "Minecraft Management, Manager von Cenny",
+          "role": "Minecraft Management",
           "image": "images/team/ryu.png",
-          "bio": "Cennys Manager und kümmert sich somit auch um den Minecraft Server.",
+          "bio": "kümmert sich um den Minecraft Server.",
           "social": [
             {
               "platform": "fa-brands fa-discord",
