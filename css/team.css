@@ -32,9 +32,10 @@
 
 .category-members {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
     padding: 20px;
+    justify-items: center;
 }
 
 .team-member {
@@ -45,6 +46,8 @@
     text-align: center;
     border: 1px solid rgba(168, 85, 247, 0.1);
     transition: all 0.4s ease;
+    width: 100%;
+    max-width: 350px;
 }
 
 .team-member:hover {
@@ -121,13 +124,4 @@
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
     }
-}
-
-/* Neue Regel: Wenn es nur ein Mitglied in einem Grid gibt oder es das letzte Element ist */
-.team-member:only-child,
-.team-member:last-child:nth-child(odd):nth-last-child(1) {
-    grid-column: 1 / -1;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
 }
