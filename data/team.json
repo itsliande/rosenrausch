@@ -126,7 +126,7 @@
         {
           "name": "Lily",
           "role": "Discord Moderation",
-          "image": "images/team/platzhalter.png",
+          "image": "images/team/Lily.png",
           "bio": "Kümmert sich um den Discord Server.",
           "social": [
             {
@@ -143,7 +143,7 @@
         {
           "name": "Mia",
           "role": "Tiktok Moderation",
-          "image": "images/team/platzhalter.png",
+          "image": "images/team/mia.png",
           "bio": "Moderiert den Tiktok live chat",
           "social": [
             {
@@ -155,7 +155,7 @@
         {
           "name": "Emmy",
           "role": "Tiktok Moderation",
-          "image": "images/team/platzhalter.png",
+          "image": "images/team/Emmy.png",
           "bio": "Moderiert den Tiktok live chat",
           "social": [
             {
@@ -183,7 +183,7 @@
         {
           "name": "Ace",
           "role": "Tiktok Moderation",
-          "image": "images/team/platzhalter.png",
+          "image": "images/team/ace.png",
           "bio": "Moderiert den Tiktok live chat",
           "social": [
             {
@@ -191,7 +191,7 @@
               "url": "https://discord.com/users/805898812589342771"
             },
             {
-              "platform": "fa-brands fa-tikok",
+              "platform": "fa-brands fa-tiktok",
               "url": "https://www.tiktok.com/@ace161"
             }
           ]
