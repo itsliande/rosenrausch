@@ -32,7 +32,7 @@
 
 .category-members {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
     padding: 20px;
 }
@@ -121,4 +121,13 @@
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
     }
+}
+
+/* Neue Regel: Wenn es nur ein Mitglied in einem Grid gibt oder es das letzte Element ist */
+.team-member:only-child,
+.team-member:last-child:nth-child(odd):nth-last-child(1) {
+    grid-column: 1 / -1;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
