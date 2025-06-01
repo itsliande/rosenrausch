@@ -39,6 +39,18 @@
               "url": "mailto:socialmedia.mgmt@rosenrausch.xyz"
             }
           ]
+        },
+        {
+          "name": "Charlie",
+          "role": "Management von Cenny",
+          "image": "images/team/charlie.png",
+          "bio": "Kümmert sich um alles was an Cenny weitergeleitet werden soll.",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/1009521824108908736"
+            }
+          ]
         }
       ]
     },
@@ -71,14 +83,22 @@
       "name": "Minecraft Managment",
       "members": [
         {
-          "name": "Ryu",
-          "role": "Minecraft Management",
-          "image": "images/team/ryu.png",
-          "bio": "kümmert sich um den Minecraft Server.",
+          "name": "Cenny",
+          "role": "Discord Management, Minecraft Managment Leitung",
+          "image": "images/team/Cenny.png",
+          "bio": "Kümmert sich um den Discord und Minecraft Server.",
           "social": [
             {
               "platform": "fa-brands fa-discord",
-              "url": "https://discord.com/users/1316061189846995008"
+              "url": "https://discord.com/users/955601882385096724"
+            },
+            {
+              "platform": "fa-brands fa-instagram",
+              "url": "https://www.instagram.com/rauschisfan/profilecard/?igsh=c2lub2Q0dHQxeHZh"
+            },
+            {
+              "platform": "fa-solid fa-envelope",
+              "url": "mailto:socialmedia.mgmt@rosenrausch.xyz"
             }
           ]
         }
