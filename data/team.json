@@ -108,9 +108,21 @@
       "name": "Discord Moderation",
       "members": [
         {
-          "name": "Lily",
+          "name": "Laura",
           "role": "Discord Moderation",
           "image": "images/team/platzhalter.png",
+          "bio": "Kümmert sich mit um den Discord Server.",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/1261329932966166628"
+            }
+          ]
+        },
+        {
+          "name": "Lily",
+          "role": "Discord Moderation",
+          "image": "images/team/Laura.png",
           "bio": "Kümmert sich um den Discord Server.",
           "social": [
             {
