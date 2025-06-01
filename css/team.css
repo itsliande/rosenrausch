@@ -122,12 +122,3 @@
         gap: 20px;
     }
 }
-
-/* Neue Regel: Wenn es nur ein Mitglied in einem Grid gibt oder es das letzte Element ist */
-.team-member:only-child,
-.team-member:last-child:nth-child(odd):nth-last-child(1) {
-    grid-column: 1 / -1;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
