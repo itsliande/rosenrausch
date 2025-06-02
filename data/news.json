@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "date": "14. August 2023",
+    "title": "Neuer Musik-Release!",
+    "content": "Meine neue Single \"Rosentraum\" ist jetzt auf allen Streaming-Plattformen verfügbar. Hört rein und lasst mich wissen, wie sie euch gefällt!"
+  },
+  {
+    "id": 2,
+    "date": "10. August 2023",
+    "title": "Community-Treffen",
+    "content": "Nächsten Samstag findet unser monatliches Community-Treffen auf Discord statt. Sei dabei und bring deine Ideen mit!"
+  },
+  {
+    "id": 3,
+    "date": "5. August 2023",
+    "title": "Website-Update",
+    "content": "Unsere Website hat ein neues Feature bekommen! Ab sofort könnt ihr alle Neuigkeiten auf einen Blick sehen."
+  },
+  {
+    "id": 4,
+    "date": "1. August 2023",
+    "title": "Sommer-Event",
+    "content": "Unser großes Sommer-Event steht vor der Tür! Bereite dich auf tolle Gewinne und jede Menge Spaß vor."
+  },
+  {
+    "id": 5,
+    "date": "25. Juli 2023",
+    "title": "Neues Merch",
+    "content": "Ab sofort ist unsere neue Merch-Kollektion im Shop erhältlich. Schaut vorbei und sichert euch die limitierten Artikel!"
+  }
+]

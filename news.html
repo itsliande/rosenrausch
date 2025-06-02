@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuigkeiten - Rosenrausch</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .news-item {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #A855F7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: #E9D5FF;
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://rosenrausch.xyz/" class="nav-item">Soziale Medien</a>
+        <a href="https://rosenrausch.xyz/minecraft" class="nav-item">Minecraft</a>
+        <a href="https://rosenrausch.xyz/termine" class="nav-item">Termine</a>
+        <a href="https://rosenrausch.xyz/team" class="nav-item">Unser Team</a>
+    </nav>
+    
+    <div class="container">
+        <a href="https://rosenrausch.xyz/" class="back-button">← Zurück zur Hauptseite</a>
+        
+        <div class="news-container">
+            <div class="news-header">
+                <div class="news-title">Alle Neuigkeiten & Ankündigungen</div>
+            </div>
+            
+            <div id="news-items-container">
+                <!-- Alle News werden hier dynamisch eingefügt -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="https://rosenrausch.xyz/privacy">Datenschutz</a> |
+            <a href="https://rosenrausch.xyz/impressum">Impressum</a>
+        </div>
+    </div>
+    
+    <script src="js/mobile-nav.js"></script>
+    <script src="js/news-loader.js"></script>
+</body>
+</html>
