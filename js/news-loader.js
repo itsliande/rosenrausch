@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Bestimme die aktuelle Seite
     const currentUrl = window.location.href;
-    const isMainPage = !currentUrl.includes('/news');
+    const isMainPage = !currentUrl.includes('news.html');
     
     console.log('Ist Hauptseite:', isMainPage);
     
@@ -40,6 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
             // Container leeren
             newsContainer.innerHTML = '';
             
+            // Funktion zum Konvertieren von \n zu <br> Tags
+            function convertNewlines(text) {
+                return text.replace(/\n/g, '<br>');
+            }
+            
             // News-Items erstellen und anzeigen
             if (newsItems.length === 0) {
                 newsContainer.innerHTML = '<div class="no-news">Keine aktuellen Neuigkeiten verfügbar.</div>';
@@ -56,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 newsItem.innerHTML = `
                     <span class="news-date">${item.date}</span>
                     <div class="news-item-title">${item.title}</div>
-                    <div class="news-content">${item.content}</div>
+                    <div class="news-content">${convertNewlines(item.content)}</div>
                 `;
                 
                 newsContainer.appendChild(newsItem);
