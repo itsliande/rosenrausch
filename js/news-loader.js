@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Bestimme die aktuelle Seite
     const currentUrl = window.location.href;
-    const isMainPage = !currentUrl.includes('news');
+    const isMainPage = !currentUrl.includes('/news');
     
     console.log('Ist Hauptseite:', isMainPage);
     
