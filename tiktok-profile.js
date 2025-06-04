@@ -1,5 +1,5 @@
 // TikTok Username
-const TIKTOK_USERNAME = 'rosen.rausch';
+const TIKTOK_USERNAME = 'rauschipromo.fanacc';
 
 const TikTokProfileLoader = {
     isLive: false,
