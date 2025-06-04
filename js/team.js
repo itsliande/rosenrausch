@@ -7,6 +7,12 @@ async function renderTeam() {
         teamContainer.innerHTML = ''; // Clear existing content
         
         data.categories.forEach(category => {
+            // Überprüfen, ob die Kategorie aktiv ist
+            // Wenn active nicht definiert ist, gilt die Kategorie als aktiv
+            if (category.active === false) {
+                return; // Kategorie überspringen, wenn sie inaktiv ist
+            }
+            
             // Create category section
             const categorySection = document.createElement('div');
             categorySection.className = 'team-category';
