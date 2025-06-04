@@ -17,84 +17,78 @@ const TikTokProfileLoader = {
 
         // Einfacher Ansatz: Verwende nur Proxy-Methode
         try {
-            await this.tryProxyFetch(username, img);
+            // Verwende verschiedene Proxy-Services nacheinander
+            const proxyServices = [
+                'https://corsproxy.io/?',
+                'https://cors-anywhere.herokuapp.com/',
+                'https://api.codetabs.com/v1/proxy?quest='
+            ];
+
+            for (const proxy of proxyServices) {
+                try {
+                    console.log(`Versuche Proxy: ${proxy}`);
+                    await this.tryProxyService(proxy, username, img);
+                    return; // Erfolgreich, beende Schleife
+                } catch (error) {
+                    console.log(`Proxy ${proxy} fehlgeschlagen:`, error.message);
+                    continue;
+                }
+            }
+
+            // Wenn alle Proxies fehlschlagen, verwende lokales Bild
+            console.log('Alle Proxy-Services fehlgeschlagen, verwende Standard-Profilbild');
+            img.src = 'profile.jpg';
         } catch (error) {
             console.log('Alle Methoden fehlgeschlagen, verwende Standard-Profilbild');
             img.src = 'profile.jpg';
         }
     },
 
-    async tryProxyFetch(username, img) {
-        try {
-            // Verwende CORS-Proxy mit besserer Fehlerbehandlung
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.tiktok.com/@${username}`)}`;
-            console.log('Proxy URL:', proxyUrl);
-            
-            const response = await fetch(proxyUrl);
-            console.log('Proxy Response Status:', response.status);
-            
-            if (!response.ok) {
-                throw new Error(`Proxy-Anfrage fehlgeschlagen: ${response.status}`);
+    async tryProxyService(proxyUrl, username, img) {
+        const fullUrl = `${proxyUrl}${encodeURIComponent(`https://www.tiktok.com/@${username}`)}`;
+        
+        const response = await fetch(fullUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
             }
+        });
 
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        let htmlContent;
+        if (proxyUrl.includes('allorigins')) {
             const data = await response.json();
-            console.log('Proxy Response erhalten, Länge:', data.contents ? data.contents.length : 'undefined');
-            
-            const avatarUrl = this.extractAvatarFromHtml(data.contents);
-            
-            if (avatarUrl) {
-                img.src = avatarUrl;
-                console.log('✓ Profilbild erfolgreich geladen:', avatarUrl);
-                return;
-            } else {
-                console.log('Kein Avatar in HTML gefunden, versuche direkte CDN-URLs...');
-                await this.tryDirectCdnUrls(username, img);
-            }
-        } catch (error) {
-            console.error('Proxy-Fehler:', error);
-            await this.tryDirectCdnUrls(username, img);
+            htmlContent = data.contents;
+        } else {
+            htmlContent = await response.text();
+        }
+
+        const avatarUrl = this.extractAvatarFromHtml(htmlContent);
+        
+        if (avatarUrl) {
+            // Teste ob das Bild tatsächlich ladbar ist
+            await this.testImageLoad(avatarUrl);
+            img.src = avatarUrl;
+            console.log('✓ Profilbild erfolgreich geladen:', avatarUrl);
+        } else {
+            throw new Error('Kein Avatar gefunden');
         }
     },
 
-    async tryDirectCdnUrls(username, img) {
-        // Teste bekannte TikTok CDN-Patterns
-        const cdnPatterns = [
-            `https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/default_${username}~c5_720x720.jpeg`,
-            `https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/${username}~c5_720x720.jpeg`,
-            `https://p77-sign-va.tiktokcdn.com/tos-maliva-avt-0068/default_${username}~c5_300x300.jpeg`,
-            // Fallback zur statischen Datei
-            'profile.jpg'
-        ];
-
-        for (const url of cdnPatterns) {
-            try {
-                console.log('Teste CDN URL:', url);
-                
-                // Teste ob das Bild existiert
-                const testImg = new Image();
-                testImg.crossOrigin = 'anonymous';
-                
-                const imageLoaded = await new Promise((resolve) => {
-                    testImg.onload = () => resolve(true);
-                    testImg.onerror = () => resolve(false);
-                    testImg.src = url;
-                    
-                    // Timeout nach 3 Sekunden
-                    setTimeout(() => resolve(false), 3000);
-                });
-
-                if (imageLoaded) {
-                    img.src = url;
-                    console.log('✓ Profilbild von CDN geladen:', url);
-                    return;
-                }
-            } catch (e) {
-                console.log('CDN URL fehlgeschlagen:', url);
-                continue;
-            }
-        }
-        
-        throw new Error('Alle CDN-URLs fehlgeschlagen');
+    async testImageLoad(url) {
+        return new Promise((resolve, reject) => {
+            const testImg = new Image();
+            testImg.onload = () => resolve(true);
+            testImg.onerror = () => reject(new Error('Bild nicht ladbar'));
+            testImg.src = url;
+            
+            // Timeout nach 5 Sekunden
+            setTimeout(() => reject(new Error('Timeout')), 5000);
+        });
     },
 
     extractAvatarFromHtml(text) {
@@ -111,27 +105,40 @@ const TikTokProfileLoader = {
             /"avatarMedium":"([^"]+)"/,
             /"avatar":"([^"]+)"/,
             /<meta property="og:image" content="([^"]+)"/,
-            /"profilePicUrlHD":"([^"]+)"/
+            /<meta name="twitter:image" content="([^"]+)"/,
+            /"profilePicUrlHD":"([^"]+)"/,
+            /"seoProps":[^}]*"metaParams":[^}]*"image":"([^"]+)"/
         ];
 
-        for (const pattern of patterns) {
-            const match = text.match(pattern);
+        for (let i = 0; i < patterns.length; i++) {
+            const match = text.match(patterns[i]);
             if (match && match[1]) {
-                let url = match[1].replace(/\\u002F/g, '/').replace(/\\\//g, '/');
-                console.log('Avatar URL gefunden:', url);
+                let url = match[1]
+                    .replace(/\\u002F/g, '/')
+                    .replace(/\\\//g, '/')
+                    .replace(/\\"/g, '"');
+                
+                // Überspringe offensichtlich falsche URLs
+                if (url.includes('default-avatar') || url.length < 10) {
+                    continue;
+                }
+                
+                console.log(`Avatar URL gefunden (Pattern ${i+1}):`, url);
                 return url;
             }
         }
         
-        console.log('Keine Avatar-URL im HTML gefunden');
         return null;
     },
 
     async checkLiveStatus() {
         try {
-            // Verwende den gespeicherten Username oder Fallback
             const username = this.currentUsername || TIKTOK_USERNAME;
-            const response = await fetch(`https://www.tiktok.com/@${username}`, {
+            
+            // Verwende den gleichen Proxy-Ansatz für Live-Status
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(`https://www.tiktok.com/@${username}`)}`;
+            
+            const response = await fetch(proxyUrl, {
                 method: 'GET',
                 headers: {
                     'User-Agent': 'Mozilla/5.0'
@@ -139,7 +146,7 @@ const TikTokProfileLoader = {
             });
 
             if (!response.ok) {
-                throw new Error('Fehler beim Laden des Live-Status');
+                throw new Error(`HTTP ${response.status}`);
             }
 
             const text = await response.text();
