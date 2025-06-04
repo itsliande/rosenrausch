@@ -1,5 +1,5 @@
 // TikTok Username (Fallback)
-const TIKTOK_USERNAME = 'rauschipromo.fanacc';
+const TIKTOK_USERNAME = '@rauschipromo.fanacc';
 
 const TikTokProfileLoader = {
     isLive: false,
