@@ -73,11 +73,11 @@ const TikTokProfileLoader = {
         const profileImg = document.querySelector('.profile-img');
         
         if (this.isLive) {
-            profileImg.classList.add('live-ring');
+            profileImg.classList.add('live-ring', 'live-glow');
             profileImg.classList.remove('offline-ring');
         } else {
             profileImg.classList.add('offline-ring');
-            profileImg.classList.remove('live-ring');
+            profileImg.classList.remove('live-ring', 'live-glow');
         }
     },
 
@@ -103,6 +103,12 @@ const TikTokProfileLoader = {
 document.addEventListener('DOMContentLoaded', () => {
     TikTokProfileLoader.loadProfilePic();
     TikTokProfileLoader.startLiveCheck();
+    
+    // Initialer Ring-Status (offline)
+    const profileImg = document.querySelector('.profile-img');
+    if (profileImg) {
+        profileImg.classList.add('offline-ring');
+    }
 });
 
 // Stoppe Live-Check beim Verlassen der Seite
