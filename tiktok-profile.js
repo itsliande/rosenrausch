@@ -1,16 +1,18 @@
-// TikTok Username
+// TikTok Username (Fallback)
 const TIKTOK_USERNAME = 'rauschipromo.fanacc';
 
 const TikTokProfileLoader = {
     isLive: false,
     checkInterval: null,
+    currentUsername: null,
 
     async loadProfilePic() {
         const img = document.querySelector('img[data-tiktok]');
         const username = img.getAttribute('data-tiktok');
+        this.currentUsername = username; // Speichere den aktuellen Username
 
         try {
-            // Nutze TikTok Username Info Endpoint
+            // Nutze den Username aus dem HTML-Attribut
             const response = await fetch(`https://www.tiktok.com/@${username}`, {
                 method: 'GET',
                 headers: {
@@ -77,8 +79,9 @@ const TikTokProfileLoader = {
 
     async checkLiveStatus() {
         try {
-            // Versuche TikTok Live-Status zu ermitteln
-            const response = await fetch(`https://www.tiktok.com/@${TIKTOK_USERNAME}`, {
+            // Verwende den gespeicherten Username oder Fallback
+            const username = this.currentUsername || TIKTOK_USERNAME;
+            const response = await fetch(`https://www.tiktok.com/@${username}`, {
                 method: 'GET',
                 headers: {
                     'User-Agent': 'Mozilla/5.0'
