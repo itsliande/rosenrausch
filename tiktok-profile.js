@@ -70,21 +70,14 @@ const TikTokProfileLoader = {
     },
 
     updateLiveIndicator() {
-        const liveIndicator = document.querySelector('.live-indicator');
         const profileImg = document.querySelector('.profile-img');
         
         if (this.isLive) {
-            liveIndicator.style.display = 'flex';
-            liveIndicator.textContent = 'LIVE';
-            liveIndicator.className = 'live-indicator live-active';
-            profileImg.classList.add('live-glow');
-            profileImg.classList.remove('offline-status');
+            profileImg.classList.add('live-ring');
+            profileImg.classList.remove('offline-ring');
         } else {
-            liveIndicator.style.display = 'flex';
-            liveIndicator.textContent = 'OFFLINE';
-            liveIndicator.className = 'live-indicator offline';
-            profileImg.classList.remove('live-glow');
-            profileImg.classList.add('offline-status');
+            profileImg.classList.add('offline-ring');
+            profileImg.classList.remove('live-ring');
         }
     },
 
