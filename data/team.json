@@ -18,7 +18,7 @@
       ]
     },
     {
-      "name": "Discord Management",
+      "name": "Discord & Minecraft Management",
       "members": [
         {
           "name": "Cenny",
@@ -59,7 +59,7 @@
       ]
     },
     {
-      "name": "IT Managment",
+      "name": "IT Management",
       "members": [
         {
           "name": "Lian",
@@ -84,7 +84,8 @@
       ]
     },
     {
-      "name": "Minecraft Managment",
+      "name": "Minecraft Management",
+      "active": false,
       "members": [
         {
           "name": "Cenny",
