@@ -1,5 +1,5 @@
-// TikTok Username (Fallback)
-const TIKTOK_USERNAME = '@rauschipromo.fanacc';
+// TikTok Username (Fallback) - ohne @
+const TIKTOK_USERNAME = 'rauschipromo.fanacc';
 
 const TikTokProfileLoader = {
     isLive: false,
@@ -12,131 +12,118 @@ const TikTokProfileLoader = {
         this.currentUsername = username;
         
         console.log('Versuche Profilbild zu laden für Username:', username);
+        console.log('IMG Element gefunden:', img ? 'Ja' : 'Nein');
+        console.log('data-tiktok Attribut:', username);
 
+        // Einfacher Ansatz: Verwende nur Proxy-Methode
         try {
-            // Methode 1: Versuche direkte TikTok-Anfrage
-            await this.tryDirectTikTokFetch(username, img);
+            await this.tryProxyFetch(username, img);
         } catch (error) {
-            console.log('Direkte TikTok-Anfrage fehlgeschlagen, versuche Alternativen...');
-            
-            try {
-                // Methode 2: Verwende CORS-Proxy
-                await this.tryProxyFetch(username, img);
-            } catch (proxyError) {
-                console.log('Proxy-Anfrage fehlgeschlagen, verwende Fallback...');
-                
-                // Methode 3: Verwende TikTok API Fallback
-                await this.tryApiFallback(username, img);
-            }
-        }
-    },
-
-    async tryDirectTikTokFetch(username, img) {
-        const response = await fetch(`https://www.tiktok.com/@${username}`, {
-            method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error('Direkte TikTok-Anfrage fehlgeschlagen');
-        }
-
-        const text = await response.text();
-        const avatarUrl = this.extractAvatarFromHtml(text);
-        
-        if (avatarUrl) {
-            img.src = avatarUrl;
-            console.log('Profilbild geladen (direkt):', avatarUrl);
-        } else {
-            throw new Error('Profilbild nicht gefunden');
+            console.log('Alle Methoden fehlgeschlagen, verwende Standard-Profilbild');
+            img.src = 'profile.jpg';
         }
     },
 
     async tryProxyFetch(username, img) {
-        // Verwende CORS-Proxy
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.tiktok.com/@${username}`)}`;
-        
-        const response = await fetch(proxyUrl);
-        if (!response.ok) {
-            throw new Error('Proxy-Anfrage fehlgeschlagen');
-        }
+        try {
+            // Verwende CORS-Proxy mit besserer Fehlerbehandlung
+            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://www.tiktok.com/@${username}`)}`;
+            console.log('Proxy URL:', proxyUrl);
+            
+            const response = await fetch(proxyUrl);
+            console.log('Proxy Response Status:', response.status);
+            
+            if (!response.ok) {
+                throw new Error(`Proxy-Anfrage fehlgeschlagen: ${response.status}`);
+            }
 
-        const data = await response.json();
-        const avatarUrl = this.extractAvatarFromHtml(data.contents);
-        
-        if (avatarUrl) {
-            img.src = avatarUrl;
-            console.log('Profilbild geladen (proxy):', avatarUrl);
-        } else {
-            throw new Error('Profilbild nicht gefunden');
+            const data = await response.json();
+            console.log('Proxy Response erhalten, Länge:', data.contents ? data.contents.length : 'undefined');
+            
+            const avatarUrl = this.extractAvatarFromHtml(data.contents);
+            
+            if (avatarUrl) {
+                img.src = avatarUrl;
+                console.log('✓ Profilbild erfolgreich geladen:', avatarUrl);
+                return;
+            } else {
+                console.log('Kein Avatar in HTML gefunden, versuche direkte CDN-URLs...');
+                await this.tryDirectCdnUrls(username, img);
+            }
+        } catch (error) {
+            console.error('Proxy-Fehler:', error);
+            await this.tryDirectCdnUrls(username, img);
         }
     },
 
-    async tryApiFallback(username, img) {
-        // Fallback: Verwende generisches TikTok-Profilbild-Pattern
-        const fallbackUrls = [
+    async tryDirectCdnUrls(username, img) {
+        // Teste bekannte TikTok CDN-Patterns
+        const cdnPatterns = [
+            `https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/default_${username}~c5_720x720.jpeg`,
             `https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/${username}~c5_720x720.jpeg`,
-            `https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/${username}~c5_300x300.jpeg`,
+            `https://p77-sign-va.tiktokcdn.com/tos-maliva-avt-0068/default_${username}~c5_300x300.jpeg`,
+            // Fallback zur statischen Datei
             'profile.jpg'
         ];
 
-        for (const url of fallbackUrls) {
+        for (const url of cdnPatterns) {
             try {
-                const response = await fetch(url, { method: 'HEAD' });
-                if (response.ok) {
+                console.log('Teste CDN URL:', url);
+                
+                // Teste ob das Bild existiert
+                const testImg = new Image();
+                testImg.crossOrigin = 'anonymous';
+                
+                const imageLoaded = await new Promise((resolve) => {
+                    testImg.onload = () => resolve(true);
+                    testImg.onerror = () => resolve(false);
+                    testImg.src = url;
+                    
+                    // Timeout nach 3 Sekunden
+                    setTimeout(() => resolve(false), 3000);
+                });
+
+                if (imageLoaded) {
                     img.src = url;
-                    console.log('Profilbild geladen (fallback):', url);
+                    console.log('✓ Profilbild von CDN geladen:', url);
                     return;
                 }
             } catch (e) {
+                console.log('CDN URL fehlgeschlagen:', url);
                 continue;
             }
         }
         
-        // Letzter Fallback
-        img.src = 'profile.jpg';
-        console.log('Verwende Standard-Profilbild');
+        throw new Error('Alle CDN-URLs fehlgeschlagen');
     },
 
     extractAvatarFromHtml(text) {
-        // Debug: Zeige ob Username im HTML gefunden wird
-        if (text.includes(this.currentUsername)) {
-            console.log('Username gefunden im HTML');
-        } else {
-            console.log('Username NICHT im HTML gefunden');
+        if (!text) {
+            console.log('Kein HTML-Text erhalten');
+            return null;
         }
         
-        // Methode 1: og:image Meta-Tag
-        const ogImage = text.match(/<meta property="og:image" content="([^"]+)"/);
-        if (ogImage && ogImage[1]) {
-            return ogImage[1];
-        }
+        console.log('Durchsuche HTML nach Avatar-URLs...');
         
-        // Methode 2: JSON-LD Struktur
-        const jsonLd = text.match(/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s);
-        if (jsonLd) {
-            try {
-                const data = JSON.parse(jsonLd[1]);
-                if (data.author && data.author.image) {
-                    return data.author.image;
-                }
-            } catch (e) {}
-        }
-        
-        // Methode 3: Suche nach Avatar-URLs im Text
-        const avatarMatch = text.match(/"avatarLarger":"([^"]+)"/);
-        if (avatarMatch && avatarMatch[1]) {
-            return avatarMatch[1].replace(/\\u002F/g, '/');
-        }
-        
-        // Methode 4: Alternative Avatar-Suche
-        const altAvatarMatch = text.match(/"avatar":"([^"]+)"/);
-        if (altAvatarMatch && altAvatarMatch[1]) {
-            return altAvatarMatch[1].replace(/\\u002F/g, '/');
-        }
+        // Verbesserte Regex-Patterns
+        const patterns = [
+            /"avatarLarger":"([^"]+)"/,
+            /"avatarMedium":"([^"]+)"/,
+            /"avatar":"([^"]+)"/,
+            /<meta property="og:image" content="([^"]+)"/,
+            /"profilePicUrlHD":"([^"]+)"/
+        ];
 
+        for (const pattern of patterns) {
+            const match = text.match(pattern);
+            if (match && match[1]) {
+                let url = match[1].replace(/\\u002F/g, '/').replace(/\\\//g, '/');
+                console.log('Avatar URL gefunden:', url);
+                return url;
+            }
+        }
+        
+        console.log('Keine Avatar-URL im HTML gefunden');
         return null;
     },
 
