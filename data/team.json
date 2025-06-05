@@ -65,7 +65,7 @@
           "name": "Lian",
           "role": "Website Management",
           "image": "images/team/Lian.jpg",
-          "bio": "Kümmert sich um das erstellen und die Wartung der Website. und um den content der website.",
+          "bio": "Kümmert sich um das erstellen, die Wartung und um den Content der Website.",
           "social": [
             {
               "platform": "fa-brands fa-discord",
@@ -116,7 +116,7 @@
           "name": "Laura",
           "role": "Discord Moderation",
           "image": "images/team/Laura.png",
-          "bio": "Kümmert sich mit um den Discord Server.",
+          "bio": "Kümmert sich um die Moderation auf dem Discord Server.",
           "social": [
             {
               "platform": "fa-brands fa-discord",
@@ -128,7 +128,7 @@
           "name": "Lily",
           "role": "Discord Moderation",
           "image": "images/team/Lily.png",
-          "bio": "Kümmert sich um den Discord Server.",
+          "bio": "Kümmert sich um die Moderation auf dem Discord Server.",
           "social": [
             {
               "platform": "fa-brands fa-discord",
