@@ -79,8 +79,17 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
-/* Für 7+ Mitglieder verwende 4er-Grid */
-.category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]) {
+/* Für 7+ Mitglieder verwende 3er-Grid mit spezieller Behandlung für ungerade Zahlen */
+.category-members[data-member-count="7"] {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.category-members[data-member-count="7"] .team-member:nth-child(7) {
+    grid-column: 1 / -1;
+    grid-row: 3;
+}
+
+.category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]):not([data-member-count="7"]) {
     grid-template-columns: repeat(4, 1fr);
 }
 
@@ -197,7 +206,16 @@
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]) {
+    .category-members[data-member-count="7"] {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .category-members[data-member-count="7"] .team-member:nth-child(7) {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+    
+    .category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]):not([data-member-count="7"]) {
         grid-template-columns: repeat(3, 1fr);
     }
 }
@@ -213,7 +231,8 @@
     }
     
     .category-members[data-member-count="4"] .team-member:nth-child(4),
-    .category-members[data-member-count="5"] .team-member:nth-child(5) {
+    .category-members[data-member-count="5"] .team-member:nth-child(5),
+    .category-members[data-member-count="7"] .team-member:nth-child(7) {
         grid-column: auto;
         grid-row: auto;
     }
