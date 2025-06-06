@@ -192,11 +192,6 @@
         padding: 10px;
     }
     
-    .category-members[data-member-count="2"] {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 15px;
-    }
-    
     .team-member {
         padding: 20px;
     }

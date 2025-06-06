@@ -111,23 +111,11 @@ function setupDynamicGrid(gridElement, memberCount) {
     
     // Prüfe Bildschirmgröße für mobile Optimierung
     const isMobile = window.innerWidth <= 768;
-    const isSmallMobile = window.innerWidth <= 480;
     
     if (isMobile) {
-        // Auf mobilen Geräten vereinfachte Layouts
-        if (isSmallMobile || memberCount > 6) {
-            // Sehr kleine Bildschirme oder viele Mitglieder: immer 1 Spalte
-            gridElement.style.gridTemplateColumns = '1fr';
-            return;
-        } else if (memberCount === 2) {
-            // Genau 2 Mitglieder: 2 Spalten auf größeren mobilen Geräten
-            gridElement.style.gridTemplateColumns = 'repeat(2, 1fr)';
-            return;
-        } else {
-            // Andere Fälle: 1 Spalte
-            gridElement.style.gridTemplateColumns = '1fr';
-            return;
-        }
+        // Auf mobilen Geräten immer 1 Spalte
+        gridElement.style.gridTemplateColumns = '1fr';
+        return;
     }
     
     let columnsPerRow, gridColumns;
