@@ -34,8 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(newsItems => {
             console.log('Geladene News:', newsItems);
             
+            // Filtere nur aktive News-Items
+            // Wenn active nicht definiert ist, gilt der Artikel als aktiv
+            const activeNewsItems = newsItems.filter(item => item.active !== false);
+            
+            console.log('Aktive News nach Filterung:', activeNewsItems);
+            
             // News nach ID sortieren (höchste zuerst = neueste)
-            newsItems.sort((a, b) => b.id - a.id);
+            activeNewsItems.sort((a, b) => b.id - a.id);
             
             // Container leeren
             newsContainer.innerHTML = '';
@@ -46,13 +52,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // News-Items erstellen und anzeigen
-            if (newsItems.length === 0) {
+            if (activeNewsItems.length === 0) {
                 newsContainer.innerHTML = '<div class="no-news">Keine aktuellen Neuigkeiten verfügbar.</div>';
                 return;
             }
             
             // Nur die neuesten 2 News auf der Hauptseite anzeigen
-            const itemsToShow = isMainPage ? newsItems.slice(0, 2) : newsItems;
+            const itemsToShow = isMainPage ? activeNewsItems.slice(0, 2) : activeNewsItems;
             
             itemsToShow.forEach(item => {
                 const newsItem = document.createElement('div');
@@ -67,8 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 newsContainer.appendChild(newsItem);
             });
             
-            // "Ältere ansehen" Button nur auf der Hauptseite hinzufügen, wenn es mehr als 2 News gibt
-            if (isMainPage && newsItems.length > 2) {
+            // "Ältere ansehen" Button nur auf der Hauptseite hinzufügen, wenn es mehr als 2 aktive News gibt
+            if (isMainPage && activeNewsItems.length > 2) {
                 const viewMoreContainer = document.createElement('div');
                 viewMoreContainer.className = 'news-all';
                 viewMoreContainer.innerHTML = '<a href="./news">Ältere ansehen →</a>';
