@@ -115,6 +115,17 @@
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
+/* Highlight-Effekt für Team-Mitglieder, wenn direkt dorthin gescrollt wird */
+.team-member.highlighted {
+    animation: highlight-pulse 1s ease;
+}
+
+@keyframes highlight-pulse {
+    0% { transform: translateY(-5px); background: rgba(168, 85, 247, 0.15); }
+    50% { transform: translateY(-5px); background: rgba(168, 85, 247, 0.3); border-color: rgba(168, 85, 247, 0.5); box-shadow: 0 10px 25px rgba(91, 33, 182, 0.3); }
+    100% { transform: translateY(-5px); background: rgba(168, 85, 247, 0.15); }
+}
+
 /* Responsive Anpassungen */
 @media (max-width: 768px) {
     .team-grid {
