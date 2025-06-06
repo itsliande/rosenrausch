@@ -32,9 +32,43 @@
 
 .category-members {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
     padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Spezielle Grid-Layouts basierend auf der Anzahl der Mitglieder */
+.category-members[data-member-count="1"] {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.category-members[data-member-count="2"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.category-members[data-member-count="3"] {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.category-members[data-member-count="4"] {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.category-members[data-member-count="5"] {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.category-members[data-member-count="6"] {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Für 7+ Mitglieder verwende 4er-Grid */
+.category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]) {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .team-member {
@@ -127,9 +161,31 @@
 }
 
 /* Responsive Anpassungen */
+@media (max-width: 1200px) {
+    .category-members[data-member-count="5"],
+    .category-members[data-member-count="6"] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .category-members[data-member-count]:not([data-member-count="1"]):not([data-member-count="2"]):not([data-member-count="3"]):not([data-member-count="4"]):not([data-member-count="5"]):not([data-member-count="6"]) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
-    .team-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    .category-members {
+        grid-template-columns: 1fr !important;
         gap: 20px;
+    }
+    
+    .category-members[data-member-count="2"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-members {
+        grid-template-columns: 1fr !important;
     }
 }

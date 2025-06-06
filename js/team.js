@@ -27,6 +27,9 @@ async function renderTeam() {
             const membersGrid = document.createElement('div');
             membersGrid.className = 'category-members';
             
+            // Setze data-attribute für die Anzahl der Mitglieder
+            membersGrid.setAttribute('data-member-count', category.members.length);
+            
             // Add members
             category.members.forEach(member => {
                 const memberElement = document.createElement('div');
