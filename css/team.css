@@ -40,14 +40,12 @@
 /* Spezielle Grid-Layouts basierend auf der Anzahl der Mitglieder */
 .category-members[data-member-count="1"] {
     grid-template-columns: 1fr;
-    max-width: 400px;
-    margin: 0 auto;
+    justify-content: center;
 }
 
 .category-members[data-member-count="2"] {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 800px;
-    margin: 0 auto;
+    justify-content: center;
 }
 
 .category-members[data-member-count="3"] {
@@ -180,7 +178,6 @@
     
     .category-members[data-member-count="2"] {
         grid-template-columns: repeat(2, 1fr) !important;
-        max-width: 600px;
     }
 }
 
