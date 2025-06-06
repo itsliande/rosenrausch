@@ -30,6 +30,9 @@ async function renderTeam() {
             // Setze data-attribute für die Anzahl der Mitglieder
             membersGrid.setAttribute('data-member-count', category.members.length);
             
+            // Dynamisches Grid-Layout basierend auf Mitgliederanzahl
+            setupDynamicGrid(membersGrid, category.members.length);
+            
             // Add members
             category.members.forEach(member => {
                 const memberElement = document.createElement('div');
@@ -96,6 +99,62 @@ function scrollToTeamMember() {
                 }, 2000);
             }
         }, 300); // Kurze Verzögerung, um sicherzustellen, dass das DOM vollständig geladen ist
+    }
+}
+
+// Funktion zur dynamischen Grid-Erstellung
+function setupDynamicGrid(gridElement, memberCount) {
+    // Für 1-3 Mitglieder verwende CSS-Regeln
+    if (memberCount <= 3) {
+        return;
+    }
+    
+    let columnsPerRow, gridColumns;
+    
+    // Bestimme optimale Spaltenanzahl basierend auf Mitgliederanzahl
+    if (memberCount <= 6) {
+        columnsPerRow = memberCount === 4 ? 3 : (memberCount === 5 ? 2 : 3);
+    } else if (memberCount <= 12) {
+        columnsPerRow = memberCount <= 8 ? 2 : 3;
+    } else {
+        // Für größere Gruppen verwende 3er oder 4er Grid
+        columnsPerRow = memberCount <= 20 ? 3 : 4;
+    }
+    
+    gridColumns = columnsPerRow;
+    
+    // Setze CSS Grid Template
+    gridElement.style.gridTemplateColumns = `repeat(${gridColumns}, 1fr)`;
+    
+    // Berechne, welche Mitglieder speziell positioniert werden müssen
+    const remainder = memberCount % columnsPerRow;
+    
+    if (remainder === 1) {
+        // Letztes Element als breite Karte
+        const lastRow = Math.ceil(memberCount / columnsPerRow);
+        setTimeout(() => {
+            const lastMember = gridElement.children[memberCount - 1];
+            if (lastMember) {
+                lastMember.style.gridColumn = '1 / -1';
+                lastMember.style.gridRow = lastRow.toString();
+            }
+        }, 100);
+    } else if (remainder === 2 && columnsPerRow >= 3) {
+        // Letzte 2 Elemente zentriert
+        const lastRow = Math.ceil(memberCount / columnsPerRow);
+        setTimeout(() => {
+            const secondLastMember = gridElement.children[memberCount - 2];
+            const lastMember = gridElement.children[memberCount - 1];
+            
+            if (secondLastMember && lastMember) {
+                if (columnsPerRow === 3) {
+                    secondLastMember.style.gridColumn = '1 / 2';
+                    secondLastMember.style.gridRow = lastRow.toString();
+                    lastMember.style.gridColumn = '3 / 4';
+                    lastMember.style.gridRow = lastRow.toString();
+                }
+            }
+        }, 100);
     }
 }
 
