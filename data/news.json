@@ -12,5 +12,13 @@
     "title": "Teaser",
     "content": "Ist dies möglicherweise ein Teaser für einen weiteren Sommer Song? 👀",
     "active": false
+  },
+  {
+    "id": 3,
+    "date": "5. Juni 2025",
+    "title": "Festival Unter Leuten Ankündigung!",
+    "content": "Großartige Neuigkeiten! Ich werde beim Festival Unter Leuten auftreten! \n\n Alle Details und Ticket-Informationen findet ihr auf der Termine-Seite.",
+    "terminLink": "festival-unter-leuten",
+    "active": true
   }
 ]

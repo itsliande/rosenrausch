@@ -616,17 +616,42 @@ h1 {
     box-shadow: 0 5px 15px rgba(91, 33, 182, 0.2);
 }
 
-@media (max-width: 480px) {
-    .news-container {
-        padding: 20px 15px;
-    }
-    
-    .news-title {
-        font-size: 18px;
-    }
-    
-    .news-item-title {
-        font-size: 1em;
+/* Styling für die termine Links in den Nachrichtenartikeln */
+.news-termin-link {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.termin-link-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(168, 85, 247, 0.2);
+    color: #E9D5FF;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.termin-link-button:hover {
+    background: rgba(168, 85, 247, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
+}
+
+.termin-link-button i {
+    font-size: 0.9em;
+}
+
+/* Mobile optimization for termine links */
+@media (max-width: 768px) {
+    .termin-link-button {
+        padding: 8px 16px;
+        font-size: 0.9em;
     }
 }
 

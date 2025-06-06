@@ -1,6 +1,6 @@
 const events = [
     {
-        id: 1,
+        id: "festival-unter-leuten",
         title: "Festival Unter Leuten",
         date: "2025-06-07",
         time: "ca. 22:00",
@@ -56,6 +56,7 @@ class EventManager {
     createEventElement(event) {
         const element = document.createElement('div');
         element.className = 'event-container';
+        element.id = event.id; // Add ID for linking
         element.innerHTML = `
             <div class="event-header">
                 <div class="event-header-left">
@@ -127,6 +128,30 @@ class EventManager {
         }
     }
 
+    // Function to scroll to specific event based on URL fragment
+    scrollToEvent() {
+        const fragment = window.location.hash.substring(1);
+        if (fragment) {
+            setTimeout(() => {
+                const element = document.getElementById(fragment);
+                if (element) {
+                    // Open the event if it's not already open
+                    if (!element.classList.contains('active')) {
+                        this.toggleEvent(element);
+                    }
+                    // Scroll to the event
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    
+                    // Add highlight effect
+                    element.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.5)';
+                    setTimeout(() => {
+                        element.style.boxShadow = '';
+                    }, 2000);
+                }
+            }, 300);
+        }
+    }
+
     render() {
         this.container.innerHTML = '';
         events
@@ -134,10 +159,19 @@ class EventManager {
             .forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
+        
+        // After rendering, check for URL fragment
+        this.scrollToEvent();
     }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const eventManager = new EventManager('events-container');
     eventManager.render();
+});
+
+// Listen for hash changes (when someone changes the URL fragment)
+window.addEventListener('hashchange', () => {
+    const eventManager = new EventManager('events-container');
+    eventManager.scrollToEvent();
 });

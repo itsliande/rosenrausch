@@ -64,10 +64,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newsItem = document.createElement('div');
                 newsItem.className = 'news-item';
                 
+                // Erstelle Termin-Link falls vorhanden
+                let terminLinkHtml = '';
+                if (item.terminLink) {
+                    terminLinkHtml = `<div class="news-termin-link">
+                        <a href="./termine#${item.terminLink}" class="termin-link-button">
+                            <i class="fas fa-calendar-alt"></i> Zum Termin
+                        </a>
+                    </div>`;
+                }
+                
                 newsItem.innerHTML = `
                     <span class="news-date">${item.date}</span>
                     <div class="news-item-title">${item.title}</div>
                     <div class="news-content">${convertNewlines(item.content)}</div>
+                    ${terminLinkHtml}
                 `;
                 
                 newsContainer.appendChild(newsItem);
