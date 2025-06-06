@@ -53,7 +53,12 @@
 }
 
 .category-members[data-member-count="4"] {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.category-members[data-member-count="4"] .team-member:nth-child(4) {
+    grid-column: 2 / 3;
+    grid-row: 2;
 }
 
 .category-members[data-member-count="5"] {
@@ -160,6 +165,15 @@
 
 /* Responsive Anpassungen */
 @media (max-width: 1200px) {
+    .category-members[data-member-count="4"] {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .category-members[data-member-count="4"] .team-member:nth-child(4) {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+    
     .category-members[data-member-count="5"],
     .category-members[data-member-count="6"] {
         grid-template-columns: repeat(2, 1fr);
@@ -178,6 +192,11 @@
     
     .category-members[data-member-count="2"] {
         grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .category-members[data-member-count="4"] .team-member:nth-child(4) {
+        grid-column: auto;
+        grid-row: auto;
     }
 }
 
