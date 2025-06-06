@@ -145,12 +145,20 @@
 
 /* Responsive Anpassungen */
 @media (max-width: 1200px) {
+    .team-container {
+        padding: 30px 15px;
+    }
+    
     .category-members {
         grid-template-columns: repeat(2, 1fr) !important;
+        gap: 25px;
+        padding: 15px;
     }
     
     .category-members[data-member-count="1"] {
         grid-template-columns: 1fr !important;
+        max-width: 400px;
+        margin: 0 auto;
     }
     
     .category-members[data-member-count="3"],
@@ -168,13 +176,61 @@
 }
 
 @media (max-width: 768px) {
+    .team-container {
+        padding: 20px 10px;
+    }
+    
+    .category-title {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+    
     .category-members {
         grid-template-columns: 1fr !important;
         gap: 20px;
+        padding: 10px;
     }
     
     .category-members[data-member-count="2"] {
         grid-template-columns: repeat(2, 1fr) !important;
+        gap: 15px;
+    }
+    
+    .team-member {
+        padding: 20px;
+    }
+    
+    .team-member img {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 15px;
+    }
+    
+    .team-member h3 {
+        font-size: 1.2em;
+        margin-bottom: 6px;
+    }
+    
+    .team-member .role {
+        font-size: 1em;
+        margin-bottom: 12px;
+    }
+    
+    .team-member .bio {
+        font-size: 0.9em;
+        margin: 12px 0;
+    }
+    
+    .social-links {
+        margin-top: 15px;
+        gap: 12px;
+    }
+    
+    .social-links a {
+        font-size: 1.1em;
+        width: 40px;
+        height: 40px;
     }
     
     /* Reset all special positioning for mobile */
@@ -185,7 +241,96 @@
 }
 
 @media (max-width: 480px) {
+    .team-container {
+        padding: 15px 8px;
+    }
+    
+    .category-title {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
+    
     .category-members {
         grid-template-columns: 1fr !important;
+        gap: 15px;
+        padding: 8px;
+    }
+    
+    .team-member {
+        padding: 15px;
+    }
+    
+    .team-member img {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 12px;
+    }
+    
+    .team-member h3 {
+        font-size: 1.1em;
+        margin-bottom: 5px;
+    }
+    
+    .team-member .role {
+        font-size: 0.95em;
+        margin-bottom: 10px;
+    }
+    
+    .team-member .bio {
+        font-size: 0.85em;
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+    
+    .social-links {
+        margin-top: 12px;
+        gap: 10px;
+    }
+    
+    .social-links a {
+        font-size: 1em;
+        width: 35px;
+        height: 35px;
+        padding: 8px;
+    }
+}
+
+/* Sehr kleine Bildschirme (unter 360px) */
+@media (max-width: 360px) {
+    .team-container {
+        padding: 10px 5px;
+    }
+    
+    .category-title {
+        font-size: 1.2em;
+        margin-bottom: 12px;
+    }
+    
+    .team-member {
+        padding: 12px;
+    }
+    
+    .team-member img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+    
+    .team-member h3 {
+        font-size: 1em;
+    }
+    
+    .team-member .role {
+        font-size: 0.9em;
+    }
+    
+    .team-member .bio {
+        font-size: 0.8em;
+    }
+    
+    .social-links a {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9em;
     }
 }

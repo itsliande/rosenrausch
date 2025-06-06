@@ -109,6 +109,27 @@ function setupDynamicGrid(gridElement, memberCount) {
         return;
     }
     
+    // Prüfe Bildschirmgröße für mobile Optimierung
+    const isMobile = window.innerWidth <= 768;
+    const isSmallMobile = window.innerWidth <= 480;
+    
+    if (isMobile) {
+        // Auf mobilen Geräten vereinfachte Layouts
+        if (isSmallMobile || memberCount > 6) {
+            // Sehr kleine Bildschirme oder viele Mitglieder: immer 1 Spalte
+            gridElement.style.gridTemplateColumns = '1fr';
+            return;
+        } else if (memberCount === 2) {
+            // Genau 2 Mitglieder: 2 Spalten auf größeren mobilen Geräten
+            gridElement.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            return;
+        } else {
+            // Andere Fälle: 1 Spalte
+            gridElement.style.gridTemplateColumns = '1fr';
+            return;
+        }
+    }
+    
     let columnsPerRow, gridColumns;
     
     // Bestimme optimale Spaltenanzahl basierend auf Mitgliederanzahl
@@ -157,6 +178,25 @@ function setupDynamicGrid(gridElement, memberCount) {
         }, 100);
     }
 }
+
+// Event-Listener für Fenstergrößenänderungen
+window.addEventListener('resize', () => {
+    // Grid nach Größenänderung neu berechnen
+    const teamGrids = document.querySelectorAll('.category-members');
+    teamGrids.forEach(grid => {
+        const memberCount = parseInt(grid.getAttribute('data-member-count'));
+        if (memberCount > 3) {
+            // Reset existing styles
+            grid.style.gridTemplateColumns = '';
+            Array.from(grid.children).forEach(child => {
+                child.style.gridColumn = '';
+                child.style.gridRow = '';
+            });
+            // Reapply dynamic grid
+            setupDynamicGrid(grid, memberCount);
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', renderTeam);
 
