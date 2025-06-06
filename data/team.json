@@ -228,6 +228,22 @@
               "url": "https://www.tiktok.com/@ace161"
             }
           ]
+        },
+        {
+          "name": "Ace",
+          "role": "Tiktok Moderation",
+          "image": "images/team/ace.png",
+          "bio": "Moderiert den Tiktok live chat",
+          "social": [
+            {
+              "platform": "fa-brands fa-discord",
+              "url": "https://discord.com/users/805898812589342771"
+            },
+            {
+              "platform": "fa-brands fa-tiktok",
+              "url": "https://www.tiktok.com/@ace161"
+            }
+          ]
         }
       ]
     }
