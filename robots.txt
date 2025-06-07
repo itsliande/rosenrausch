@@ -18,7 +18,6 @@ Allow: /
 Allow: /minecraft
 Allow: /termine
 Allow: /team
-Allow: /news
 Allow: /impressum
 Allow: /privacy
 

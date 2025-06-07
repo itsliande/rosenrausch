@@ -1,6 +1,7 @@
 ErrorDocument 404 /404.html
-ErrorDocument 403 /404.html
-ErrorDocument 500 /404.html
+ErrorDocument 403 /403.html
+ErrorDocument 401 /401.html
+ErrorDocument 500 /500.html
 
 # Verhindere Zugriff auf versteckte Dateien
 <FilesMatch "^\.(htaccess|htpasswd|git)">
@@ -29,3 +30,8 @@ ExpiresByType application/x-shockwave-flash "access plus 1 month"
 ExpiresByType image/x-icon "access plus 1 year"
 ExpiresDefault "access plus 2 days"
 </IfModule>
+
+# XML MIME Type für Sitemap
+<Files "sitemap.xml">
+    Header set Content-Type "application/xml; charset=utf-8"
+</Files>
