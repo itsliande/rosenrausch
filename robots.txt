@@ -1,0 +1,26 @@
+<!-- filepath: /workspaces/rosenrausch/robots.txt -->
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://rosenrausch.xyz/sitemap.xml
+
+# Disallow error pages
+Disallow: /404.html
+Disallow: /403.html
+Disallow: /401.html
+Disallow: /418.html
+Disallow: /500.html
+Disallow: /error.html
+
+# Allow important pages
+Allow: /
+Allow: /minecraft
+Allow: /termine
+Allow: /team
+Allow: /news
+Allow: /impressum
+Allow: /privacy
+
+# Crawl-delay (optional, be respectful)
+Crawl-delay: 1
