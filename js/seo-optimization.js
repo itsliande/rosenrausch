@@ -258,3 +258,115 @@ function addBreadcrumbStructuredData() {
 
 // Füge Breadcrumb-Daten hinzu
 addBreadcrumbStructuredData();
+
+/**
+ * Validiert die Sitemap auf korrekte Formate
+ */
+function validateSitemap() {
+    // Sitemap-Validierung für Development
+    if (window.location.hostname === 'localhost') {
+        console.log('Sitemap-Validierung wird nur in der Development-Umgebung ausgeführt');
+        
+        // Überprüfe, ob Sitemap existiert
+        fetch('/sitemap.xml')
+            .then(response => {
+                if (!response.ok) {
+                    console.warn('Sitemap.xml nicht gefunden oder nicht erreichbar');
+                    return;
+                }
+                return response.text();
+            })
+            .then(xmlText => {
+                if (!xmlText) return;
+                
+                try {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
+                    
+                    // Überprüfe auf Parser-Fehler
+                    const parseError = xmlDoc.querySelector('parsererror');
+                    if (parseError) {
+                        console.error('Sitemap XML Parse Error:', parseError.textContent);
+                        return;
+                    }
+                    
+                    // Validiere URLs und Daten
+                    const urls = xmlDoc.querySelectorAll('url');
+                    urls.forEach((url, index) => {
+                        const loc = url.querySelector('loc')?.textContent;
+                        const lastmod = url.querySelector('lastmod')?.textContent;
+                        
+                        if (!loc) {
+                            console.warn(`URL ${index + 1}: loc fehlt`);
+                        } else if (!loc.startsWith('https://rosenrausch.xyz/')) {
+                            console.warn(`URL ${index + 1}: Ungültige Domain in loc`);
+                        }
+                        
+                        if (lastmod && !isValidDate(lastmod)) {
+                            console.warn(`URL ${index + 1}: Ungültiges Datumsformat in lastmod: ${lastmod}`);
+                        }
+                    });
+                    
+                    console.log(`Sitemap validiert: ${urls.length} URLs gefunden`);
+                    
+                } catch (e) {
+                    console.error('Sitemap-Validierung fehlgeschlagen:', e);
+                }
+            })
+            .catch(e => console.error('Fehler beim Laden der Sitemap:', e));
+    }
+}
+
+/**
+ * Überprüft, ob ein Datum im ISO 8601 Format vorliegt
+ */
+function isValidDate(dateString) {
+    const iso8601Regex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!iso8601Regex.test(dateString)) {
+        return false;
+    }
+    
+    const date = new Date(dateString);
+    return date instanceof Date && !isNaN(date);
+}
+
+/**
+ * Generiert automatisch eine Sitemap für dynamische Inhalte
+ */
+function generateDynamicSitemap() {
+    const staticUrls = [
+        { url: '/', priority: 1.0, changefreq: 'daily' },
+        { url: '/minecraft', priority: 0.9, changefreq: 'weekly' },
+        { url: '/termine', priority: 0.8, changefreq: 'weekly' },
+        { url: '/team', priority: 0.7, changefreq: 'monthly' },
+        { url: '/news', priority: 0.8, changefreq: 'daily' },
+        { url: '/impressum', priority: 0.3, changefreq: 'yearly' },
+        { url: '/privacy', priority: 0.3, changefreq: 'yearly' }
+    ];
+    
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    sitemapContent += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+    
+    staticUrls.forEach(page => {
+        sitemapContent += `  <url>\n`;
+        sitemapContent += `    <loc>https://rosenrausch.xyz${page.url}</loc>\n`;
+        sitemapContent += `    <lastmod>${currentDate}</lastmod>\n`;
+        sitemapContent += `    <changefreq>${page.changefreq}</changefreq>\n`;
+        sitemapContent += `    <priority>${page.priority}</priority>\n`;
+        sitemapContent += `  </url>\n`;
+    });
+    
+    sitemapContent += `</urlset>`;
+    
+    // Nur in Development-Umgebung ausgeben
+    if (window.location.hostname === 'localhost') {
+        console.log('Generierte Sitemap:', sitemapContent);
+    }
+    
+    return sitemapContent;
+}
+
+// Führe Sitemap-Validierung aus
+validateSitemap();

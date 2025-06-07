@@ -2,43 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rosenrausch.xyz/</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/minecraft</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/termine</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/team</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/news</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/impressum</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://rosenrausch.xyz/privacy</loc>
-    <lastmod>2025-06-07</lastmod>
+    <lastmod>2025-01-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
