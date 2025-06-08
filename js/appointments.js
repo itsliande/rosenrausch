@@ -69,10 +69,7 @@ class EventManager {
         
         this.toggleButton = document.createElement('button');
         this.toggleButton.className = 'past-events-toggle';
-        this.toggleButton.innerHTML = `
-            <i class="fas fa-history"></i>
-            Vergangene Termine ansehen (${pastEventsCount})
-        `;
+        this.updateButtonText(pastEventsCount);
         
         this.toggleButton.addEventListener('click', () => {
             this.togglePastEvents();
@@ -84,10 +81,8 @@ class EventManager {
         this.toggleContainer = toggleContainer;
     }
 
-    // Toggle past events visibility
-    togglePastEvents() {
-        this.showPastEvents = !this.showPastEvents;
-        
+    // New method to update button text
+    updateButtonText(pastEventsCount) {
         if (this.showPastEvents) {
             this.toggleButton.innerHTML = `
                 <i class="fas fa-arrow-left"></i>
@@ -95,13 +90,20 @@ class EventManager {
             `;
             this.toggleButton.classList.add('active');
         } else {
-            const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
             this.toggleButton.innerHTML = `
                 <i class="fas fa-history"></i>
                 Vergangene Termine ansehen (${pastEventsCount})
             `;
             this.toggleButton.classList.remove('active');
         }
+    }
+
+    // Toggle past events visibility
+    togglePastEvents() {
+        this.showPastEvents = !this.showPastEvents;
+        
+        const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
+        this.updateButtonText(pastEventsCount);
         
         this.render();
     }
@@ -267,11 +269,6 @@ class EventManager {
                 this.container.appendChild(this.toggleContainer);
             }
         } else {
-            // Always add toggle button at the top when showing any events
-            if (this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
-            
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
             pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -280,6 +277,11 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
+            
+            // Add toggle button at the bottom when showing events
+            if (this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
+            }
         }
         
         // After rendering, check for URL fragment
