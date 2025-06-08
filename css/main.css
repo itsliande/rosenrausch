@@ -830,3 +830,60 @@ h1 {
         right: 12px;
     }
 }
+
+/* Keine Termine Meldung */
+.no-events-message {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 15px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    margin: 2rem 0;
+}
+
+.no-events-message i {
+    font-size: 3rem;
+    color: rgba(168, 85, 247, 0.6);
+    margin-bottom: 1rem;
+}
+
+.no-events-message h3 {
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.no-events-message p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.past-events-toggle-container {
+    margin: 2rem 0 1rem 0;
+    text-align: center;
+}
+
+.past-events-toggle {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.past-events-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+}
+
+.past-events-toggle.active {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}

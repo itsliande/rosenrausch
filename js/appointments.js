@@ -7,6 +7,7 @@ class EventManager {
         this.activeDropdown = null;
         this.isMobile = window.innerWidth <= 520;
         this.showPastEvents = false;
+        this.toggleButton = null;
         
         // Close calendar dropdown on backdrop click (mobile)
         document.addEventListener('click', (e) => {
@@ -20,9 +21,6 @@ class EventManager {
         window.addEventListener('resize', () => {
             this.isMobile = window.innerWidth <= 520;
         });
-        
-        // Create and insert the toggle button
-        this.createToggleButton();
     }
 
     // Add method to load events from JSON
@@ -59,6 +57,12 @@ class EventManager {
         const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
         
         if (pastEventsCount === 0) return;
+
+        // Remove existing button if it exists
+        const existingContainer = document.querySelector('.past-events-toggle-container');
+        if (existingContainer) {
+            existingContainer.remove();
+        }
 
         const toggleContainer = document.createElement('div');
         toggleContainer.className = 'past-events-toggle-container';
@@ -231,6 +235,9 @@ class EventManager {
             await this.loadEvents();
         }
         
+        // Create toggle button after events are loaded
+        this.createToggleButton();
+        
         this.container.innerHTML = '';
         
         // Filter events based on showPastEvents setting
@@ -242,14 +249,26 @@ class EventManager {
         const futureEvents = filteredEvents.filter(event => !this.isEventPast(event));
         const pastEvents = filteredEvents.filter(event => this.isEventPast(event));
         
-        // Sort future events by date (ascending), past events by date (descending)
-        futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
-        pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        // Render future events first, then past events
-        [...futureEvents, ...pastEvents].forEach(event => {
-            this.container.appendChild(this.createEventElement(event));
-        });
+        // Check if there are no current events
+        if (futureEvents.length === 0 && !this.showPastEvents) {
+            const noEventsMessage = document.createElement('div');
+            noEventsMessage.className = 'no-events-message';
+            noEventsMessage.innerHTML = `
+                <i class="fas fa-calendar-times"></i>
+                <h3>Momentan stehen keine Termine an</h3>
+                <p>Schau später wieder vorbei oder folge uns in den sozialen Medien, um über neue Termine informiert zu werden!</p>
+            `;
+            this.container.appendChild(noEventsMessage);
+        } else {
+            // Sort future events by date (ascending), past events by date (descending)
+            futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+            pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Render future events first, then past events
+            [...futureEvents, ...pastEvents].forEach(event => {
+                this.container.appendChild(this.createEventElement(event));
+            });
+        }
         
         // Update toggle button text
         if (this.toggleButton) {
