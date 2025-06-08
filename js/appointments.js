@@ -253,6 +253,11 @@ class EventManager {
         const futureEvents = filteredEvents.filter(event => !this.isEventPast(event));
         const pastEvents = filteredEvents.filter(event => this.isEventPast(event));
         
+        // If showing past events, add toggle button at the top
+        if (this.showPastEvents && this.toggleContainer) {
+            this.container.appendChild(this.toggleContainer);
+        }
+        
         // Check if there are no current events
         if (futureEvents.length === 0 && !this.showPastEvents) {
             const noEventsMessage = document.createElement('div');
@@ -264,7 +269,7 @@ class EventManager {
             `;
             this.container.appendChild(noEventsMessage);
             
-            // Add toggle button after no-events message if it exists
+            // Add toggle button after no-events message if showing current events
             if (this.toggleContainer) {
                 this.container.appendChild(this.toggleContainer);
             }
@@ -278,8 +283,8 @@ class EventManager {
                 this.container.appendChild(this.createEventElement(event));
             });
             
-            // Add toggle button at the bottom when showing events
-            if (this.toggleContainer) {
+            // Add toggle button at the bottom only when showing current events
+            if (!this.showPastEvents && this.toggleContainer) {
                 this.container.appendChild(this.toggleContainer);
             }
         }
