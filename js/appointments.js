@@ -90,8 +90,8 @@ class EventManager {
         
         if (this.showPastEvents) {
             this.toggleButton.innerHTML = `
-                <i class="fas fa-eye-slash"></i>
-                Vergangene Termine ausblenden
+                <i class="fas fa-arrow-left"></i>
+                Zurück zu aktuellen Terminen
             `;
             this.toggleButton.classList.add('active');
         } else {
@@ -267,6 +267,11 @@ class EventManager {
                 this.container.appendChild(this.toggleContainer);
             }
         } else {
+            // Add toggle button at the top when showing past events
+            if (this.showPastEvents && this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
+            }
+            
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
             pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
