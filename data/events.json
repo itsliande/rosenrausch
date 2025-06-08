@@ -22,5 +22,29 @@
     ],
     "price": "20€-55€",
     "category": "Festival"
+  },
+  {
+    "id": "festival-unter-leuten",
+    "title": "Festival Unter Leuten",
+    "date": "2025-06-10",
+    "endDate": null,
+    "time": "ca. 22:00",
+    "location": "Internationaler Garten Meißen\nGroßenhainer Straße 161, 01662 Meißen",
+    "description": "Die angaben von Uhrzeit und Datum Gelten nur für Rosenrausch nicht für das gesamte Festival",
+    "image": "images/festival.jpg",
+    "links": [
+      {
+        "url": "https://www.instagram.com/stories/highlights/18169382071332225/",
+        "label": "Tickets kaufen",
+        "icon": "fa-ticket-alt"
+      },
+      {
+        "url": "https://www.instagram.com/unter_leuten_2025/",
+        "label": "Mehr Informationen",
+        "icon": "fa-info-circle"
+      }
+    ],
+    "price": "20€-55€",
+    "category": "Festival"
   }
 ]
