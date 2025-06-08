@@ -267,8 +267,8 @@ class EventManager {
                 this.container.appendChild(this.toggleContainer);
             }
         } else {
-            // Add toggle button at the top when showing past events
-            if (this.showPastEvents && this.toggleContainer) {
+            // Always add toggle button at the top when showing any events
+            if (this.toggleContainer) {
                 this.container.appendChild(this.toggleContainer);
             }
             
@@ -280,11 +280,6 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
-            
-            // Add toggle button at the bottom when NOT showing past events
-            if (!this.showPastEvents && this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
         }
         
         // After rendering, check for URL fragment
