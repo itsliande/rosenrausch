@@ -79,7 +79,9 @@ class EventManager {
         });
         
         toggleContainer.appendChild(this.toggleButton);
-        this.container.parentNode.insertBefore(toggleContainer, this.container);
+        
+        // Store reference to toggle container for later placement
+        this.toggleContainer = toggleContainer;
     }
 
     // Toggle past events visibility
@@ -259,6 +261,11 @@ class EventManager {
                 <p>Schau später wieder vorbei oder folge uns in den sozialen Medien, um über neue Termine informiert zu werden!</p>
             `;
             this.container.appendChild(noEventsMessage);
+            
+            // Add toggle button after no-events message if it exists
+            if (this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
+            }
         } else {
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
