@@ -262,8 +262,8 @@ class EventManager {
         const futureEvents = filteredEvents.filter(event => !this.isEventPast(event));
         const pastEvents = filteredEvents.filter(event => this.isEventPast(event));
         
-        // If showing past events, add toggle button at the top
-        if (this.showPastEvents && this.toggleContainer) {
+        // Always add toggle button at the top when it exists
+        if (this.toggleContainer) {
             this.container.appendChild(this.toggleContainer);
         }
         
@@ -277,11 +277,6 @@ class EventManager {
                 <p>Schau später wieder vorbei oder folge uns in den sozialen Medien, um über neue Termine informiert zu werden!</p>
             `;
             this.container.appendChild(noEventsMessage);
-            
-            // Add toggle button after no-events message if showing current events
-            if (this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
         } else {
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -291,11 +286,6 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
-            
-            // Add toggle button at the bottom only when showing current events
-            if (!this.showPastEvents && this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
         }
         
         // After rendering, check for URL fragment
