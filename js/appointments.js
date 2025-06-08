@@ -262,11 +262,6 @@ class EventManager {
         const futureEvents = filteredEvents.filter(event => !this.isEventPast(event));
         const pastEvents = filteredEvents.filter(event => this.isEventPast(event));
         
-        // Always add toggle button at the top when it exists
-        if (this.toggleContainer) {
-            this.container.appendChild(this.toggleContainer);
-        }
-        
         // Check if there are no current events
         if (futureEvents.length === 0 && !this.showPastEvents) {
             const noEventsMessage = document.createElement('div');
@@ -277,7 +272,17 @@ class EventManager {
                 <p>Schau später wieder vorbei oder folge uns in den sozialen Medien, um über neue Termine informiert zu werden!</p>
             `;
             this.container.appendChild(noEventsMessage);
+            
+            // Add toggle button after the no events message
+            if (this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
+            }
         } else {
+            // Add toggle button at the top when showing events
+            if (this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
+            }
+            
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
             pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
