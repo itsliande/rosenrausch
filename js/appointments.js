@@ -253,6 +253,11 @@ class EventManager {
         
         this.container.innerHTML = '';
         
+        // Add toggle button at the beginning if it exists
+        if (this.toggleContainer) {
+            this.container.appendChild(this.toggleContainer);
+        }
+        
         // Filter events based on showPastEvents setting
         const filteredEvents = events.filter(event => {
             return this.showPastEvents || !this.isEventPast(event);
@@ -281,11 +286,6 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
-        }
-        
-        // Add toggle button at the end in all cases
-        if (this.toggleContainer) {
-            this.container.appendChild(this.toggleContainer);
         }
         
         // After rendering, check for URL fragment
