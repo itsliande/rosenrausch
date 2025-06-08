@@ -195,19 +195,48 @@ window.SEOHelper = {
 /**
  * Automatische Sitemap-Generierung für dynamische Inhalte
  */
-function generateDynamicSitemapEntries() {
+async function generateDynamicSitemapEntries() {
     const entries = [];
     
-    // Events auf der Termine-Seite
+    // Load events from JSON file for sitemap generation
+    try {
+        const response = await fetch('data/events.json');
+        if (response.ok) {
+            const eventsData = await response.json();
+            
+            // Process events from JSON data
+            eventsData.forEach(event => {
+                if (event.title && event.date) {
+                    // Use end date if available, otherwise use start date
+                    const lastMod = event.endDate || event.date;
+                    
+                    entries.push({
+                        url: `${window.location.origin}/termine#${encodeURIComponent(event.id)}`,
+                        lastmod: lastMod,
+                        changefreq: 'weekly',
+                        priority: 0.7
+                    });
+                }
+            });
+        }
+    } catch (error) {
+        console.warn('Could not load events for sitemap generation:', error);
+    }
+    
+    // Events auf der Termine-Seite (fallback for DOM-based detection)
     const events = document.querySelectorAll('.event-container');
     events.forEach(event => {
         const eventTitle = event.querySelector('.event-title')?.textContent;
         const eventDate = event.querySelector('[data-event-date]')?.getAttribute('data-event-date');
+        const eventEndDate = event.querySelector('[data-event-end-date]')?.getAttribute('data-event-end-date');
         
         if (eventTitle && eventDate) {
+            // Use end date if available, otherwise use start date
+            const lastMod = eventEndDate || eventDate;
+            
             entries.push({
                 url: `${window.location.origin}/termine#${encodeURIComponent(eventTitle)}`,
-                lastmod: eventDate,
+                lastmod: lastMod,
                 changefreq: 'weekly',
                 priority: 0.7
             });

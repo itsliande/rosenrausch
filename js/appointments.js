@@ -1,28 +1,4 @@
-const events = [
-    {
-        id: "festival-unter-leuten",
-        title: "Festival Unter Leuten",
-        date: "2025-06-07",
-        time: "ca. 22:00",
-        location: "Internationaler Garten Meißen\nGroßenhainer Straße 161, 01662 Meißen",
-        description: "Die angaben von Uhrzeit und Datum Gelten nur für Rosenrausch nicht für das gesamte Festival",
-        image: "images/festival.jpg",
-        links: [
-            {
-                url: "https://www.instagram.com/stories/highlights/18169382071332225/",
-                label: "Tickets kaufen",
-                icon: "fa-ticket-alt"
-            },
-            {
-                url: "https://www.instagram.com/unter_leuten_2025/",
-                label: "Mehr Informationen",
-                icon: "fa-info-circle"
-            }
-        ],
-        price: "20€-55€",
-        category: "Festival"
-    }
-];
+let events = [];
 
 class EventManager {
     constructor(containerId) {
@@ -30,6 +6,7 @@ class EventManager {
         this.activeEvent = null;
         this.activeDropdown = null;
         this.isMobile = window.innerWidth <= 520;
+        this.showPastEvents = false;
         
         // Close calendar dropdown on backdrop click (mobile)
         document.addEventListener('click', (e) => {
@@ -43,6 +20,84 @@ class EventManager {
         window.addEventListener('resize', () => {
             this.isMobile = window.innerWidth <= 520;
         });
+        
+        // Create and insert the toggle button
+        this.createToggleButton();
+    }
+
+    // Add method to load events from JSON
+    async loadEvents() {
+        try {
+            const response = await fetch('data/events.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            events = await response.json();
+            return events;
+        } catch (error) {
+            console.error('Error loading events:', error);
+            // Fallback to empty array if loading fails
+            events = [];
+            return events;
+        }
+    }
+
+    // Check if an event is in the past
+    isEventPast(event) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        // If event has an end date, use that for comparison
+        const eventEndDate = new Date(event.endDate || event.date);
+        eventEndDate.setHours(23, 59, 59, 999);
+        
+        return eventEndDate < today;
+    }
+
+    // Create toggle button for past events
+    createToggleButton() {
+        const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
+        
+        if (pastEventsCount === 0) return;
+
+        const toggleContainer = document.createElement('div');
+        toggleContainer.className = 'past-events-toggle-container';
+        
+        this.toggleButton = document.createElement('button');
+        this.toggleButton.className = 'past-events-toggle';
+        this.toggleButton.innerHTML = `
+            <i class="fas fa-history"></i>
+            Vergangene Termine ansehen (${pastEventsCount})
+        `;
+        
+        this.toggleButton.addEventListener('click', () => {
+            this.togglePastEvents();
+        });
+        
+        toggleContainer.appendChild(this.toggleButton);
+        this.container.parentNode.insertBefore(toggleContainer, this.container);
+    }
+
+    // Toggle past events visibility
+    togglePastEvents() {
+        this.showPastEvents = !this.showPastEvents;
+        
+        if (this.showPastEvents) {
+            this.toggleButton.innerHTML = `
+                <i class="fas fa-eye-slash"></i>
+                Vergangene Termine ausblenden
+            `;
+            this.toggleButton.classList.add('active');
+        } else {
+            const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
+            this.toggleButton.innerHTML = `
+                <i class="fas fa-history"></i>
+                Vergangene Termine ansehen (${pastEventsCount})
+            `;
+            this.toggleButton.classList.remove('active');
+        }
+        
+        this.render();
     }
 
     formatDate(dateStr) {
@@ -53,16 +108,34 @@ class EventManager {
         });
     }
 
+    // Format date range for multi-day events
+    formatDateRange(startDate, endDate) {
+        if (!endDate) {
+            return this.formatDate(startDate);
+        }
+        
+        const start = this.formatDate(startDate);
+        const end = this.formatDate(endDate);
+        
+        return `${start} - ${end}`;
+    }
+
     createEventElement(event) {
         const element = document.createElement('div');
         element.className = 'event-container';
-        element.id = event.id; // Add ID for linking
+        if (this.isEventPast(event)) {
+            element.classList.add('past-event');
+        }
+        element.id = event.id;
+        
+        const dateDisplay = this.formatDateRange(event.date, event.endDate);
+        
         element.innerHTML = `
             <div class="event-header">
                 <div class="event-header-left">
                     <div class="event-title">${event.title}</div>
                     <div class="event-meta">
-                        <span><i class="far fa-calendar"></i> ${this.formatDate(event.date)}</span>
+                        <span><i class="far fa-calendar"></i> ${dateDisplay}</span>
                         <span><i class="far fa-clock"></i> ${event.time}</span>
                     </div>
                 </div>
@@ -152,22 +225,51 @@ class EventManager {
         }
     }
 
-    render() {
+    async render() {
+        // Load events if not already loaded
+        if (events.length === 0) {
+            await this.loadEvents();
+        }
+        
         this.container.innerHTML = '';
-        events
-            .sort((a, b) => new Date(a.date) - new Date(b.date))
-            .forEach(event => {
-                this.container.appendChild(this.createEventElement(event));
-            });
+        
+        // Filter events based on showPastEvents setting
+        const filteredEvents = events.filter(event => {
+            return this.showPastEvents || !this.isEventPast(event);
+        });
+        
+        // Separate past and future events
+        const futureEvents = filteredEvents.filter(event => !this.isEventPast(event));
+        const pastEvents = filteredEvents.filter(event => this.isEventPast(event));
+        
+        // Sort future events by date (ascending), past events by date (descending)
+        futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+        pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        // Render future events first, then past events
+        [...futureEvents, ...pastEvents].forEach(event => {
+            this.container.appendChild(this.createEventElement(event));
+        });
+        
+        // Update toggle button text
+        if (this.toggleButton) {
+            const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
+            if (!this.showPastEvents) {
+                this.toggleButton.innerHTML = `
+                    <i class="fas fa-history"></i>
+                    Vergangene Termine ansehen (${pastEventsCount})
+                `;
+            }
+        }
         
         // After rendering, check for URL fragment
         this.scrollToEvent();
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const eventManager = new EventManager('events-container');
-    eventManager.render();
+    await eventManager.render();
 });
 
 // Listen for hash changes (when someone changes the URL fragment)
