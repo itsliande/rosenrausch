@@ -280,16 +280,10 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
-        }
-        
-        // Update toggle button text
-        if (this.toggleButton) {
-            const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
-            if (!this.showPastEvents) {
-                this.toggleButton.innerHTML = `
-                    <i class="fas fa-history"></i>
-                    Vergangene Termine ansehen (${pastEventsCount})
-                `;
+            
+            // Add toggle button at the bottom when NOT showing past events
+            if (!this.showPastEvents && this.toggleContainer) {
+                this.container.appendChild(this.toggleContainer);
             }
         }
         
