@@ -31,12 +31,17 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
   - Intelligente Fehlerbehandlung mit kontextbezogenen Hinweisen
   - Easter Eggs mit wechselnden lustigen Sprüchen und Konami-Code
 
+### Visual Identity
+- **Performance Image Integration**: Live-Performance Bild für Browser-Tabs, Google-Suche und Social Media
+- **Multi-Format Favicon Support**: Optimierte Icons für alle Geräte und Browser
+- **Social Media Preview**: Konsistente Bilddarstellung auf allen Plattformen
+
 ## SEO Features
 
 ### Meta-Tags und Structured Data
 - Umfassende Meta-Descriptions für alle Seiten
-- Open Graph Tags für Social Media Sharing
-- Twitter Card Unterstützung
+- Open Graph Tags für Social Media Sharing mit Performance-Bild
+- Twitter Card Unterstützung mit optimierter Bilddarstellung
 - Schema.org strukturierte Daten für bessere Suchmaschinen-Verständnis
 
 ### Technische SEO
@@ -44,12 +49,21 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 - **robots.txt**: Optimierte Crawler-Anweisungen
 - **Canonical URLs**: Vermeidung von Duplicate Content
 - **Performance**: Lazy Loading und Core Web Vitals Monitoring
+- **Favicon Integration**: Optimierte Browser-Tab und Bookmark-Darstellung
 
 ### Content-Optimierung
 - Keyword-optimierte Titel und Beschreibungen
 - Strukturierte Daten für Events und Personen
 - Alt-Texte für alle Bilder
 - Breadcrumb-Navigation
+- Performance-optimierte Bildformate
+
+## Image Assets
+Das Hauptbild (`rosenrausch-performer.jpg`) sollte im `/images/` Ordner gespeichert werden zusammen mit den generierten Favicon-Varianten:
+- `favicon.ico` (32x32)
+- `favicon-16x16.png`
+- `favicon-32x32.png` 
+- `apple-touch-icon.png` (180x180)
 
 ## Deployment
 
