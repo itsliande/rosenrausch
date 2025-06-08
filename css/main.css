@@ -792,6 +792,11 @@ h1 {
     margin: 25px 0 0 0;
 }
 
+/* Add extra space when toggle is at the top (showing past events) */
+.past-events-toggle-container:first-child {
+    margin-top: 40px;
+}
+
 .past-events-toggle {
     background: rgba(91, 33, 182, 0.1);
     backdrop-filter: blur(12px);

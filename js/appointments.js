@@ -105,6 +105,15 @@ class EventManager {
         const pastEventsCount = events.filter(event => this.isEventPast(event)).length;
         this.updateButtonText(pastEventsCount);
         
+        // Add class to container when showing past events for additional styling
+        if (this.toggleContainer) {
+            if (this.showPastEvents) {
+                this.toggleContainer.classList.add('showing-past-events');
+            } else {
+                this.toggleContainer.classList.remove('showing-past-events');
+            }
+        }
+        
         this.render();
     }
 
