@@ -272,17 +272,7 @@ class EventManager {
                 <p>Schau später wieder vorbei oder folge uns in den sozialen Medien, um über neue Termine informiert zu werden!</p>
             `;
             this.container.appendChild(noEventsMessage);
-            
-            // Add toggle button after the no events message
-            if (this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
         } else {
-            // Add toggle button at the top when showing events
-            if (this.toggleContainer) {
-                this.container.appendChild(this.toggleContainer);
-            }
-            
             // Sort future events by date (ascending), past events by date (descending)
             futureEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
             pastEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -291,6 +281,11 @@ class EventManager {
             [...futureEvents, ...pastEvents].forEach(event => {
                 this.container.appendChild(this.createEventElement(event));
             });
+        }
+        
+        // Add toggle button at the end in all cases
+        if (this.toggleContainer) {
+            this.container.appendChild(this.toggleContainer);
         }
         
         // After rendering, check for URL fragment
