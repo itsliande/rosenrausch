@@ -165,6 +165,57 @@
             opacity: 0.8;
         }
         
+        .contact-info {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .contact-info h3 {
+            color: #E9D5FF;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .contact-info p {
+            color: #9F7AEA;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #A855F7;
+            text-decoration: none;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: rgba(168, 85, 247, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .contact-link i {
+            font-size: 1.1em;
+        }
+        
         @media (max-width: 768px) {
             .quote-text {
                 font-size: 1em;
@@ -178,6 +229,15 @@
             
             .page-title {
                 font-size: 1.8em;
+            }
+            
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-link {
+                width: fit-content;
             }
         }
     </style>
@@ -197,6 +257,21 @@
         <div class="page-header">
             <h1 class="page-title">Zitate & Sprüche</h1>
             <p class="page-subtitle">Die besten Momente aus Rauschis Livestreams</p>
+        </div>
+        
+        <div class="contact-info">
+            <h3>💬 Hast du ein lustiges Zitat?</h3>
+            <p>Kennst du einen witzigen Spruch von Rauschi? Schreib Lian an und teile sie mit uns!</p>
+            <div class="contact-links">
+                <a href="https://discord.com/users/1234118238414180432" class="contact-link" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-discord"></i>
+                    Discord
+                </a>
+                <a href="https://www.instagram.com/itslian.de/profilecard/?igsh=c2lub2Q0dHQxeHZh" class="contact-link" target="_blank" rel="noopener">
+                    <i class="fa-brands fa-instagram"></i>
+                    Instagram
+                </a>
+            </div>
         </div>
         
         <div class="quotes-container">
