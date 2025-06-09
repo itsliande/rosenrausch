@@ -179,7 +179,7 @@ class EventManager {
                     <h3 class="event-description-title">Beschreibung</h3>
                     ${event.description}
                 </div>
-                ${event.image ? `<img src="${event.image}" alt="${event.title}" class="event-image">` : ''}
+                ${event.image ? `<img src="${event.image}" alt="Event Bild: ${event.title}" class="event-image">` : ''}
                 <div class="event-actions">
                     ${event.links ? event.links.map(link => `
                         <a href="${link.url}" class="event-button" target="_blank">

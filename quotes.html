@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/rosenrausch-performer.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/rosenrausch-performer.ico">
+    
+    <!-- SEO Meta Tags -->
+    <title>Zitate & Sprüche - Rosenrausch | Die besten Momente aus den Livestreams</title>
+    <meta name="description" content="Die lustigsten und besten Zitate von Rosenrausch aus seinen Livestreams. Entdecke unvergessliche Momente und Sprüche der Community.">
+    <meta name="keywords" content="Rosenrausch Zitate, Livestream Sprüche, lustige Momente, Raushi Quotes, Streaming Highlights">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rosenrausch.xyz/quotes">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Zitate & Sprüche - Rosenrausch">
+    <meta property="og:description" content="Die lustigsten und besten Zitate von Rosenrausch aus seinen Livestreams.">
+    <meta property="og:image" content="https://rosenrausch.xyz/profile.jpg">
+    <meta property="og:url" content="https://rosenrausch.xyz/quotes">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Zitate & Sprüche - Rosenrausch">
+    <meta name="twitter:description" content="Die lustigsten und besten Zitate von Rosenrausch aus seinen Livestreams.">
+    <meta name="twitter:image" content="https://rosenrausch.xyz/profile.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Rosenrausch Zitate & Sprüche",
+        "description": "Sammlung der besten Zitate und Sprüche von Rosenrausch aus seinen Livestreams",
+        "url": "https://rosenrausch.xyz/quotes",
+        "author": {
+            "@type": "Person",
+            "@id": "https://rosenrausch.xyz/#person"
+        }
+    }
+    </script>
+    
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .quotes-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quote-card {
+            background: rgba(91, 33, 182, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .quote-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(168, 85, 247, 0.4);
+            box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
+        }
+        
+        .quote-text {
+            font-size: 1.1em;
+            color: #E9D5FF;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-style: italic;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .quote-text::before {
+            content: '"';
+            font-size: 3em;
+            color: #A855F7;
+            position: absolute;
+            left: -10px;
+            top: -20px;
+            opacity: 0.3;
+        }
+        
+        .quote-text::after {
+            content: '"';
+            font-size: 3em;
+            color: #A855F7;
+            position: absolute;
+            right: -10px;
+            bottom: -40px;
+            opacity: 0.3;
+        }
+        
+        .quote-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .quote-date {
+            color: #9F7AEA;
+            font-size: 0.9em;
+        }
+        
+        .quote-context {
+            color: #A855F7;
+            font-size: 0.85em;
+            background: rgba(168, 85, 247, 0.1);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #A855F7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            color: #E9D5FF;
+            transform: translateX(-5px);
+        }
+        
+        .loading-indicator {
+            text-align: center;
+            color: #E9D5FF;
+            padding: 40px;
+            font-style: italic;
+        }
+        
+        .no-quotes {
+            text-align: center;
+            color: #9F7AEA;
+            padding: 40px;
+            background: rgba(91, 33, 182, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            color: #E9D5FF;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .page-subtitle {
+            color: #9F7AEA;
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .quote-text {
+                font-size: 1em;
+                padding: 0 15px;
+            }
+            
+            .quote-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .page-title {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://rosenrausch.xyz/" class="nav-item">Soziale Medien</a>
+        <a href="https://rosenrausch.xyz/minecraft" class="nav-item">Minecraft & Discord</a>
+        <a href="https://rosenrausch.xyz/termine" class="nav-item">Termine</a>
+        <a href="https://rosenrausch.xyz/team" class="nav-item">Unser Team</a>
+        <a href="https://rosenrausch.xyz/quotes" class="nav-item active">Zitate</a>
+    </nav>
+    
+    <div class="container">
+        <a href="https://rosenrausch.xyz/" class="back-button">← Zurück zur Hauptseite</a>
+        
+        <div class="page-header">
+            <h1 class="page-title">Zitate & Sprüche</h1>
+            <p class="page-subtitle">Die besten Momente aus Raushis Livestreams</p>
+        </div>
+        
+        <div class="quotes-container">
+            <div id="quotes-container">
+                <div class="loading-indicator">Zitate werden geladen...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="copyright">
+        © 2025 Rosenrausch. Alle Rechte vorbehalten.
+        <div class="legal-links">
+            <a href="https://rosenrausch.xyz/privacy">Datenschutz</a> |
+            <a href="https://rosenrausch.xyz/impressum">Impressum</a>
+        </div>
+    </div>
+    
+    <script src="js/mobile-nav.js"></script>
+    <script src="js/quotes-loader.js"></script>
+    <script src="js/seo-optimization.js"></script>
+</body>
+</html>

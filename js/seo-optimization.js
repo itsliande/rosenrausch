@@ -229,6 +229,7 @@ function addBreadcrumbStructuredData() {
         '/termine': 'Termine & Events',
         '/team': 'Unser Team',
         '/news': 'Neuigkeiten',
+        '/quotes': 'Zitate & Sprüche',
         '/impressum': 'Impressum',
         '/privacy': 'Datenschutz'
     };
@@ -340,6 +341,7 @@ function generateDynamicSitemap() {
         { url: '/termine', priority: 0.8, changefreq: 'weekly' },
         { url: '/team', priority: 0.7, changefreq: 'monthly' },
         { url: '/news', priority: 0.8, changefreq: 'daily' },
+        { url: '/quotes', priority: 0.6, changefreq: 'weekly' },
         { url: '/impressum', priority: 0.3, changefreq: 'yearly' },
         { url: '/privacy', priority: 0.3, changefreq: 'yearly' }
     ];

@@ -8,6 +8,7 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 - **minecraft.html**: Informationen zum Minecraft-Server
 - **termine.html**: Aktuelle Veranstaltungen und Termine
 - **team.html**: Vorstellung des Teams
+- **quotes.html**: Zitate und Sprüche aus Livestreams
 - **css/**: Enthält die Stylesheets für das Projekt
 - **js/**: JavaScript-Dateien für interaktive Funktionen
 - **images/**: Bilddateien für die Website
@@ -20,6 +21,7 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 - **Minecraft-Bereich**: Informationen zum Community-Server
 - **Terminkalender**: Aktuelle Veranstaltungen und Events
 - **Team-Übersicht**: Vorstellung der Teammitglieder
+- **Zitate-Sammlung**: Lustige Sprüche und Zitate aus Livestreams
 - **SEO-Optimierung**: Vollständige Suchmaschinenoptimierung
   - Meta-Tags für alle Seiten
   - Strukturierte Daten (Schema.org)
