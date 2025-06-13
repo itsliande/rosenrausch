@@ -5,6 +5,7 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 ## Projektstruktur
 
 - **index.html**: Hauptseite mit Social-Media-Links und Profil
+- **tiktok.html**: Vereinfachte Bio-Seite speziell für TikTok-Links
 - **minecraft.html**: Informationen zum Minecraft-Server
 - **termine.html**: Aktuelle Veranstaltungen und Termine
 - **team.html**: Vorstellung des Teams
@@ -17,6 +18,7 @@ Diese Website dient als zentrale Anlaufstelle für alle Rosenrausch Social-Media
 ## Features
 
 - **Social Media Integration**: Direkte Links zu allen Rosenrausch-Plattformen
+- **TikTok Bio Seite**: Minimalistische Seite mit nur den wichtigsten Links
 - **Responsive Design**: Optimiert für Mobile und Desktop
 - **Minecraft-Bereich**: Informationen zum Community-Server
 - **Terminkalender**: Aktuelle Veranstaltungen und Events
