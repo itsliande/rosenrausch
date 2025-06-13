@@ -899,3 +899,293 @@ h1 {
         right: 12px;
     }
 }
+
+/* TikTok Bio Seite - Spezielles Design */
+.tiktok-body {
+    position: relative;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #2D1B69 0%, #1A1033 30%, #2D1B69 60%, #4C1D95 100%);
+    background-size: 300% 300%;
+    animation: gentleGradient 20s ease infinite;
+}
+
+@keyframes gentleGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Rosen-Dekoration */
+.rose-decoration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.1;
+    font-size: 24px;
+    color: #E9D5FF;
+    animation: floatRose 15s infinite linear;
+}
+
+.rose-decoration:nth-child(odd) {
+    color: #F8BBD9;
+    animation-duration: 20s;
+}
+
+@keyframes floatRose {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.1;
+    }
+    80% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-50px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Glasmorphismus Container */
+.tiktok-container {
+    max-width: 600px;
+    width: 100%;
+    padding: 30px 20px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    padding: 40px 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-profile {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.profile-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+}
+
+.tiktok-profile-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    border: 3px solid rgba(168, 85, 247, 0.4);
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.tiktok-profile-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.5);
+}
+
+.tiktok-title {
+    color: #E9D5FF;
+    font-size: 28px;
+    margin-bottom: 8px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+    position: relative;
+}
+
+.tiktok-title::before,
+.tiktok-title::after {
+    content: '🌹';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    opacity: 0.6;
+}
+
+.tiktok-title::before {
+    left: -35px;
+}
+
+.tiktok-title::after {
+    right: -35px;
+}
+
+.tiktok-subtitle {
+    color: #9F7AEA;
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.tiktok-links {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 30px;
+}
+
+.tiktok-link-button {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 18px 26px;
+    border-radius: 20px;
+    color: #E9D5FF;
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-link-button:hover {
+    transform: translateY(-2px);
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
+}
+
+.tiktok-link-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.tiktok-link-icon {
+    font-size: 22px;
+    width: 28px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tiktok-link-button:hover .tiktok-link-icon {
+    transform: scale(1.1);
+}
+
+.tiktok-arrow {
+    color: #A855F7;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+}
+
+.tiktok-link-button:hover .tiktok-arrow {
+    transform: translateX(3px);
+    color: #E9D5FF;
+}
+
+/* Platform-spezifische Hover-Farben */
+.discord-link:hover { background: rgba(114, 137, 218, 0.15); }
+.spotify-link:hover { background: rgba(30, 215, 96, 0.15); }
+.instagram-link:hover { background: rgba(225, 48, 108, 0.15); }
+.apple-link:hover { background: rgba(252, 61, 3, 0.15); }
+.whatsapp-link:hover { background: rgba(37, 211, 102, 0.15); }
+
+.tiktok-footer {
+    text-align: center;
+    color: rgba(233, 213, 255, 0.6);
+    font-size: 13px;
+    margin-top: auto;
+    padding-top: 20px;
+}
+
+.tiktok-footer a {
+    color: #9F7AEA;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.tiktok-footer a:hover {
+    color: #E9D5FF;
+}
+
+/* Mobile Optimierung für TikTok */
+@media (max-width: 480px) {
+    .tiktok-container {
+        padding: 20px 15px;
+    }
+
+    .glass-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+    
+    .tiktok-profile-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-glow {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .tiktok-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .tiktok-title::before,
+    .tiktok-title::after {
+        font-size: 16px;
+    }
+
+    .tiktok-title::before {
+        left: -25px;
+    }
+
+    .tiktok-title::after {
+        right: -25px;
+    }
+    
+    .tiktok-link-button {
+        padding: 16px 22px;
+        border-radius: 18px;
+    }
+    
+    .tiktok-link-icon {
+        font-size: 20px;
+    }
+}
+
+/* Accessibility - Reduzierte Bewegung */
+@media (prefers-reduced-motion: reduce) {
+    .tiktok-body,
+    .rose-decoration {
+        animation: none;
+    }
+    
+    .tiktok-link-button:hover {
+        transform: none;
+    }
+}
