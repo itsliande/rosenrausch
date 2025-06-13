@@ -52,7 +52,69 @@
     </script>
     
     <style>
-        /* Spezielle Styles für TikTok Bio Seite */
+        /* Animierter Hintergrund */
+        body {
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #2D1B69 0%, #1A1033 30%, #2D1B69 60%, #6B21A8 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Particles */
+        .floating-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(168, 85, 247, 0.6);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .particle:nth-child(2n) {
+            background: rgba(233, 213, 255, 0.4);
+            animation-duration: 25s;
+        }
+
+        .particle:nth-child(3n) {
+            background: rgba(159, 122, 234, 0.5);
+            animation-duration: 30s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Glasmorphismus Container */
         .tiktok-container {
             max-width: 600px;
             width: 100%;
@@ -62,11 +124,58 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
         
         .tiktok-profile {
             text-align: center;
             margin-bottom: 40px;
+            position: relative;
+        }
+
+        .profile-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
         }
         
         .tiktok-profile-img {
@@ -74,21 +183,37 @@
             height: 120px;
             border-radius: 50%;
             margin-bottom: 20px;
-            border: 3px solid rgba(168, 85, 247, 0.3);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
-            transition: transform 0.3s ease;
+            border: 3px solid rgba(168, 85, 247, 0.4);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+            animation: profileFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
         
         .tiktok-profile-img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
         }
         
         .tiktok-title {
             color: #E9D5FF;
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+            to { text-shadow: 0 0 30px rgba(168, 85, 247, 0.8); }
         }
         
         .tiktok-subtitle {
@@ -96,58 +221,115 @@
             font-size: 16px;
             opacity: 0.9;
             margin-bottom: 10px;
+            animation: subtitleFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes subtitleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
         }
         
         .tiktok-links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
             margin-bottom: 30px;
         }
         
         .tiktok-link-button {
-            background: rgba(91, 33, 182, 0.15);
-            backdrop-filter: blur(12px);
-            padding: 16px 24px;
-            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            padding: 18px 26px;
+            border-radius: 20px;
             color: #E9D5FF;
             text-decoration: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(168, 85, 247, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        .tiktok-link-button:nth-child(1) { animation-delay: 0.1s; }
+        .tiktok-link-button:nth-child(2) { animation-delay: 0.2s; }
+        .tiktok-link-button:nth-child(3) { animation-delay: 0.3s; }
+        .tiktok-link-button:nth-child(4) { animation-delay: 0.4s; }
+        .tiktok-link-button:nth-child(5) { animation-delay: 0.5s; }
+        .tiktok-link-button:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .tiktok-link-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .tiktok-link-button:hover::before {
+            left: 100%;
         }
         
         .tiktok-link-content {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
         }
         
         .tiktok-link-icon {
-            font-size: 20px;
-            width: 24px;
+            font-size: 22px;
+            width: 28px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
         
         .tiktok-link-button:hover {
-            transform: translateY(-2px);
-            background: rgba(168, 85, 247, 0.2);
+            transform: translateY(-3px) scale(1.02);
+            background: rgba(168, 85, 247, 0.15);
             border-color: rgba(168, 85, 247, 0.3);
-            box-shadow: 0 8px 20px rgba(91, 33, 182, 0.2);
+            box-shadow: 0 15px 35px rgba(91, 33, 182, 0.3);
+        }
+
+        .tiktok-link-button:hover .tiktok-link-icon {
+            transform: scale(1.2) rotate(10deg);
         }
         
         .tiktok-arrow {
             color: #A855F7;
-            font-size: 18px;
-            transition: transform 0.3s ease;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
         }
         
         .tiktok-link-button:hover .tiktok-arrow {
-            transform: translateX(3px);
+            transform: translateX(5px) scale(1.1);
+            color: #E9D5FF;
         }
+
+        /* Spezielle Farben für verschiedene Plattformen */
+        .tiktok-link-button:nth-child(1):hover { background: rgba(114, 137, 218, 0.15); }
+        .tiktok-link-button:nth-child(2):hover { background: rgba(30, 215, 96, 0.15); }
+        .tiktok-link-button:nth-child(3):hover { background: rgba(225, 48, 108, 0.15); }
+        .tiktok-link-button:nth-child(4):hover { background: rgba(252, 61, 3, 0.15); }
+        .tiktok-link-button:nth-child(5):hover { background: rgba(37, 211, 102, 0.15); }
         
         .tiktok-footer {
             text-align: center;
@@ -155,116 +337,205 @@
             font-size: 13px;
             margin-top: auto;
             padding-top: 20px;
+            animation: fadeIn 1s ease 1s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .tiktok-footer a {
             color: #9F7AEA;
             text-decoration: none;
+            transition: color 0.3s ease;
         }
         
         .tiktok-footer a:hover {
             color: #E9D5FF;
         }
-        
+
+        /* Interaktive Click-Effekte */
+        .tiktok-link-button:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+
         /* Mobile Optimierung */
         @media (max-width: 480px) {
             .tiktok-container {
                 padding: 20px 15px;
+            }
+
+            .glass-card {
+                padding: 30px 20px;
+                border-radius: 20px;
             }
             
             .tiktok-profile-img {
                 width: 100px;
                 height: 100px;
             }
+
+            .profile-glow {
+                width: 120px;
+                height: 120px;
+            }
             
             .tiktok-title {
-                font-size: 22px;
+                font-size: 24px;
+                letter-spacing: 1px;
             }
             
             .tiktok-link-button {
-                padding: 14px 20px;
-                border-radius: 15px;
+                padding: 16px 22px;
+                border-radius: 18px;
             }
             
             .tiktok-link-icon {
-                font-size: 18px;
+                font-size: 20px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.1s !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.1s !important;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
     <div class="tiktok-container">
-        <div class="tiktok-profile">
-            <img src="profile.jpg" alt="Rosenrausch Profilbild" class="tiktok-profile-img">
-            <h1 class="tiktok-title">ROSENRAUSCH</h1>
-            <p class="tiktok-subtitle">Alle meine Links 🎵</p>
-        </div>
-        
-        <div class="tiktok-links">
-            <a href="https://discord.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">💬</span>
-                    <span>Discord Server</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
+        <div class="glass-card">
+            <div class="tiktok-profile">
+                <div class="profile-glow"></div>
+                <img src="profile.jpg" alt="Rosenrausch Profilbild" class="tiktok-profile-img">
+                <h1 class="tiktok-title">ROSENRAUSCH</h1>
+                <p class="tiktok-subtitle">Alle meine Links 🎵✨</p>
+            </div>
             
-            <a href="https://spotify.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">🎵</span>
-                    <span>Spotify</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
+            <div class="tiktok-links">
+                <a href="https://discord.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">💬</span>
+                        <span>Discord Server</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+                
+                <a href="https://spotify.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">🎵</span>
+                        <span>Spotify</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+                
+                <a href="https://instagram.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">📸</span>
+                        <span>Instagram</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+                
+                <a href="https://applemusik.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">🍎</span>
+                        <span>Apple Music</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+                
+                <a href="https://whatsapp.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">💚</span>
+                        <span>WhatsApp Channel</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+                
+                <a href="https://rosenrausch.xyz/" class="tiktok-link-button">
+                    <div class="tiktok-link-content">
+                        <span class="tiktok-link-icon">🌐</span>
+                        <span>Vollständige Website</span>
+                    </div>
+                    <span class="tiktok-arrow">→</span>
+                </a>
+            </div>
             
-            <a href="https://instagram.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">📸</span>
-                    <span>Instagram</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
-            
-            <a href="https://applemusik.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">🍎</span>
-                    <span>Apple Music</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
-            
-            <a href="https://whatsapp.rosenrausch.xyz" target="_blank" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">💚</span>
-                    <span>WhatsApp Channel</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
-            
-            <a href="https://rosenrausch.xyz/" class="tiktok-link-button">
-                <div class="tiktok-link-content">
-                    <span class="tiktok-link-icon">🌐</span>
-                    <span>Website</span>
-                </div>
-                <span class="tiktok-arrow">→</span>
-            </a>
-        </div>
-        
-        <div class="tiktok-footer">
-            © 2025 Rosenrausch<br>
-            <a href="https://rosenrausch.xyz/privacy">Datenschutz</a> | 
-            <a href="https://rosenrausch.xyz/impressum">Impressum</a>
+            <div class="tiktok-footer">
+                © 2025 Rosenrausch<br>
+                <a href="https://rosenrausch.xyz/privacy">Datenschutz</a> | 
+                <a href="https://rosenrausch.xyz/impressum">Impressum</a>
+            </div>
         </div>
     </div>
     
     <script>
-        // Einfaches Analytics für TikTok-Klicks
-        document.querySelectorAll('.tiktok-link-button').forEach(link => {
-            link.addEventListener('click', function() {
+        // Erstelle schwebende Partikel
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Link-Klick-Tracking mit visuellen Effekten
+        document.querySelectorAll('.tiktok-link-button').forEach((link, index) => {
+            link.addEventListener('click', function(e) {
                 const linkText = this.querySelector('span:not(.tiktok-link-icon):not(.tiktok-arrow)').textContent;
                 console.log('TikTok Bio Link geklickt:', linkText);
+                
+                // Erstelle Ripple-Effekt
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+                ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(168, 85, 247, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.pointerEvents = 'none';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
             });
         });
+
+        // Ripple-Animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialisiere Partikel beim Laden
+        document.addEventListener('DOMContentLoaded', createParticles);
     </script>
 </body>
 </html>
