@@ -919,7 +919,7 @@ h1 {
     position: fixed;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.1;
+    opacity: 0.15;
     font-size: 24px;
     color: #E9D5FF;
     animation: floatRose 15s infinite linear;
@@ -936,13 +936,68 @@ h1 {
         opacity: 0;
     }
     20% {
-        opacity: 0.1;
+        opacity: 0.15;
     }
     80% {
-        opacity: 0.1;
+        opacity: 0.15;
     }
     100% {
         transform: translateY(-50px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Floating Particles - Optimiert für Mobile */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: rgba(168, 85, 247, 0.4);
+    border-radius: 50%;
+    animation: float 25s infinite linear;
+}
+
+.particle:nth-child(2n) {
+    background: rgba(233, 213, 255, 0.3);
+    animation-duration: 30s;
+}
+
+.particle:nth-child(3n) {
+    background: rgba(159, 122, 234, 0.35);
+    animation-duration: 35s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 0.4;
+    }
+    80% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-50px) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Ripple-Effekt */
+@keyframes ripple {
+    to {
+        transform: scale(4);
         opacity: 0;
     }
 }
@@ -1105,11 +1160,11 @@ h1 {
 }
 
 /* Platform-spezifische Hover-Farben */
-.discord-link:hover { background: rgba(114, 137, 218, 0.15); }
-.spotify-link:hover { background: rgba(30, 215, 96, 0.15); }
-.instagram-link:hover { background: rgba(225, 48, 108, 0.15); }
-.apple-link:hover { background: rgba(252, 61, 3, 0.15); }
-.whatsapp-link:hover { background: rgba(37, 211, 102, 0.15); }
+.discord-link:hover { background: rgba(114, 137, 218, 0.15) !important; }
+.spotify-link:hover { background: rgba(30, 215, 96, 0.15) !important; }
+.instagram-link:hover { background: rgba(225, 48, 108, 0.15) !important; }
+.apple-link:hover { background: rgba(252, 61, 3, 0.15) !important; }
+.whatsapp-link:hover { background: rgba(37, 211, 102, 0.15) !important; }
 
 .tiktok-footer {
     text-align: center;
@@ -1129,61 +1184,6 @@ h1 {
     color: #E9D5FF;
 }
 
-/* Floating Particles - Optimiert für Mobile */
-.floating-particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: rgba(168, 85, 247, 0.4);
-    border-radius: 50%;
-    animation: float 25s infinite linear;
-}
-
-.particle:nth-child(2n) {
-    background: rgba(233, 213, 255, 0.3);
-    animation-duration: 30s;
-}
-
-.particle:nth-child(3n) {
-    background: rgba(159, 122, 234, 0.35);
-    animation-duration: 35s;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-    }
-    20% {
-        opacity: 0.4;
-    }
-    80% {
-        opacity: 0.4;
-    }
-    100% {
-        transform: translateY(-50px) rotate(180deg);
-        opacity: 0;
-    }
-}
-
-/* Ripple-Effekt */
-@keyframes ripple {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-
 /* Mobile Optimierung für TikTok */
 @media (max-width: 768px) {
     /* Reduziere Animationen auf Mobile */
@@ -1201,7 +1201,7 @@ h1 {
     /* Reduziere Rosen-Animationen */
     .rose-decoration {
         animation: simpleFloat 10s infinite ease-in-out;
-        opacity: 0.08;
+        opacity: 0.1;
     }
     
     @keyframes simpleFloat {
@@ -1211,19 +1211,74 @@ h1 {
 }
 
 @media (max-width: 480px) {
-    /* ...existing code... */
+    .tiktok-container {
+        padding: 20px 15px;
+    }
+
+    .glass-card {
+        padding: 30px 20px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .tiktok-profile-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-glow {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .tiktok-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+    }
+
+    .tiktok-title::before,
+    .tiktok-title::after {
+        font-size: 16px;
+    }
+
+    .tiktok-title::before {
+        left: -25px;
+    }
+
+    .tiktok-title::after {
+        right: -25px;
+    }
+    
+    .tiktok-link-button {
+        padding: 16px 22px;
+        border-radius: 18px;
+    }
+    
+    .tiktok-link-icon {
+        font-size: 20px;
+    }
     
     /* Deaktiviere Hover-Effekte auf Touch-Geräten */
     .tiktok-link-button:hover {
         transform: none;
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.1);
-        box-shadow: none;
     }
     
     .tiktok-link-button:active {
         transform: scale(0.98);
-        background: rgba(168, 85, 247, 0.15);
+    }
+}
+
+/* Accessibility - Reduzierte Bewegung */
+@media (prefers-reduced-motion: reduce) {
+    .tiktok-body,
+    .rose-decoration,
+    .floating-particles,
+    .particle {
+        animation: none;
+    }
+    
+    .tiktok-link-button:hover {
+        transform: none;
     }
 }
 
@@ -1240,19 +1295,5 @@ h1 {
     
     .rose-decoration {
         display: none;
-    }
-}
-
-/* Accessibility - Reduzierte Bewegung */
-@media (prefers-reduced-motion: reduce) {
-    .tiktok-body,
-    .rose-decoration,
-    .floating-particles,
-    .particle {
-        animation: none;
-    }
-    
-    .tiktok-link-button:hover {
-        transform: none;
     }
 }
