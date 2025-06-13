@@ -134,91 +134,91 @@
     </div>
     
     <script>
-        // Erstelle schwebende Partikel
+        // Mobile Detection
+        function isMobile() {
+            return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Vereinfachtes Partikel-System nur für Desktop
         function createParticles() {
-            const particlesContainer = document.createElement('div');
-            particlesContainer.className = 'floating-particles';
-            particlesContainer.id = 'particles';
-            document.body.appendChild(particlesContainer);
-            
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 20) + 's';
-                particlesContainer.appendChild(particle);
+            // Prüfe ob Desktop und nicht reduced motion
+            if (!isMobile() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const particlesContainer = document.createElement('div');
+                particlesContainer.className = 'floating-particles';
+                particlesContainer.id = 'particles';
+                document.body.appendChild(particlesContainer);
+                
+                const particleCount = 8; // Reduziert für bessere Performance
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 25 + 's';
+                    particle.style.animationDuration = (Math.random() * 15 + 25) + 's';
+                    particlesContainer.appendChild(particle);
+                }
             }
         }
 
-        // Link-Klick-Tracking mit visuellen Effekten
-        document.querySelectorAll('.tiktok-link-button').forEach((link, index) => {
+        // Einfaches Link-Tracking ohne Ripple-Effekt auf Mobile
+        document.querySelectorAll('.tiktok-link-button').forEach(link => {
             link.addEventListener('click', function(e) {
-                const linkText = this.querySelector('span:not(.tiktok-link-icon):not(.tiktok-arrow)').textContent;
+                const linkText = this.querySelector('span').textContent;
                 console.log('TikTok Bio Link geklickt:', linkText);
                 
-                // Erstelle Ripple-Effekt
-                const ripple = document.createElement('div');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
-                ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(168, 85, 247, 0.3)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s linear';
-                ripple.style.pointerEvents = 'none';
-                
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
+                // Ripple-Effekt nur auf Desktop
+                if (!isMobile()) {
+                    const ripple = document.createElement('div');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${e.clientX - rect.left - size / 2}px;
+                        top: ${e.clientY - rect.top - size / 2}px;
+                        border-radius: 50%;
+                        background: rgba(168, 85, 247, 0.3);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                }
             });
         });
 
-        // Ripple-Animation CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+        // Initialisiere nur auf Desktop
+        if (!isMobile()) {
+            document.addEventListener('DOMContentLoaded', createParticles);
+        }
+        
+        // Entferne Partikel beim Resize auf Mobile
+        window.addEventListener('resize', function() {
+            if (isMobile()) {
+                const particles = document.getElementById('particles');
+                if (particles) {
+                    particles.remove();
                 }
+            } else if (!document.getElementById('particles')) {
+                createParticles();
             }
-            .floating-particles {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 1;
-            }
-            .particle {
-                position: absolute;
-                width: 4px;
-                height: 4px;
-                background: rgba(168, 85, 247, 0.3);
-                border-radius: 50%;
-                animation: float 20s infinite linear;
-            }
-            @keyframes float {
-                0% {
-                    transform: translateY(100vh) rotate(0deg);
-                    opacity: 0;
-                }
-                20% {
-                    opacity: 0.3;
-                }
-                80% {
-                    opacity: 0.3;
-                }
+        });
+
+        // Performance-Optimierung: Reduziere Animationen bei schwacher Performance
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
+            document.documentElement.style.setProperty('--animation-duration-multiplier', '2');
+        }
+    </script>
+</body>
+</html>
                 100% {
                     transform: translateY(-50px) rotate(180deg);
                     opacity: 0;
