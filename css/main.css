@@ -1300,7 +1300,7 @@ h1 {
 
 /* News-Link-Buttons */
 .news-link-container {
-    margin: 10px 0;
+    margin: 12px 0 8px 0; /* Reduzierter unterer Abstand */
     display: flex;
     justify-content: flex-start;
 }
@@ -1308,128 +1308,138 @@ h1 {
 .news-link-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    background: rgba(168, 85, 247, 0.15);
+    gap: 10px;
+    padding: 14px 24px;
+    background: rgba(91, 33, 182, 0.1);
+    backdrop-filter: blur(12px);
     color: #E9D5FF;
     text-decoration: none;
-    border-radius: 12px;
+    border-radius: 18px;
     font-weight: 500;
     font-size: 0.9em;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(168, 85, 247, 0.2);
+    transition: all 0.4s ease;
+    border: 1px solid rgba(168, 85, 247, 0.1);
     position: relative;
     overflow: hidden;
 }
 
 .news-link-button:hover {
-    background: rgba(168, 85, 247, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
-    border-color: rgba(168, 85, 247, 0.4);
+    background: rgba(168, 85, 247, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(91, 33, 182, 0.2);
+    border-color: rgba(168, 85, 247, 0.3);
 }
 
 .news-link-button .button-arrow {
     transition: transform 0.3s ease;
-    font-size: 0.8em;
+    font-size: 0.85em;
+    opacity: 0.8;
 }
 
 .news-link-button:hover .button-arrow {
-    transform: translateX(3px);
+    transform: translateX(4px);
+    opacity: 1;
 }
 
-/* Platform-spezifische Button-Styles */
+/* Platform-spezifische Button-Styles - überarbeitet */
 .presave-button {
-    background: rgba(30, 215, 96, 0.15);
-    border-color: rgba(30, 215, 96, 0.2);
+    background: rgba(30, 215, 96, 0.1);
+    border-color: rgba(30, 215, 96, 0.15);
 }
 
 .presave-button:hover {
-    background: rgba(30, 215, 96, 0.25);
-    border-color: rgba(30, 215, 96, 0.4);
-    box-shadow: 0 5px 15px rgba(30, 215, 96, 0.2);
+    background: rgba(30, 215, 96, 0.15);
+    border-color: rgba(30, 215, 96, 0.3);
+    box-shadow: 0 10px 25px rgba(30, 215, 96, 0.15);
 }
 
 .spotify-button {
-    background: rgba(30, 215, 96, 0.15);
-    border-color: rgba(30, 215, 96, 0.2);
+    background: rgba(30, 215, 96, 0.1);
+    border-color: rgba(30, 215, 96, 0.15);
 }
 
 .spotify-button:hover {
-    background: rgba(30, 215, 96, 0.25);
-    border-color: rgba(30, 215, 96, 0.4);
-    box-shadow: 0 5px 15px rgba(30, 215, 96, 0.2);
+    background: rgba(30, 215, 96, 0.15);
+    border-color: rgba(30, 215, 96, 0.3);
+    box-shadow: 0 10px 25px rgba(30, 215, 96, 0.15);
 }
 
 .youtube-button {
-    background: rgba(255, 0, 0, 0.15);
-    border-color: rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.1);
+    border-color: rgba(255, 0, 0, 0.15);
 }
 
 .youtube-button:hover {
-    background: rgba(255, 0, 0, 0.25);
-    border-color: rgba(255, 0, 0, 0.4);
-    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
+    background: rgba(255, 0, 0, 0.15);
+    border-color: rgba(255, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 0, 0, 0.15);
 }
 
 .instagram-button {
-    background: rgba(225, 48, 108, 0.15);
-    border-color: rgba(225, 48, 108, 0.2);
+    background: rgba(225, 48, 108, 0.1);
+    border-color: rgba(225, 48, 108, 0.15);
 }
 
 .instagram-button:hover {
-    background: rgba(225, 48, 108, 0.25);
-    border-color: rgba(225, 48, 108, 0.4);
-    box-shadow: 0 5px 15px rgba(225, 48, 108, 0.2);
+    background: rgba(225, 48, 108, 0.15);
+    border-color: rgba(225, 48, 108, 0.3);
+    box-shadow: 0 10px 25px rgba(225, 48, 108, 0.15);
 }
 
 .tiktok-button {
-    background: rgba(255, 0, 80, 0.15);
-    border-color: rgba(255, 0, 80, 0.2);
+    background: rgba(255, 0, 80, 0.1);
+    border-color: rgba(255, 0, 80, 0.15);
 }
 
 .tiktok-button:hover {
-    background: rgba(255, 0, 80, 0.25);
-    border-color: rgba(255, 0, 80, 0.4);
-    box-shadow: 0 5px 15px rgba(255, 0, 80, 0.2);
+    background: rgba(255, 0, 80, 0.15);
+    border-color: rgba(255, 0, 80, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 0, 80, 0.15);
 }
 
 .discord-button {
-    background: rgba(114, 137, 218, 0.15);
-    border-color: rgba(114, 137, 218, 0.2);
+    background: rgba(114, 137, 218, 0.1);
+    border-color: rgba(114, 137, 218, 0.15);
 }
 
 .discord-button:hover {
-    background: rgba(114, 137, 218, 0.25);
-    border-color: rgba(114, 137, 218, 0.4);
-    box-shadow: 0 5px 15px rgba(114, 137, 218, 0.2);
+    background: rgba(114, 137, 218, 0.15);
+    border-color: rgba(114, 137, 218, 0.3);
+    box-shadow: 0 10px 25px rgba(114, 137, 218, 0.15);
 }
 
 /* Mobile Anpassungen für News-Link-Buttons */
 @media (max-width: 768px) {
     .news-link-button {
-        padding: 10px 16px;
+        padding: 12px 20px;
         font-size: 0.85em;
-        gap: 6px;
+        gap: 8px;
+        border-radius: 16px;
     }
     
     .news-link-container {
-        margin: 8px 0;
+        margin: 10px 0 6px 0;
     }
 }
 
 @media (max-width: 480px) {
     .news-link-button {
-        padding: 8px 14px;
+        padding: 10px 18px;
         font-size: 0.8em;
-        border-radius: 10px;
+        border-radius: 14px;
+        gap: 6px;
     }
     
     .news-link-container {
-        margin: 6px 0;
+        margin: 8px 0 4px 0;
     }
     
     .news-link-button .button-arrow {
-        font-size: 0.7em;
+        font-size: 0.75em;
+    }
+    
+    /* Reduzierte Hover-Effekte auf Mobile */
+    .news-link-button:hover {
+        transform: translateY(-1px);
     }
 }
