@@ -51,6 +51,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 return text.replace(/\n/g, '<br>');
             }
             
+            // Funktion zum Erkennen und Konvertieren von Links zu Buttons
+            function convertLinksToButtons(text) {
+                // URL-Regex Pattern für http/https Links
+                const urlRegex = /(https?:\/\/[^\s<>"{}|\\^`[\]]+)/gi;
+                
+                return text.replace(urlRegex, function(url) {
+                    // Bestimme den Button-Text basierend auf der URL
+                    let buttonText = 'Link öffnen';
+                    let buttonClass = 'news-link-button';
+                    let iconClass = 'fas fa-external-link-alt';
+                    
+                    // Spezifische Button-Texte für bekannte Domains
+                    if (url.includes('tunelink.to') || url.includes('presave')) {
+                        buttonText = 'Presave Link';
+                        buttonClass += ' presave-button';
+                        iconClass = 'fas fa-music';
+                    } else if (url.includes('spotify.com')) {
+                        buttonText = 'Auf Spotify öffnen';
+                        buttonClass += ' spotify-button';
+                        iconClass = 'fab fa-spotify';
+                    } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+                        buttonText = 'Video ansehen';
+                        buttonClass += ' youtube-button';
+                        iconClass = 'fab fa-youtube';
+                    } else if (url.includes('instagram.com')) {
+                        buttonText = 'Auf Instagram öffnen';
+                        buttonClass += ' instagram-button';
+                        iconClass = 'fab fa-instagram';
+                    } else if (url.includes('tiktok.com')) {
+                        buttonText = 'Auf TikTok öffnen';
+                        buttonClass += ' tiktok-button';
+                        iconClass = 'fab fa-tiktok';
+                    } else if (url.includes('discord')) {
+                        buttonText = 'Discord beitreten';
+                        buttonClass += ' discord-button';
+                        iconClass = 'fab fa-discord';
+                    }
+                    
+                    return `<div class="news-link-container">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="${buttonClass}">
+                            <i class="${iconClass}"></i>
+                            <span>${buttonText}</span>
+                            <i class="fas fa-arrow-right button-arrow"></i>
+                        </a>
+                    </div>`;
+                });
+            }
+            
             // News-Items erstellen und anzeigen
             if (activeNewsItems.length === 0) {
                 newsContainer.innerHTML = '<div class="no-news">Keine aktuellen Neuigkeiten verfügbar.</div>';
@@ -74,10 +122,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>`;
                 }
                 
+                // Verarbeite den Content: Erst Links zu Buttons, dann Newlines zu <br>
+                const processedContent = convertNewlines(convertLinksToButtons(item.content));
+                
                 newsItem.innerHTML = `
                     <span class="news-date">${item.date}</span>
                     <div class="news-item-title">${item.title}</div>
-                    <div class="news-content">${convertNewlines(item.content)}</div>
+                    <div class="news-content">${processedContent}</div>
                     ${terminLinkHtml}
                 `;
                 

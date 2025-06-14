@@ -128,6 +128,98 @@ function updateDynamicMetaData() {
             }
         }
     }
+    
+    // Füge strukturierte Daten für News-Links hinzu
+    addNewsLinksStructuredData();
+}
+
+/**
+ * Fügt strukturierte Daten für News-Links hinzu
+ */
+function addNewsLinksStructuredData() {
+    const newsItems = document.querySelectorAll('.news-item');
+    if (newsItems.length === 0) return;
+    
+    const articles = [];
+    
+    newsItems.forEach((item, index) => {
+        const title = item.querySelector('.news-item-title')?.textContent;
+        const date = item.querySelector('.news-date')?.textContent;
+        const content = item.querySelector('.news-content')?.textContent;
+        const links = item.querySelectorAll('.news-link-button');
+        
+        if (title && date) {
+            const article = {
+                "@type": "NewsArticle",
+                "headline": title,
+                "datePublished": convertDateToISO(date),
+                "author": {
+                    "@type": "Person",
+                    "name": "Rosenrausch"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Rosenrausch",
+                    "url": "https://rosenrausch.xyz"
+                }
+            };
+            
+            if (content) {
+                article.description = content.substring(0, 200);
+            }
+            
+            // Füge externe Links als Referenzen hinzu
+            if (links.length > 0) {
+                article.mentions = Array.from(links).map(link => ({
+                    "@type": "WebPage",
+                    "url": link.href,
+                    "name": link.querySelector('span')?.textContent || 'External Link'
+                }));
+            }
+            
+            articles.push(article);
+        }
+    });
+    
+    if (articles.length > 0) {
+        const structuredData = {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": articles.map((article, index) => ({
+                "@type": "ListItem",
+                "position": index + 1,
+                "item": article
+            }))
+        };
+        
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(structuredData);
+        document.head.appendChild(script);
+    }
+}
+
+/**
+ * Konvertiert deutsches Datum zu ISO-Format
+ */
+function convertDateToISO(germanDate) {
+    const months = {
+        'Januar': '01', 'Februar': '02', 'März': '03', 'April': '04',
+        'Mai': '05', 'Juni': '06', 'Juli': '07', 'August': '08',
+        'September': '09', 'Oktober': '10', 'November': '11', 'Dezember': '12'
+    };
+    
+    // Format: "1. Juni 2025"
+    const parts = germanDate.replace('.', '').split(' ');
+    if (parts.length === 3) {
+        const day = parts[0].padStart(2, '0');
+        const month = months[parts[1]] || '01';
+        const year = parts[2];
+        return `${year}-${month}-${day}`;
+    }
+    
+    // Fallback: aktuelles Datum
+    return new Date().toISOString().split('T')[0];
 }
 
 /**
