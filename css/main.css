@@ -1300,7 +1300,7 @@ h1 {
 
 /* News-Link-Buttons */
 .news-link-container {
-    margin: 12px 0 6px 0; /* Reduzierter unterer Abstand */
+    margin: 12px 0 2px 0; /* Unterer Abstand von 6px auf 2px reduziert */
     display: flex;
     justify-content: flex-start;
 }
@@ -1418,7 +1418,7 @@ h1 {
     }
     
     .news-link-container {
-        margin: 10px 0 4px 0;
+        margin: 10px 0 1px 0; /* Unterer Abstand von 4px auf 1px reduziert */
     }
 }
 
@@ -1431,7 +1431,7 @@ h1 {
     }
     
     .news-link-container {
-        margin: 8px 0 3px 0;
+        margin: 8px 0 0px 0; /* Unterer Abstand von 3px auf 0px reduziert */
     }
     
     .news-link-button .button-arrow {
