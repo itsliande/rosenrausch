@@ -1300,7 +1300,7 @@ h1 {
 
 /* News-Link-Buttons */
 .news-link-container {
-    margin: 15px 0;
+    margin: 10px 0;
     display: flex;
     justify-content: flex-start;
 }
@@ -1414,7 +1414,7 @@ h1 {
     }
     
     .news-link-container {
-        margin: 12px 0;
+        margin: 8px 0;
     }
 }
 
@@ -1423,6 +1423,10 @@ h1 {
         padding: 8px 14px;
         font-size: 0.8em;
         border-radius: 10px;
+    }
+    
+    .news-link-container {
+        margin: 6px 0;
     }
     
     .news-link-button .button-arrow {
