@@ -8,7 +8,7 @@ async function renderTeam() {
             if (window.firebase && window.firebase.apps.length > 0) {
                 try {
                     const { db } = await import('./firebase-config.js');
-                    const { collection, getDocs } = await import('firebase/firestore');
+                    const { collection, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js');
                     
                     const querySnapshot = await getDocs(collection(db, 'team-members'));
                     const categories = {};

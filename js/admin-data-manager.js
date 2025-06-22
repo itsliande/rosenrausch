@@ -1,6 +1,6 @@
 // Firebase Data Manager für Admin Panel
 import { db } from './firebase-config.js';
-import { collection, doc, getDocs, setDoc, deleteDoc, updateDoc, addDoc } from 'firebase/firestore';
+// Firebase imports werden dynamisch in den Methoden geladen
 
 class AdminDataManager {
     constructor() {
@@ -12,9 +12,17 @@ class AdminDataManager {
         };
     }
 
+    // Dynamische Firebase-Imports
+    async getFirebaseImports() {
+        const { collection, doc, getDocs, setDoc, deleteDoc, updateDoc, addDoc } = 
+            await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js');
+        return { collection, doc, getDocs, setDoc, deleteDoc, updateDoc, addDoc };
+    }
+
     // Team Management
     async getTeamData() {
         try {
+            const { collection, getDocs } = await this.getFirebaseImports();
             const querySnapshot = await getDocs(collection(db, this.collections.team));
             const categories = {};
             
@@ -42,8 +50,9 @@ class AdminDataManager {
 
     async saveTeamMember(memberData) {
         try {
+            const { collection, doc, setDoc, addDoc } = await this.getFirebaseImports();
             if (memberData.id) {
-                await updateDoc(doc(db, this.collections.team, memberData.id), memberData);
+                await setDoc(doc(db, this.collections.team, memberData.id), memberData);
             } else {
                 await addDoc(collection(db, this.collections.team), memberData);
             }
@@ -55,6 +64,7 @@ class AdminDataManager {
 
     async deleteTeamMember(memberId) {
         try {
+            const { doc, deleteDoc } = await this.getFirebaseImports();
             await deleteDoc(doc(db, this.collections.team, memberId));
         } catch (error) {
             console.error('Fehler beim Löschen des Team-Mitglieds:', error);
@@ -65,6 +75,7 @@ class AdminDataManager {
     // News Management
     async getNewsData() {
         try {
+            const { collection, getDocs } = await this.getFirebaseImports();
             const querySnapshot = await getDocs(collection(db, this.collections.news));
             const news = [];
             
@@ -84,8 +95,9 @@ class AdminDataManager {
 
     async saveNewsItem(newsData) {
         try {
+            const { collection, doc, setDoc, addDoc } = await this.getFirebaseImports();
             if (newsData.id) {
-                await updateDoc(doc(db, this.collections.news, newsData.id), newsData);
+                await setDoc(doc(db, this.collections.news, newsData.id), newsData);
             } else {
                 await addDoc(collection(db, this.collections.news), newsData);
             }
@@ -97,6 +109,7 @@ class AdminDataManager {
 
     async deleteNewsItem(newsId) {
         try {
+            const { doc, deleteDoc } = await this.getFirebaseImports();
             await deleteDoc(doc(db, this.collections.news, newsId));
         } catch (error) {
             console.error('Fehler beim Löschen der News:', error);
@@ -107,6 +120,7 @@ class AdminDataManager {
     // Events Management
     async getEventsData() {
         try {
+            const { collection, getDocs } = await this.getFirebaseImports();
             const querySnapshot = await getDocs(collection(db, this.collections.events));
             const events = [];
             
@@ -126,8 +140,9 @@ class AdminDataManager {
 
     async saveEvent(eventData) {
         try {
+            const { collection, doc, setDoc, addDoc } = await this.getFirebaseImports();
             if (eventData.id) {
-                await updateDoc(doc(db, this.collections.events, eventData.id), eventData);
+                await setDoc(doc(db, this.collections.events, eventData.id), eventData);
             } else {
                 await addDoc(collection(db, this.collections.events), eventData);
             }
@@ -139,6 +154,7 @@ class AdminDataManager {
 
     async deleteEvent(eventId) {
         try {
+            const { doc, deleteDoc } = await this.getFirebaseImports();
             await deleteDoc(doc(db, this.collections.events, eventId));
         } catch (error) {
             console.error('Fehler beim Löschen des Events:', error);
@@ -149,6 +165,7 @@ class AdminDataManager {
     // Quotes Management
     async getQuotesData() {
         try {
+            const { collection, getDocs } = await this.getFirebaseImports();
             const querySnapshot = await getDocs(collection(db, this.collections.quotes));
             const quotes = [];
             
@@ -168,8 +185,9 @@ class AdminDataManager {
 
     async saveQuote(quoteData) {
         try {
+            const { collection, doc, setDoc, addDoc } = await this.getFirebaseImports();
             if (quoteData.id) {
-                await updateDoc(doc(db, this.collections.quotes, quoteData.id), quoteData);
+                await setDoc(doc(db, this.collections.quotes, quoteData.id), quoteData);
             } else {
                 await addDoc(collection(db, this.collections.quotes), quoteData);
             }
@@ -181,6 +199,7 @@ class AdminDataManager {
 
     async deleteQuote(quoteId) {
         try {
+            const { doc, deleteDoc } = await this.getFirebaseImports();
             await deleteDoc(doc(db, this.collections.quotes, quoteId));
         } catch (error) {
             console.error('Fehler beim Löschen des Quotes:', error);
