@@ -33,15 +33,11 @@ if (!firebaseConfig.projectId) {
     console.log('✅ Firebase projectId:', firebaseConfig.projectId);
 }
 
-try {
-    const app = initializeApp(firebaseConfig);
-    console.log('✅ Firebase App erfolgreich initialisiert');
-    console.log('📱 App Name:', app.name);
-    console.log('🔧 App Options:', app.options);
-} catch (error) {
-    console.error('❌ FEHLER beim Initialisieren von Firebase:', error);
-    throw error;
-}
+// App und Services initialisieren
+const app = initializeApp(firebaseConfig);
+console.log('✅ Firebase App erfolgreich initialisiert');
+console.log('📱 App Name:', app.name);
+console.log('🔧 App Options:', app.options);
 
 // Services exportieren
 export const auth = getAuth(app);
