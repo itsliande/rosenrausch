@@ -1,0 +1,67 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Replace API Key in Firebase Config
+        run: |
+          echo "🔧 Ersetze API_KEY_RAUSHI mit echtem API-Key..."
+          # Ersetze in der Firebase-Config-Datei
+          sed -i 's/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g' js/firebase-config.js
+          
+          # Zeige den ersten Teil der Datei zur Überprüfung (ohne den echten Key zu zeigen)
+          echo "📄 Firebase-Config nach Ersetzung:"
+          head -n 50 js/firebase-config.js | grep -A 5 -B 5 "apiKey"
+          
+          # Überprüfe, ob die Ersetzung erfolgreich war
+          if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
+            echo "❌ FEHLER: API_KEY_RAUSHI wurde nicht ersetzt!"
+            exit 1
+          else
+            echo "✅ API_KEY_RAUSHI wurde erfolgreich ersetzt"
+          fi
+
+      - name: Verify API Key Replacement
+        run: |
+          echo "🔍 Überprüfe API-Key-Ersetzung..."
+          if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
+            echo "❌ FEHLER: Placeholder wurde nicht ersetzt!"
+            grep -n "API_KEY_RAUSHI" js/firebase-config.js
+            exit 1
+          else
+            echo "✅ Alle Platzhalter wurden ersetzt"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

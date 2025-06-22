@@ -9,27 +9,34 @@ console.log('🔧 Firebase-Konfiguration wird geladen...');
 function getSecureApiKey() {
     console.log('🔍 Suche nach Firebase API-Key...');
     
-    // 1. Prüfe lokale Entwicklungskonfiguration
+    // 1. GitHub Actions ersetzt diesen Wert in der Produktion
+    const buildTimeKey = "API_KEY_RAUSHI";
+    if (buildTimeKey && buildTimeKey !== "API_KEY_RAUSHI") {
+        console.log('✅ API-Key durch GitHub Actions geladen');
+        return buildTimeKey;
+    }
+    
+    // 2. Prüfe lokale Entwicklungskonfiguration
     if (typeof window !== 'undefined' && window.FIREBASE_API_KEY) {
         console.log('✅ API-Key aus lokaler Konfiguration geladen');
         return window.FIREBASE_API_KEY;
     }
     
-    // 2. Prüfe HTML Meta-Tag
+    // 3. Prüfe HTML Meta-Tag
     const metaTag = document.querySelector('meta[name="firebase-api-key"]');
     if (metaTag && metaTag.content) {
         console.log('✅ API-Key aus Meta-Tag geladen');
         return metaTag.content;
     }
     
-    // 3. GitHub Actions Placeholder (wird in Produktion ersetzt)
-    const buildKey = "API_KEY_RAUSHI";
-    if (buildKey !== "API_KEY_RAUSHI") {
-        console.log('✅ API-Key durch GitHub Actions ersetzt');
-        return buildKey;
+    // 4. Prüfe Umgebungsvariable (falls verfügbar)
+    if (typeof process !== 'undefined' && process.env && process.env.FIREBASE_API_KEY) {
+        console.log('✅ API-Key aus Umgebungsvariable geladen');
+        return process.env.FIREBASE_API_KEY;
     }
     
     console.error('❌ Kein gültiger API-Key gefunden!');
+    console.log('💡 Für lokale Entwicklung: Erstelle js/firebase-config.local.js');
     return null;
 }
 
@@ -37,7 +44,7 @@ const apiKey = getSecureApiKey();
 
 // Firebase-Konfiguration
 const firebaseConfig = {
-    apiKey: API_KEY_RAUSHI,
+    apiKey: apiKey,
     authDomain: "rosenrasch.firebaseapp.com",
     projectId: "rosenrasch",
     storageBucket: "rosenrasch.firebasestorage.app",
@@ -45,45 +52,43 @@ const firebaseConfig = {
     appId: "1:238261942819:web:3294f6c8031303f423cf96"
 };
 
-// Sichere Konfigurationsanzeige
-console.log('📊 Config: ', {
-    ...firebaseConfig,
-    apiKey: apiKey ? `${apiKey.substring(0, 8)}...` : 'NICHT_GESETZT'
-});
+// Debug-Ausgabe (ohne den echten Key zu zeigen)
+console.log('📊 Firebase Config Status:');
+console.log('   API-Key:', apiKey ? `${apiKey.substring(0, 8)}...` : 'NICHT_GESETZT');
+console.log('   Project ID:', firebaseConfig.projectId);
+console.log('   Auth Domain:', firebaseConfig.authDomain);
 
 // Validierung der Konfiguration
 if (!apiKey) {
     console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
     console.log('💡 Mögliche Lösungen:');
     console.log('   1. GitHub Actions: Stelle sicher, dass das Secret API_KEY_RAUSHI gesetzt ist');
-    console.log('   2. Lokale Entwicklung: Setze window.FIREBASE_API_KEY in einer separaten Datei');
-    console.log('   3. HTML Meta-Tag: <meta name="firebase-api-key" content="dein-key">');
-    console.log('   4. Umgebungsvariable: FIREBASE_API_KEY=dein-key');
+    console.log('   2. Lokale Entwicklung: Erstelle js/firebase-config.local.js mit window.FIREBASE_API_KEY');
+    throw new Error('Firebase API-Key fehlt');
 } else if (!apiKey.startsWith('AIza')) {
     console.warn('⚠️ WARNUNG: API-Key hat unerwartetes Format');
 } else {
-    console.log('✅ Firebase apiKey ist konfiguriert');
+    console.log('✅ Firebase API-Key ist konfiguriert');
 }
 
-console.log('✅ Firebase projectId:', firebaseConfig.projectId);
+// Firebase App initialisieren
+let app, auth, db;
 
-// App initialisieren
-let app;
 try {
     app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    
     console.log('✅ Firebase App erfolgreich initialisiert');
     console.log('📱 App Name:', app.name);
 } catch (error) {
-    console.error('❌ Firebase App Initialisierung fehlgeschlagen:', error);
-    throw new Error('Firebase konnte nicht initialisiert werden. Bitte prüfen Sie die Konfiguration.');
+    console.error('❌ Fehler beim Initialisieren von Firebase:', error);
+    throw error;
 }
 
-// Services exportieren
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// Exports für andere Module
+window.firebaseApp = app;
+window.firebaseAuth = auth;
+window.firebaseDB = db;
 
-console.log('🔐 Auth Service: ✅ Geladen');
-console.log('🗄️ Firestore: ✅ Geladen');
-console.log('🚀 Firebase-Setup abgeschlossen!');
-
-export default app;
+export { app, auth, db };
