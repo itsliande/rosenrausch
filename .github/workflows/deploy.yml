@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Replace API Key in env-config.js
+      run: |
+        echo "Replacing API key in env-config.js..."
+        sed -i "s/DEIN_ECHTER_API_KEY_HIER/${{ secrets.API_KEY_RAUSHI }}/g" js/env-config.js
+        echo "API key replacement completed"
+        
+    - name: Replace API Key in firebase-config.js
+      run: |
+        echo "Replacing API key in firebase-config.js..."
+        sed -i "s/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g" js/firebase-config.js
+        echo "Firebase config API key replacement completed"
+        
+    - name: Verify API Key replacement
+      run: |
+        echo "Checking if API key was replaced..."
+        if grep -q "DEIN_ECHTER_API_KEY_HIER" js/env-config.js; then
+          echo "ERROR: API key was not replaced in env-config.js"
+          exit 1
+        fi
+        if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
+          echo "ERROR: API key was not replaced in firebase-config.js"
+          exit 1
+        fi
+        echo "API key replacement verified successfully"
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        exclude_assets: '.github,*.md,API_KEY_SETUP.md,FIREBASE_SETUP.md'
