@@ -27,9 +27,24 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Replace API Key in firebase-config.js
+      - name: Replace API Keys
         run: |
-          sed -i "s/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g" js/firebase-config.js
+          echo "Replacing API keys in all files..."
+          echo "Current API_KEY_RAUSHI placeholder in firebase-config.js:"
+          grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "Not found"
+          echo "Current DEIN_ECHTER_API_KEY_HIER placeholder in env-config.js:"
+          grep -n "DEIN_ECHTER_API_KEY_HIER" js/env-config.js || echo "Not found"
+          
+          # Replace in firebase-config.js
+          sed -i 's/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g' js/firebase-config.js
+          
+          # Replace in env-config.js  
+          sed -i 's/DEIN_ECHTER_API_KEY_HIER/${{ secrets.API_KEY_RAUSHI }}/g' js/env-config.js
+          
+          echo "After replacement in firebase-config.js:"
+          grep -n "apiKey" js/firebase-config.js || true
+          echo "After replacement in env-config.js:"
+          grep -n "FIREBASE_API_KEY" js/env-config.js || true
           
       - name: Build
         run: |

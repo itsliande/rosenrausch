@@ -7,7 +7,7 @@ import { getStorage } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-s
 // Firebase Konfiguration
 // WICHTIG: Diese Werte müssen durch echte Firebase-Konfiguration ersetzt werden
 const firebaseConfig = {
-  apiKey: window.FIREBASE_API_KEY || "API_KEY_RAUSHI",
+  apiKey: "API_KEY_RAUSHI",
   authDomain: "rosenrasch.firebaseapp.com",
   projectId: "rosenrasch",
   storageBucket: "rosenrasch.firebasestorage.app",
@@ -20,7 +20,7 @@ console.log('🔧 Firebase-Konfiguration wird geladen...');
 console.log('📊 Config:', firebaseConfig);
 
 // Prüfe Konfiguration
-if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER') {
+if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER' || firebaseConfig.apiKey === 'API_KEY_RAUSHI') {
     console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
     console.log('💡 Bitte echte Firebase-Konfigurationswerte eintragen.');
 } else {
