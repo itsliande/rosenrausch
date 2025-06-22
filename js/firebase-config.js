@@ -21,11 +21,6 @@ const DEV_MODE = true; // Auf false setzen für Produktion
 // Firebase initialisieren
 const app = initializeApp(firebaseConfig);
 
-// Schutz vor Entwicklertools (nur wenn nicht im Entwicklungsmodus)
-if (!DEV_MODE) {
-    // ...existing protection code...
-}
-
 // Services exportieren
 export const auth = getAuth(app);
 export const db = getFirestore(app);

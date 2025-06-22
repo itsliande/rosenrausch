@@ -2,17 +2,16 @@
 (function() {
     'use strict';
     
+    // Entwicklungs-Konfiguration - HIER KANNST DU DEV_MODE EIN/AUSSCHALTEN
+    const DEV_MODE = true; // Auf false setzen für Produktion
+    
     // Prüfe ob wir uns auf der Admin-Seite befinden
     if (!window.location.pathname.includes('admin')) {
         return;
     }
     
-    // Blockiere DevTools nur in Produktion (nicht localhost/development)
-    const isProduction = window.location.hostname !== 'localhost' && 
-                        window.location.hostname !== '127.0.0.1' && 
-                        !window.location.hostname.includes('github.dev') &&
-                        !window.location.hostname.includes('gitpod') &&
-                        !window.location.hostname.includes('codespaces');
+    // Blockiere DevTools nur wenn DEV_MODE ausgeschaltet ist
+    const isProduction = !DEV_MODE;
     
     if (isProduction) {
         // DevTools Detection
@@ -93,8 +92,13 @@
         }, 1000);
     }
     
-    // Add warning message
-    console.log('%cSicherheitswarnung!', 'color: red; font-size: 20px; font-weight: bold;');
-    console.log('%cDieser Bereich ist nur für autorisierte Administratoren zugänglich.', 'color: orange; font-size: 14px;');
+    // Add warning message (nur in Entwicklung sichtbar)
+    if (DEV_MODE) {
+        console.log('%cEntwicklungsmodus aktiv!', 'color: green; font-size: 16px; font-weight: bold;');
+        console.log('%cSicherheitschecks sind deaktiviert.', 'color: blue; font-size: 12px;');
+    } else {
+        console.log('%cSicherheitswarnung!', 'color: red; font-size: 20px; font-weight: bold;');
+        console.log('%cDieser Bereich ist nur für autorisierte Administratoren zugänglich.', 'color: orange; font-size: 14px;');
+    }
     
 })();
