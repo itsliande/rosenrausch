@@ -19,11 +19,11 @@ jobs:
         with:
           node-version: '18'
           
-      - name: Install dependencies
-        run: npm install
-        
       - name: Build
-        run: npm run build
+        run: |
+          mkdir -p dist
+          cp -r * dist/ 2>/dev/null || true
+          rm -rf dist/.git dist/.github dist/node_modules dist/package.json dist/package-lock.json 2>/dev/null || true
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
