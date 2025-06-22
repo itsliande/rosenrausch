@@ -28,23 +28,25 @@ jobs:
           node-version: '18'
           
       - name: Replace API Keys
+        env:
+          FIREBASE_API_KEY: ${{ secrets.API_KEY_RAUSHI }}
         run: |
-          echo "Replacing API keys in all files..."
-          echo "Current API_KEY_RAUSHI placeholder in firebase-config.js:"
-          grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "Not found"
-          echo "Current DEIN_ECHTER_API_KEY_HIER placeholder in env-config.js:"
-          grep -n "DEIN_ECHTER_API_KEY_HIER" js/env-config.js || echo "Not found"
+          echo "Creating environment config file..."
+          cat > js/env-config.js << EOF
+          // Auto-generated environment configuration
+          export const FIREBASE_API_KEY = '$FIREBASE_API_KEY';
+          export const FIREBASE_CONFIG = {
+            apiKey: '$FIREBASE_API_KEY',
+            authDomain: "rosenrasch.firebaseapp.com",
+            projectId: "rosenrasch",
+            storageBucket: "rosenrasch.firebasestorage.app",
+            messagingSenderId: "238261942819",
+            appId: "1:238261942819:web:3294f6c8031303f423cf96"
+          };
+          EOF
           
-          # Replace in firebase-config.js
-          sed -i 's/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g' js/firebase-config.js
-          
-          # Replace in env-config.js  
-          sed -i 's/DEIN_ECHTER_API_KEY_HIER/${{ secrets.API_KEY_RAUSHI }}/g' js/env-config.js
-          
-          echo "After replacement in firebase-config.js:"
-          grep -n "apiKey" js/firebase-config.js || true
-          echo "After replacement in env-config.js:"
-          grep -n "FIREBASE_API_KEY" js/env-config.js || true
+          echo "Environment config created:"
+          cat js/env-config.js
           
       - name: Build
         run: |
