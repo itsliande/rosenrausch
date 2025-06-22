@@ -15,11 +15,12 @@ console.log('🔧 Firebase-Konfiguration wird geladen...');
 console.log('📊 Config:', firebaseConfig);
 
 // Prüfe Konfiguration
-if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER' || firebaseConfig.apiKey === 'API_KEY_RAUSHI') {
+if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER') {
     console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
     console.log('💡 Bitte echte Firebase-Konfigurationswerte eintragen.');
 } else {
     console.log('✅ Firebase apiKey ist konfiguriert');
+    console.log('🔑 API-Key beginnt mit:', firebaseConfig.apiKey.substring(0, 10) + '...');
 }
 
 if (!firebaseConfig.projectId) {

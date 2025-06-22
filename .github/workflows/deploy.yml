@@ -38,6 +38,9 @@ jobs:
           # Replace in env-config.js
           sed -i "s/DEIN_ECHTER_API_KEY_HIER/$API_KEY_RAUSHI/g" js/env-config.js
           
+          # Replace in any other files that might use the secret name as placeholder
+          find . -name "*.js" -type f -exec sed -i "s/API_KEY_RAUSHI/$API_KEY_RAUSHI/g" {} \;
+          
           echo "API Key replacement completed"
           echo "Checking env-config.js after replacement:"
           grep -A 2 -B 2 "apiKey" js/env-config.js || echo "No apiKey found"
