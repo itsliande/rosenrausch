@@ -43,6 +43,10 @@ jobs:
             messagingSenderId: "238261942819",
             appId: "1:238261942819:web:3294f6c8031303f423cf96"
           };
+          
+          // Debug-Information
+          console.log('✅ Firebase API-Key ist konfiguriert (Production Build)');
+          console.log('🔧 Environment-Konfiguration geladen');
           EOF
           
           echo "Environment config created:"
