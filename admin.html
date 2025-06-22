@@ -11,13 +11,9 @@
     <title>Admin Panel - Rosenrausch</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer">
     
-    <!-- Firebase SDKs -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
     <nav class="navbar">
@@ -37,7 +33,8 @@
                 <div class="login-header">
                     <img src="profile.jpg" alt="Rosenrausch" class="login-logo">
                     <h1>Admin Panel</h1>
-                    <p>Sichere Anmeldung für Administratoren</p>
+                    <p>Vereinfachte Admin-Oberfläche</p>
+                    <p><small>Demo Login: contact@rosenrausch.xyz / admin123</small></p>
                 </div>
                 
                 <form id="login-form" class="login-form">
@@ -70,7 +67,7 @@
         <div id="admin-panel" class="admin-panel" style="display: none;">
             <div class="admin-header">
                 <h1><i class="fas fa-cogs"></i> Rosenrausch Admin Panel</h1>
-                <p>Verwalte alle Inhalte der Website</p>
+                <p>Vereinfachte Verwaltung aller Website-Inhalte</p>
             </div>
 
             <!-- Tab Navigation -->
@@ -98,7 +95,7 @@
                 <div id="team-tab" class="tab-pane active">
                     <div class="section-header">
                         <h2><i class="fas fa-users"></i> Team Management</h2>
-                        <button class="add-btn" id="add-team-member">
+                        <button class="add-btn" onclick="simpleAdmin.editItem('team', 'new')">
                             <i class="fas fa-plus"></i> Neues Mitglied
                         </button>
                     </div>
@@ -111,7 +108,7 @@
                 <div id="news-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-newspaper"></i> News Management</h2>
-                        <button class="add-btn" id="add-news-item">
+                        <button class="add-btn" onclick="simpleAdmin.editItem('news', 'new')">
                             <i class="fas fa-plus"></i> Neue News
                         </button>
                     </div>
@@ -124,7 +121,7 @@
                 <div id="events-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-calendar-alt"></i> Events Management</h2>
-                        <button class="add-btn" id="add-event">
+                        <button class="add-btn" onclick="simpleAdmin.editItem('events', 'new')">
                             <i class="fas fa-plus"></i> Neues Event
                         </button>
                     </div>
@@ -137,7 +134,7 @@
                 <div id="quotes-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-quote-left"></i> Quotes Management</h2>
-                        <button class="add-btn" id="add-quote">
+                        <button class="add-btn" onclick="simpleAdmin.editItem('quotes', 'new')">
                             <i class="fas fa-plus"></i> Neues Zitat
                         </button>
                     </div>
@@ -153,7 +150,7 @@
                     </div>
                     <div class="export-section">
                         <p>Exportiere alle Daten als JSON-Dateien für die statische Website.</p>
-                        <button class="export-btn" id="export-all-data">
+                        <button class="export-btn" onclick="simpleAdmin.exportData()">
                             <i class="fas fa-download"></i> Alle Daten exportieren
                         </button>
                         <div id="export-status" class="export-status"></div>
@@ -163,36 +160,25 @@
         </div>
     </div>
 
-    <!-- Loading Overlay -->
-    <div id="loading-overlay" class="loading-overlay" style="display: none;">
-        <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>Laden...</p>
-        </div>
-    </div>
-
-    <!-- Modal for editing -->
-    <div id="edit-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">Bearbeiten</h3>
-                <button class="modal-close" id="modal-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Dynamic content will be inserted here -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" id="modal-cancel">Abbrechen</button>
-                <button class="btn-primary" id="modal-save">Speichern</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="js/admin-security.js"></script>
-    <script src="js/env-config.js"></script>
-    <script type="module" src="js/firebase-config.js"></script>
-    <script type="module" src="js/admin-panel.js"></script>
+    <script src="js/simple-admin.js"></script>
+    
+    <script>
+        // Tab Switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    btn.classList.add('active');
+                    const tabName = btn.getAttribute('data-tab');
+                    document.getElementById(`${tabName}-tab`).classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
