@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/rosenrausch-performer.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/rosenrausch-performer.ico">
+    
+    <title>Admin Panel - Rosenrausch</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="https://rosenrausch.xyz/" class="nav-item">Zurück zur Website</a>
+        <div class="admin-nav-info">
+            <span id="admin-user-info">Nicht eingeloggt</span>
+            <button id="logout-btn" class="admin-logout-btn" style="display: none;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="login-section" class="login-section">
+            <div class="login-card">
+                <div class="login-header">
+                    <img src="profile.jpg" alt="Rosenrausch" class="login-logo">
+                    <h1>Admin Panel</h1>
+                    <p>Sichere Anmeldung für Administratoren</p>
+                </div>
+                
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label for="email">E-Mail-Adresse</label>
+                        <input type="email" id="email" required>
+                        <i class="fas fa-envelope form-icon"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Passwort</label>
+                        <input type="password" id="password" required>
+                        <i class="fas fa-lock form-icon"></i>
+                        <button type="button" class="password-toggle" id="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Anmelden
+                    </button>
+                    
+                    <div id="login-error" class="error-message" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-panel" class="admin-panel" style="display: none;">
+            <div class="admin-header">
+                <h1><i class="fas fa-cogs"></i> Rosenrausch Admin Panel</h1>
+                <p>Verwalte alle Inhalte der Website</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="team">
+                    <i class="fas fa-users"></i> Team
+                </button>
+                <button class="tab-btn" data-tab="news">
+                    <i class="fas fa-newspaper"></i> News
+                </button>
+                <button class="tab-btn" data-tab="events">
+                    <i class="fas fa-calendar-alt"></i> Events
+                </button>
+                <button class="tab-btn" data-tab="quotes">
+                    <i class="fas fa-quote-left"></i> Quotes
+                </button>
+                <button class="tab-btn" data-tab="export">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="tab-content">
+                <!-- Team Management -->
+                <div id="team-tab" class="tab-pane active">
+                    <div class="section-header">
+                        <h2><i class="fas fa-users"></i> Team Management</h2>
+                        <button class="add-btn" id="add-team-member">
+                            <i class="fas fa-plus"></i> Neues Mitglied
+                        </button>
+                    </div>
+                    <div id="team-list" class="data-list">
+                        <!-- Team members will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- News Management -->
+                <div id="news-tab" class="tab-pane">
+                    <div class="section-header">
+                        <h2><i class="fas fa-newspaper"></i> News Management</h2>
+                        <button class="add-btn" id="add-news-item">
+                            <i class="fas fa-plus"></i> Neue News
+                        </button>
+                    </div>
+                    <div id="news-list" class="data-list">
+                        <!-- News items will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Events Management -->
+                <div id="events-tab" class="tab-pane">
+                    <div class="section-header">
+                        <h2><i class="fas fa-calendar-alt"></i> Events Management</h2>
+                        <button class="add-btn" id="add-event">
+                            <i class="fas fa-plus"></i> Neues Event
+                        </button>
+                    </div>
+                    <div id="events-list" class="data-list">
+                        <!-- Events will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Quotes Management -->
+                <div id="quotes-tab" class="tab-pane">
+                    <div class="section-header">
+                        <h2><i class="fas fa-quote-left"></i> Quotes Management</h2>
+                        <button class="add-btn" id="add-quote">
+                            <i class="fas fa-plus"></i> Neues Zitat
+                        </button>
+                    </div>
+                    <div id="quotes-list" class="data-list">
+                        <!-- Quotes will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Export Tab -->
+                <div id="export-tab" class="tab-pane">
+                    <div class="section-header">
+                        <h2><i class="fas fa-download"></i> Daten Export</h2>
+                    </div>
+                    <div class="export-section">
+                        <p>Exportiere alle Daten als JSON-Dateien für die statische Website.</p>
+                        <button class="export-btn" id="export-all-data">
+                            <i class="fas fa-download"></i> Alle Daten exportieren
+                        </button>
+                        <div id="export-status" class="export-status"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Laden...</p>
+        </div>
+    </div>
+
+    <!-- Modal for editing -->
+    <div id="edit-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Bearbeiten</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modal-cancel">Abbrechen</button>
+                <button class="btn-primary" id="modal-save">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin-security.js"></script>
+    <script type="module" src="js/admin-panel.js"></script>
+</body>
+</html>

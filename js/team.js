@@ -1,7 +1,47 @@
 async function renderTeam() {
     try {
-        const response = await fetch('/data/team.json');
-        const data = await response.json();
+        // Versuche zuerst Firebase zu laden, falls verfügbar
+        const data = await loadTeamData();
+        
+        async function loadTeamData() {
+            // Prüfe ob Firebase verfügbar ist
+            if (window.firebase && window.firebase.apps.length > 0) {
+                try {
+                    const { db } = await import('./firebase-config.js');
+                    const { collection, getDocs } = await import('firebase/firestore');
+                    
+                    const querySnapshot = await getDocs(collection(db, 'team-members'));
+                    const categories = {};
+                    
+                    querySnapshot.forEach((doc) => {
+                        const memberData = doc.data();
+                        if (!categories[memberData.category]) {
+                            categories[memberData.category] = {
+                                name: memberData.category,
+                                active: memberData.categoryActive !== false,
+                                members: []
+                            };
+                        }
+                        categories[memberData.category].members.push({
+                            id: doc.id,
+                            ...memberData
+                        });
+                    });
+
+                    return { categories: Object.values(categories) };
+                } catch (error) {
+                    console.log('Firebase nicht verfügbar, lade JSON-Fallback');
+                    return loadJSONFallback();
+                }
+            } else {
+                return loadJSONFallback();
+            }
+        }
+        
+        async function loadJSONFallback() {
+            const response = await fetch('/data/team.json');
+            return await response.json();
+        }
         
         const teamContainer = document.querySelector('.team-grid');
         teamContainer.innerHTML = ''; // Clear existing content
