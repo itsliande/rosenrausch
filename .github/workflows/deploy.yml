@@ -39,27 +39,34 @@ jobs:
             exit 1
           fi
           
+          # Debug: Show original file content around API key
+          echo "📄 Original firebase-config.js (API key area):"
+          grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "Placeholder not found"
+          
           # Backup der Original-Datei
           cp js/firebase-config.js js/firebase-config.js.backup
           
-          # Ersetze API_KEY_RAUSHI in firebase-config.js
-          sed -i "s/API_KEY_RAUSHI/$API_KEY_RAUSHI/g" js/firebase-config.js
+          # Ersetze API_KEY_RAUSHI in firebase-config.js - WICHTIG: Verwende doppelte Anführungszeichen
+          sed -i "s/API_KEY_RAUSHI/${API_KEY_RAUSHI}/g" js/firebase-config.js
+          
+          # Debug: Show file after replacement
+          echo "📄 Nach Ersetzung (API key area):"
+          grep -A 2 -B 2 "apiKey:" js/firebase-config.js | head -10
           
           # Überprüfe ob die Ersetzung erfolgreich war
           if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
             echo "❌ FEHLER: API_KEY_RAUSHI wurde nicht vollständig ersetzt!"
-            echo "Checking original file:"
-            grep -n "API_KEY_RAUSHI" js/firebase-config.js.backup || echo "Not found in backup"
-            echo "Checking modified file:"
-            grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "Not found in modified"
+            echo "Remaining occurrences:"
+            grep -n "API_KEY_RAUSHI" js/firebase-config.js
+            echo "--- Backup content: ---"
+            cat js/firebase-config.js.backup
+            echo "--- Modified content: ---"
+            cat js/firebase-config.js
             exit 1
           else
             echo "✅ API_KEY_RAUSHI wurde erfolgreich ersetzt"
+            echo "✅ Ersetzung war erfolgreich - kein API_KEY_RAUSHI mehr gefunden"
           fi
-          
-          # Zeige Bestätigung (ohne den echten Key zu enthüllen)
-          echo "📄 Firebase-Config Status:"
-          grep -A 2 -B 2 "apiKey:" js/firebase-config.js | sed 's/AIza[^"]*/"AIza...HIDDEN..."/g'
           
       - name: Build
         run: |

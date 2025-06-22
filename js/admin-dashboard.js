@@ -1,107 +1,67 @@
 // Admin Dashboard Module
-// Basiert auf https://github.com/itsliande/aboutme/blob/main/admin-dashboard.js
+// Based on https://github.com/itsliande/aboutme/blob/main/admin-dashboard.js
 
-import adminAuth from './admin-auth.js';
 import { db } from './firebase-config.js';
-import { 
-    collection, 
-    doc, 
-    getDocs, 
-    setDoc, 
-    deleteDoc, 
+import adminAuth from './admin-auth.js';
+import {
+    collection,
+    doc,
+    getDocs,
+    setDoc,
+    deleteDoc,
     addDoc,
-    updateDoc,
     query,
     orderBy,
-    where
+    Timestamp
 } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
 class AdminDashboard {
     constructor() {
         this.currentTab = 'team';
-        this.isLoading = false;
-        this.currentEdit = null;
-        
-        // Collection Mapping
         this.collections = {
             team: 'team-members',
             news: 'news-items',
             events: 'events',
             quotes: 'quotes'
         };
-        
         this.init();
     }
 
     init() {
         console.log('📊 Admin Dashboard wird initialisiert...');
         
-        // Warte auf Auth-Status
-        adminAuth.onAuthStateChanged((user, isAdmin) => {
-            this.handleAuthStateChange(user, isAdmin);
+        // Wait for auth state
+        adminAuth.onAuthStateChange((isAuthenticated, user) => {
+            this.updateUIState(isAuthenticated, user);
+            if (isAuthenticated) {
+                this.loadCurrentTabData();
+            }
         });
-        
+
         this.setupEventListeners();
         this.setupTabSwitching();
     }
 
-    handleAuthStateChange(user, isAdmin) {
-        this.updateUIState(user, isAdmin);
-        
-        if (isAdmin) {
-            console.log('✅ Admin eingeloggt - lade Dashboard');
-            this.loadTabData(this.currentTab);
-        } else {
-            console.log('❌ Nicht autorisiert - zeige Login');
-            this.clearDashboardData();
-        }
-    }
-
-    updateUIState(user, isAdmin) {
-        const loginSection = document.getElementById('login-section');
-        const adminPanel = document.getElementById('admin-panel');
-        const userInfo = document.getElementById('admin-user-info');
-        const logoutBtn = document.getElementById('logout-btn');
-        
-        if (isAdmin && user) {
-            // Zeige Admin Panel
-            if (loginSection) loginSection.style.display = 'none';
-            if (adminPanel) adminPanel.style.display = 'block';
-            if (userInfo) userInfo.textContent = `Eingeloggt als: ${user.email}`;
-            if (logoutBtn) logoutBtn.style.display = 'block';
-        } else {
-            // Zeige Login
-            if (loginSection) loginSection.style.display = 'block';
-            if (adminPanel) adminPanel.style.display = 'none';
-            if (userInfo) userInfo.textContent = 'Nicht eingeloggt';
-            if (logoutBtn) logoutBtn.style.display = 'none';
-        }
-    }
-
     setupEventListeners() {
-        // Login Form
+        // Login form
         const loginForm = document.getElementById('login-form');
         if (loginForm) {
             loginForm.addEventListener('submit', (e) => this.handleLogin(e));
         }
 
-        // Logout Button
+        // Logout button
         const logoutBtn = document.getElementById('logout-btn');
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => this.handleLogout());
         }
 
-        // Password Toggle
+        // Password toggle
         const passwordToggle = document.getElementById('password-toggle');
         if (passwordToggle) {
             passwordToggle.addEventListener('click', () => this.togglePassword());
         }
 
-        // Modal Events
-        this.setupModalEvents();
-    }
-
-    setupModalEvents() {
+        // Modal events
         const modalClose = document.getElementById('modal-close');
         const modalCancel = document.getElementById('modal-cancel');
         const modalSave = document.getElementById('modal-save');
@@ -134,18 +94,16 @@ class AdminDashboard {
     switchTab(tabName) {
         // Update active tab button
         document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
-        if (activeBtn) activeBtn.classList.add('active');
+        document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
 
-        // Update active tab content  
+        // Update active tab content
         document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-        const activePane = document.getElementById(`${tabName}-tab`);
-        if (activePane) activePane.classList.add('active');
+        document.getElementById(`${tabName}-tab`)?.classList.add('active');
 
         this.currentTab = tabName;
         
         if (adminAuth.isAdmin()) {
-            this.loadTabData(tabName);
+            this.loadCurrentTabData();
         }
     }
 
@@ -156,27 +114,20 @@ class AdminDashboard {
         const password = document.getElementById('password').value;
         const errorDiv = document.getElementById('login-error');
 
-        if (errorDiv) errorDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
 
         try {
             this.showLoading();
-            console.log('🔑 Login-Versuch für:', email);
-            
             await adminAuth.signIn(email, password);
-            // Auth state change wird automatisch behandelt
-            
+            // Auth state change will be handled by the listener
         } catch (error) {
-            console.error('❌ Login-Fehler:', error);
+            console.error('❌ Login error:', error);
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
             
-            if (errorDiv) {
-                errorDiv.textContent = error.message;
-                errorDiv.style.display = 'block';
-                
-                setTimeout(() => {
-                    errorDiv.style.display = 'none';
-                }, 5000);
-            }
-            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
         } finally {
             this.hideLoading();
         }
@@ -185,13 +136,11 @@ class AdminDashboard {
     async handleLogout() {
         try {
             await adminAuth.signOut();
-            
             // Reset form
             const loginForm = document.getElementById('login-form');
             if (loginForm) loginForm.reset();
-            
         } catch (error) {
-            console.error('❌ Logout-Fehler:', error);
+            console.error('❌ Logout error:', error);
         }
     }
 
@@ -210,15 +159,34 @@ class AdminDashboard {
         }
     }
 
-    async loadTabData(tabName) {
+    updateUIState(isAuthenticated, user) {
+        const loginSection = document.getElementById('login-section');
+        const adminPanel = document.getElementById('admin-panel');
+        const userInfo = document.getElementById('admin-user-info');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        if (isAuthenticated && user) {
+            if (loginSection) loginSection.style.display = 'none';
+            if (adminPanel) adminPanel.style.display = 'block';
+            if (userInfo) userInfo.textContent = `Eingeloggt als: ${user.email}`;
+            if (logoutBtn) logoutBtn.style.display = 'block';
+        } else {
+            if (loginSection) loginSection.style.display = 'block';
+            if (adminPanel) adminPanel.style.display = 'none';
+            if (userInfo) userInfo.textContent = 'Nicht eingeloggt';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+        }
+    }
+
+    async loadCurrentTabData() {
         if (!adminAuth.isAdmin()) return;
         
         this.showLoading();
         
         try {
-            console.log(`📊 Lade ${tabName} Daten...`);
+            console.log(`📊 Lade ${this.currentTab} Daten...`);
             
-            switch (tabName) {
+            switch (this.currentTab) {
                 case 'team':
                     await this.loadTeamData();
                     break;
@@ -231,15 +199,10 @@ class AdminDashboard {
                 case 'quotes':
                     await this.loadQuotesData();
                     break;
-                case 'export':
-                    // Keine Daten zu laden für Export Tab
-                    break;
-                default:
-                    console.warn(`Unbekannter Tab: ${tabName}`);
             }
             
         } catch (error) {
-            console.error(`❌ Fehler beim Laden der ${tabName} Daten:`, error);
+            console.error(`❌ Fehler beim Laden der ${this.currentTab} Daten:`, error);
             this.showError(`Fehler beim Laden der Daten: ${error.message}`);
         } finally {
             this.hideLoading();
@@ -247,76 +210,90 @@ class AdminDashboard {
     }
 
     async loadTeamData() {
-        const querySnapshot = await getDocs(collection(db, this.collections.team));
-        const categories = {};
-        
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            if (!categories[data.category]) {
-                categories[data.category] = {
-                    name: data.category,
-                    active: data.categoryActive !== false,
-                    members: []
-                };
-            }
-            categories[data.category].members.push({
-                id: doc.id,
-                ...data
+        try {
+            const querySnapshot = await getDocs(collection(db, this.collections.team));
+            const categories = {};
+            
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                if (!categories[data.category]) {
+                    categories[data.category] = {
+                        name: data.category,
+                        active: data.categoryActive !== false,
+                        members: []
+                    };
+                }
+                categories[data.category].members.push({
+                    id: doc.id,
+                    ...data
+                });
             });
-        });
 
-        this.renderTeamData(Object.values(categories));
+            this.renderTeamData(Object.values(categories));
+        } catch (error) {
+            console.error('❌ Error loading team data:', error);
+            throw error;
+        }
     }
 
     async loadNewsData() {
-        const querySnapshot = await getDocs(collection(db, this.collections.news));
-        const news = [];
-        
-        querySnapshot.forEach((doc) => {
-            news.push({
-                id: doc.id,
-                ...doc.data()
+        try {
+            const q = query(collection(db, this.collections.news), orderBy('date', 'desc'));
+            const querySnapshot = await getDocs(q);
+            const news = [];
+            
+            querySnapshot.forEach((doc) => {
+                news.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
-        });
 
-        // Sortiere nach Datum (neueste zuerst)
-        news.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        this.renderNewsData(news);
+            this.renderNewsData(news);
+        } catch (error) {
+            console.error('❌ Error loading news data:', error);
+            throw error;
+        }
     }
 
     async loadEventsData() {
-        const querySnapshot = await getDocs(collection(db, this.collections.events));
-        const events = [];
-        
-        querySnapshot.forEach((doc) => {
-            events.push({
-                id: doc.id,
-                ...doc.data()
+        try {
+            const q = query(collection(db, this.collections.events), orderBy('date', 'asc'));
+            const querySnapshot = await getDocs(q);
+            const events = [];
+            
+            querySnapshot.forEach((doc) => {
+                events.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
-        });
 
-        // Sortiere nach Datum (nächste zuerst)
-        events.sort((a, b) => new Date(a.date) - new Date(b.date));
-        
-        this.renderEventsData(events);
+            this.renderEventsData(events);
+        } catch (error) {
+            console.error('❌ Error loading events data:', error);
+            throw error;
+        }
     }
 
     async loadQuotesData() {
-        const querySnapshot = await getDocs(collection(db, this.collections.quotes));
-        const quotes = [];
-        
-        querySnapshot.forEach((doc) => {
-            quotes.push({
-                id: doc.id,
-                ...doc.data()
+        try {
+            const q = query(collection(db, this.collections.quotes), orderBy('date', 'desc'));
+            const querySnapshot = await getDocs(q);
+            const quotes = [];
+            
+            querySnapshot.forEach((doc) => {
+                quotes.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
             });
-        });
 
-        // Sortiere nach Datum (neueste zuerst)
-        quotes.sort((a, b) => new Date(b.date) - new Date(a.date));
-        
-        this.renderQuotesData(quotes);
+            this.renderQuotesData(quotes);
+        } catch (error) {
+            console.error('❌ Error loading quotes data:', error);
+            throw error;
+        }
     }
 
     renderTeamData(categories) {
@@ -351,7 +328,7 @@ class AdminDashboard {
             const dataItem = this.createDataItem({
                 title: item.title,
                 meta: `${item.date} | ${item.active ? 'Aktiv' : 'Inaktiv'}`,
-                content: item.content ? item.content.substring(0, 200) + '...' : '',
+                content: item.content.substring(0, 200) + '...',
                 id: item.id,
                 type: 'news'
             });
@@ -368,8 +345,8 @@ class AdminDashboard {
         events.forEach(event => {
             const item = this.createDataItem({
                 title: event.title,
-                meta: `${event.date} | ${event.location || 'Kein Ort'}`,
-                content: event.description || '',
+                meta: `${event.date} | ${event.location}`,
+                content: event.description,
                 id: event.id,
                 type: 'events'
             });
@@ -401,8 +378,8 @@ class AdminDashboard {
         item.innerHTML = `
             <div class="data-item-header">
                 <div>
-                    <div class="data-item-title">${this.escapeHtml(title)}</div>
-                    <div class="data-item-meta">${this.escapeHtml(meta)}</div>
+                    <div class="data-item-title">${title}</div>
+                    <div class="data-item-meta">${meta}</div>
                 </div>
                 <div class="data-item-actions">
                     <button class="btn-edit" onclick="adminDashboard.editItem('${type}', '${id}')">
@@ -413,75 +390,29 @@ class AdminDashboard {
                     </button>
                 </div>
             </div>
-            ${content ? `<div class="data-item-content">${this.escapeHtml(content)}</div>` : ''}
+            ${content ? `<div class="data-item-content">${content}</div>` : ''}
         `;
         return item;
     }
 
-    // Modal Functions
+    // Modal and CRUD operations
     openModal(type, data = null) {
         const title = data ? `${type} bearbeiten` : `Neuen ${type} hinzufügen`;
-        const modalTitle = document.getElementById('modal-title');
-        if (modalTitle) modalTitle.textContent = title;
+        document.getElementById('modal-title').textContent = title;
         
         const formContent = this.getFormContent(type, data);
-        const modalBody = document.getElementById('modal-body');
-        if (modalBody) modalBody.innerHTML = formContent;
+        document.getElementById('modal-body').innerHTML = formContent;
         
-        const modal = document.getElementById('edit-modal');
-        if (modal) modal.style.display = 'flex';
+        document.getElementById('edit-modal').style.display = 'flex';
         
-        // Store current edit context
         this.currentEdit = { type, data };
     }
 
     closeModal() {
-        const modal = document.getElementById('edit-modal');
-        if (modal) modal.style.display = 'none';
+        document.getElementById('edit-modal').style.display = 'none';
         this.currentEdit = null;
     }
 
-    async editItem(type, id) {
-        try {
-            // Lade Item-Daten aus Firestore
-            const querySnapshot = await getDocs(collection(db, this.collections[type]));
-            
-            let itemData = null;
-            querySnapshot.forEach((doc) => {
-                if (doc.id === id) {
-                    itemData = { id: doc.id, ...doc.data() };
-                }
-            });
-            
-            if (itemData) {
-                this.openModal(type, itemData);
-            } else {
-                console.error(`❌ Item mit ID ${id} nicht gefunden`);
-                this.showError(`Item mit ID ${id} nicht gefunden`);
-            }
-        } catch (error) {
-            console.error(`❌ Fehler beim Laden von ${type}:`, error);
-            this.showError(`Fehler beim Laden: ${error.message}`);
-        }
-    }
-
-    async deleteItem(type, id) {
-        if (confirm(`Möchten Sie dieses ${type}-Element wirklich löschen?`)) {
-            try {
-                this.showLoading();
-                await deleteDoc(doc(db, this.collections[type], id));
-                console.log(`✅ ${type} mit ID ${id} erfolgreich gelöscht`);
-                await this.loadTabData(this.currentTab);
-            } catch (error) {
-                console.error(`❌ Fehler beim Löschen von ${type}:`, error);
-                this.showError(`Fehler beim Löschen: ${error.message}`);
-            } finally {
-                this.hideLoading();
-            }
-        }
-    }
-
-    // Form Generation
     getFormContent(type, data) {
         switch (type) {
             case 'team':
@@ -604,18 +535,18 @@ class AdminDashboard {
             const { type, data } = this.currentEdit;
             const formData = this.getFormData(type);
             
-            if (data && data.id) {
-                // Bearbeite existierendes Item
+            if (data) {
+                // Update existing item
                 await setDoc(doc(db, this.collections[type], data.id), formData);
                 console.log(`✅ ${type} erfolgreich aktualisiert`);
             } else {
-                // Erstelle neues Item
+                // Add new item
                 await addDoc(collection(db, this.collections[type]), formData);
                 console.log(`✅ ${type} erfolgreich hinzugefügt`);
             }
             
             this.closeModal();
-            await this.loadTabData(this.currentTab);
+            await this.loadCurrentTabData();
             
         } catch (error) {
             console.error(`❌ Fehler beim Speichern von ${this.currentEdit.type}:`, error);
@@ -635,7 +566,7 @@ class AdminDashboard {
                     bio: document.getElementById('member-bio').value,
                     image: document.getElementById('member-image').value,
                     categoryActive: true,
-                    social: [] // Default empty social array
+                    social: []
                 };
             case 'news':
                 return {
@@ -663,13 +594,50 @@ class AdminDashboard {
         }
     }
 
+    async editItem(type, id) {
+        try {
+            // Get document
+            const querySnapshot = await getDocs(collection(db, this.collections[type]));
+            let itemData = null;
+            
+            querySnapshot.forEach((doc) => {
+                if (doc.id === id) {
+                    itemData = { id: doc.id, ...doc.data() };
+                }
+            });
+            
+            if (itemData) {
+                this.openModal(type, itemData);
+            } else {
+                console.error(`❌ Item mit ID ${id} nicht gefunden`);
+            }
+        } catch (error) {
+            console.error(`❌ Fehler beim Laden von ${type}:`, error);
+        }
+    }
+
+    async deleteItem(type, id) {
+        if (confirm(`Möchten Sie dieses ${type}-Element wirklich löschen?`)) {
+            try {
+                this.showLoading();
+                await deleteDoc(doc(db, this.collections[type], id));
+                console.log(`✅ ${type} mit ID ${id} erfolgreich gelöscht`);
+                await this.loadCurrentTabData();
+            } catch (error) {
+                console.error(`❌ Fehler beim Löschen von ${type}:`, error);
+                this.showError(`Fehler beim Löschen: ${error.message}`);
+            } finally {
+                this.hideLoading();
+            }
+        }
+    }
+
     async exportData() {
         try {
             this.showLoading();
             
             const exportData = {};
             
-            // Exportiere alle Collections
             for (const [key, collectionName] of Object.entries(this.collections)) {
                 const querySnapshot = await getDocs(collection(db, collectionName));
                 const data = [];
@@ -684,7 +652,7 @@ class AdminDashboard {
                 exportData[key] = data;
             }
             
-            // Download jede Collection als separate JSON-Datei
+            // Download each as separate JSON files
             Object.keys(exportData).forEach(key => {
                 this.downloadJSON(exportData[key], `${key}.json`);
             });
@@ -721,41 +689,26 @@ class AdminDashboard {
         URL.revokeObjectURL(url);
     }
 
-    clearDashboardData() {
-        // Lösche alle Listen
-        const lists = ['team-list', 'news-list', 'events-list', 'quotes-list'];
-        lists.forEach(listId => {
-            const list = document.getElementById(listId);
-            if (list) list.innerHTML = '';
-        });
-    }
-
-    // Utility Functions
+    // Utility functions
     showLoading() {
-        this.isLoading = true;
         const overlay = document.getElementById('loading-overlay');
         if (overlay) overlay.style.display = 'flex';
     }
 
     hideLoading() {
-        this.isLoading = false;
         const overlay = document.getElementById('loading-overlay');
         if (overlay) overlay.style.display = 'none';
     }
 
     showError(message) {
         console.error('❌ Fehler:', message);
-        alert(message); // Einfache Fehleranzeige
-    }
-
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+        alert(message);
     }
 }
 
-// Singleton Instance
+// Create and export singleton instance
 const adminDashboard = new AdminDashboard();
-
 export default adminDashboard;
+
+// Make it globally available for onclick handlers
+window.adminDashboard = adminDashboard;

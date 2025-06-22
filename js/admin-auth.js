@@ -1,183 +1,110 @@
 // Admin Authentication Module
-// Basiert auf https://github.com/itsliande/aboutme/blob/main/admin-auth.js
+// Based on https://github.com/itsliande/aboutme/blob/main/admin-auth.js
 
-import { auth, db } from './firebase-config.js';
-import { 
-    signInWithEmailAndPassword, 
-    signOut, 
-    onAuthStateChanged,
-    sendPasswordResetEmail 
-} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-import { 
-    doc, 
-    getDoc 
-} from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+import { auth } from './firebase-config.js';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
 class AdminAuth {
     constructor() {
         this.currentUser = null;
-        this.isAdminUser = false;
-        this.authStateCallbacks = [];
-        
-        // Admin E-Mail Whitelist
+        this.isAuthenticated = false;
         this.adminEmails = [
             'contact@rosenrausch.xyz',
             'admin@rosenrausch.xyz'
+            // Add more admin emails here
         ];
-        
+        this.authCallbacks = [];
         this.init();
     }
 
     init() {
         console.log('🔐 Admin Auth System wird initialisiert...');
-        this.setupAuthStateListener();
-    }
-
-    setupAuthStateListener() {
-        onAuthStateChanged(auth, async (user) => {
-            this.currentUser = user;
-            
-            if (user) {
-                console.log('👤 Benutzer eingeloggt:', user.email);
-                
-                // Prüfe Admin-Status
-                this.isAdminUser = await this.checkAdminStatus(user);
-                
-                if (this.isAdminUser) {
-                    console.log('✅ Admin-Berechtigung bestätigt');
-                } else {
-                    console.log('❌ Keine Admin-Berechtigung');
-                    await this.signOut(); // Nicht-Admin ausloggen
-                }
-            } else {
-                console.log('👤 Benutzer ausgeloggt');
-                this.isAdminUser = false;
-            }
-            
-            // Benachrichtige alle Callbacks
-            this.authStateCallbacks.forEach(callback => {
-                callback(user, this.isAdminUser);
-            });
+        
+        // Setup auth state listener
+        onAuthStateChanged(auth, (user) => {
+            this.handleAuthChange(user);
         });
     }
 
-    async checkAdminStatus(user) {
-        try {
-            // Prüfe E-Mail Whitelist
-            if (!this.adminEmails.includes(user.email)) {
-                console.log('❌ E-Mail nicht in Admin-Whitelist:', user.email);
-                return false;
-            }
-
-            // Optional: Zusätzliche Firestore-Prüfung
-            try {
-                const adminDoc = await getDoc(doc(db, 'admins', user.uid));
-                if (adminDoc.exists()) {
-                    const adminData = adminDoc.data();
-                    console.log('📋 Admin-Daten aus Firestore:', adminData);
-                    return adminData.isActive !== false;
-                }
-            } catch (firestoreError) {
-                console.log('⚠️ Firestore Admin-Check fehlgeschlagen, verwende E-Mail-Whitelist');
-            }
-
-            // Fallback: E-Mail-Whitelist ist ausreichend
-            return true;
+    handleAuthChange(user) {
+        this.currentUser = user;
+        
+        if (user) {
+            console.log('👤 Benutzer eingeloggt:', user.email);
             
-        } catch (error) {
-            console.error('❌ Fehler beim Admin-Status Check:', error);
-            return false;
+            // Check if user is admin
+            if (this.adminEmails.includes(user.email)) {
+                this.isAuthenticated = true;
+                console.log('✅ Admin-Berechtigung bestätigt');
+            } else {
+                this.isAuthenticated = false;
+                console.log('❌ E-Mail nicht in Admin-Whitelist');
+                this.signOut(); // Sign out non-admin users
+                return;
+            }
+        } else {
+            this.isAuthenticated = false;
+            console.log('👤 Benutzer ausgeloggt');
         }
+
+        // Notify callbacks
+        this.authCallbacks.forEach(callback => callback(this.isAuthenticated, this.currentUser));
     }
 
     async signIn(email, password) {
         try {
-            console.log('🔑 Login-Versuch für:', email);
-            
+            console.log('🔑 Attempting sign in for:', email);
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            
-            console.log('✅ Firebase Login erfolgreich');
-            
-            // Admin-Status wird automatisch durch onAuthStateChanged geprüft
-            return user;
-            
+            console.log('✅ Sign in successful');
+            return userCredential.user;
         } catch (error) {
-            console.error('❌ Login-Fehler:', error);
-            
-            let errorMessage = 'Login fehlgeschlagen';
-            
-            switch (error.code) {
-                case 'auth/user-not-found':
-                    errorMessage = 'Benutzer nicht gefunden';
-                    break;
-                case 'auth/wrong-password':
-                    errorMessage = 'Falsches Passwort';
-                    break;
-                case 'auth/invalid-email':
-                    errorMessage = 'Ungültige E-Mail-Adresse';
-                    break;
-                case 'auth/too-many-requests':
-                    errorMessage = 'Zu viele fehlgeschlagene Versuche. Bitte später versuchen.';
-                    break;
-                case 'auth/network-request-failed':
-                    errorMessage = 'Netzwerk-Fehler. Prüfe deine Internetverbindung.';
-                    break;
-                case 'auth/invalid-credential':
-                    errorMessage = 'Ungültige Anmeldedaten';
-                    break;
-                default:
-                    errorMessage = error.message || 'Ein unbekannter Fehler ist aufgetreten';
-            }
-            
-            throw new Error(errorMessage);
+            console.error('❌ Sign in error:', error);
+            throw this.handleAuthError(error);
         }
     }
 
     async signOut() {
         try {
             await signOut(auth);
-            console.log('👋 Logout erfolgreich');
+            console.log('🚪 Sign out successful');
         } catch (error) {
-            console.error('❌ Logout-Fehler:', error);
+            console.error('❌ Sign out error:', error);
             throw error;
         }
     }
 
-    async resetPassword(email) {
-        try {
-            await sendPasswordResetEmail(auth, email);
-            console.log('📧 Passwort-Reset E-Mail gesendet an:', email);
-            return true;
-        } catch (error) {
-            console.error('❌ Passwort-Reset Fehler:', error);
-            throw error;
+    handleAuthError(error) {
+        switch (error.code) {
+            case 'auth/user-not-found':
+                return new Error('Benutzer nicht gefunden');
+            case 'auth/wrong-password':
+                return new Error('Falsches Passwort');
+            case 'auth/invalid-email':
+                return new Error('Ungültige E-Mail-Adresse');
+            case 'auth/too-many-requests':
+                return new Error('Zu viele fehlgeschlagene Versuche. Bitte später nochmal versuchen.');
+            case 'auth/network-request-failed':
+                return new Error('Netzwerkfehler. Bitte Internetverbindung prüfen.');
+            default:
+                return new Error(`Authentifizierungsfehler: ${error.message}`);
         }
     }
 
-    // Callback für Auth-State-Änderungen registrieren
-    onAuthStateChanged(callback) {
-        this.authStateCallbacks.push(callback);
-        
-        // Sofortiger Aufruf mit aktuellem Status
-        callback(this.currentUser, this.isAdminUser);
+    onAuthStateChange(callback) {
+        this.authCallbacks.push(callback);
+        // Call immediately with current state
+        callback(this.isAuthenticated, this.currentUser);
     }
 
-    // Getter für aktuellen Status
     getCurrentUser() {
         return this.currentUser;
     }
 
     isAdmin() {
-        return this.isAdminUser;
-    }
-
-    isAuthenticated() {
-        return this.currentUser !== null && this.isAdminUser;
+        return this.isAuthenticated;
     }
 }
 
-// Singleton Instance
+// Create and export singleton instance
 const adminAuth = new AdminAuth();
-
 export default adminAuth;

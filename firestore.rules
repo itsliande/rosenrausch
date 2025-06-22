@@ -4,59 +4,37 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allgemeine Regel: Nur authentifizierte Admin-Benutzer haben Zugriff
+    // Admin access control
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email in [
+        'contact@rosenrausch.xyz',
+        'admin@rosenrausch.xyz'
+      ];
+    }
+    
+    // Team members collection
+    match /team-members/{document} {
+      allow read, write: if isAdmin();
+    }
+    
+    // News items collection
+    match /news-items/{document} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Events collection
+    match /events/{document} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Quotes collection
+    match /quotes/{document} {
+      allow read, write: if isAdmin();
+    }
+    
+    // Deny all other access
     match /{document=**} {
-      allow read, write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-    
-    // Team Members Collection
-    match /team-members/{memberId} {
-      allow read, write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-    
-    // News Items Collection
-    match /news-items/{newsId} {
-      allow read, write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-    
-    // Events Collection
-    match /events/{eventId} {
-      allow read, write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-    
-    // Quotes Collection
-    match /quotes/{quoteId} {
-      allow read, write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-    
-    // Admin Users Collection (optional)
-    match /admins/{userId} {
-      allow read: if request.auth != null 
-        && request.auth.uid == userId;
-      allow write: if request.auth != null 
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz'
-        ];
+      allow read, write: if false;
     }
   }
 }
