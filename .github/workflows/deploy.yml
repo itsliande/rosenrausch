@@ -19,6 +19,14 @@ jobs:
         with:
           node-version: '18'
           
+      - name: Replace API Key in env-config.js
+        run: |
+          sed -i "s/DEIN_ECHTER_API_KEY_HIER/${{ secrets.API_KEY_RAUSHI }}/g" js/env-config.js
+          
+      - name: Replace API Key in firebase-config.js
+        run: |
+          sed -i "s/API_KEY_RAUSHI/${{ secrets.API_KEY_RAUSHI }}/g" js/firebase-config.js
+          
       - name: Build
         run: |
           mkdir -p dist
@@ -30,3 +38,4 @@ jobs:
         with:
           personal_token: ${{ secrets.API_KEY_RAUSHI }}
           publish_dir: ./dist
+          force_orphan: true
