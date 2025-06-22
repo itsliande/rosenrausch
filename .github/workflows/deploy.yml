@@ -31,21 +31,35 @@ jobs:
         env:
           API_KEY_RAUSHI: ${{ secrets.API_KEY_RAUSHI }}
         run: |
-          echo "Replacing API Keys in JavaScript files..."
-          echo "API Key Secret length: ${#API_KEY_RAUSHI}"
+          echo "🔧 Ersetze Firebase API-Key..."
+          echo "Secret length: ${#API_KEY_RAUSHI}"
           
-          # Replace API_KEY_RAUSHI placeholder in firebase-config.js
+          if [ -z "$API_KEY_RAUSHI" ]; then
+            echo "❌ FEHLER: GitHub Secret API_KEY_RAUSHI ist nicht gesetzt!"
+            exit 1
+          fi
+          
+          # Backup der Original-Datei
+          cp js/firebase-config.js js/firebase-config.js.backup
+          
+          # Ersetze API_KEY_RAUSHI in firebase-config.js
           sed -i "s/API_KEY_RAUSHI/$API_KEY_RAUSHI/g" js/firebase-config.js
           
-          echo "API Key replacement completed"
-          echo "Verifying firebase-config.js replacement:"
+          # Überprüfe ob die Ersetzung erfolgreich war
           if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
-            echo "❌ API Key replacement FAILED - placeholder still exists"
-            echo "Content check:"
-            grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "No matches found"
+            echo "❌ FEHLER: API_KEY_RAUSHI wurde nicht vollständig ersetzt!"
+            echo "Checking original file:"
+            grep -n "API_KEY_RAUSHI" js/firebase-config.js.backup || echo "Not found in backup"
+            echo "Checking modified file:"
+            grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "Not found in modified"
+            exit 1
           else
-            echo "✅ API Key replacement SUCCESS - placeholder replaced"
+            echo "✅ API_KEY_RAUSHI wurde erfolgreich ersetzt"
           fi
+          
+          # Zeige Bestätigung (ohne den echten Key zu enthüllen)
+          echo "📄 Firebase-Config Status:"
+          grep -A 2 -B 2 "apiKey:" js/firebase-config.js | sed 's/AIza[^"]*/"AIza...HIDDEN..."/g'
           
       - name: Build
         run: |

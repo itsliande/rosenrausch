@@ -1,50 +1,13 @@
 // Firebase Configuration für Rosenrausch Admin Panel
+// Basiert auf https://github.com/itsliande/aboutme/blob/main/firebase-config.js
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-console.log('🔧 Firebase-Konfiguration wird geladen...');
-
-// Sichere API-Key-Funktion
-function getSecureApiKey() {
-    console.log('🔍 Suche nach Firebase API-Key...');
-    
-    // 1. GitHub Actions ersetzt diesen Wert in der Produktion
-    const buildTimeKey = "API_KEY_RAUSHI";
-    if (buildTimeKey && buildTimeKey !== "API_KEY_RAUSHI") {
-        console.log('✅ API-Key durch GitHub Actions geladen');
-        return buildTimeKey;
-    }
-    
-    // 2. Prüfe lokale Entwicklungskonfiguration
-    if (typeof window !== 'undefined' && window.FIREBASE_API_KEY) {
-        console.log('✅ API-Key aus lokaler Konfiguration geladen');
-        return window.FIREBASE_API_KEY;
-    }
-    
-    // 3. Prüfe HTML Meta-Tag
-    const metaTag = document.querySelector('meta[name="firebase-api-key"]');
-    if (metaTag && metaTag.content) {
-        console.log('✅ API-Key aus Meta-Tag geladen');
-        return metaTag.content;
-    }
-    
-    // 4. Prüfe Umgebungsvariable (falls verfügbar)
-    if (typeof process !== 'undefined' && process.env && process.env.FIREBASE_API_KEY) {
-        console.log('✅ API-Key aus Umgebungsvariable geladen');
-        return process.env.FIREBASE_API_KEY;
-    }
-    
-    console.error('❌ Kein gültiger API-Key gefunden!');
-    console.log('💡 Für lokale Entwicklung: Erstelle js/firebase-config.local.js');
-    return null;
-}
-
-const apiKey = getSecureApiKey();
-
-// Firebase-Konfiguration
+// Firebase-Konfiguration (API_KEY_RAUSHI wird durch GitHub Actions ersetzt)
 const firebaseConfig = {
-    apiKey: apiKey,
+    apiKey: "API_KEY_RAUSHI",
     authDomain: "rosenrasch.firebaseapp.com",
     projectId: "rosenrasch",
     storageBucket: "rosenrasch.firebasestorage.app",
@@ -52,23 +15,21 @@ const firebaseConfig = {
     appId: "1:238261942819:web:3294f6c8031303f423cf96"
 };
 
-// Debug-Ausgabe (ohne den echten Key zu zeigen)
-console.log('📊 Firebase Config Status:');
-console.log('   API-Key:', apiKey ? `${apiKey.substring(0, 8)}...` : 'NICHT_GESETZT');
-console.log('   Project ID:', firebaseConfig.projectId);
-console.log('   Auth Domain:', firebaseConfig.authDomain);
-
-// Validierung der Konfiguration
-if (!apiKey) {
-    console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
-    console.log('💡 Mögliche Lösungen:');
-    console.log('   1. GitHub Actions: Stelle sicher, dass das Secret API_KEY_RAUSHI gesetzt ist');
-    console.log('   2. Lokale Entwicklung: Erstelle js/firebase-config.local.js mit window.FIREBASE_API_KEY');
-    throw new Error('Firebase API-Key fehlt');
-} else if (!apiKey.startsWith('AIza')) {
-    console.warn('⚠️ WARNUNG: API-Key hat unerwartetes Format');
+// Überprüfe ob API-Key ersetzt wurde
+if (firebaseConfig.apiKey === "API_KEY_RAUSHI") {
+    console.error('❌ Firebase API-Key wurde nicht durch GitHub Actions ersetzt!');
+    console.log('💡 Für lokale Entwicklung: Setze window.FIREBASE_API_KEY vor dem Laden dieser Datei');
+    
+    // Fallback für lokale Entwicklung
+    if (typeof window !== 'undefined' && window.FIREBASE_API_KEY) {
+        firebaseConfig.apiKey = window.FIREBASE_API_KEY;
+        console.log('✅ API-Key aus window.FIREBASE_API_KEY geladen');
+    } else {
+        console.error('❌ Kein API-Key verfügbar! Setze window.FIREBASE_API_KEY für lokale Entwicklung.');
+        throw new Error('Firebase API-Key nicht verfügbar');
+    }
 } else {
-    console.log('✅ Firebase API-Key ist konfiguriert');
+    console.log('✅ Firebase API-Key wurde erfolgreich gesetzt');
 }
 
 // Firebase App initialisieren
@@ -87,8 +48,4 @@ try {
 }
 
 // Exports für andere Module
-window.firebaseApp = app;
-window.firebaseAuth = auth;
-window.firebaseDB = db;
-
 export { app, auth, db };
