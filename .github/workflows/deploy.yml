@@ -32,16 +32,14 @@ jobs:
           FIREBASE_API_KEY: ${{ secrets.API_KEY_RAUSHI }}
         run: |
           echo "Replacing API Keys in JavaScript files..."
-          
-          # Replace in firebase-config.js
-          sed -i "s/API_KEY_RAUSHI/$FIREBASE_API_KEY/g" js/firebase-config.js
+          echo "Original API Key length: ${#FIREBASE_API_KEY}"
           
           # Replace in env-config.js
           sed -i "s/DEIN_ECHTER_API_KEY_HIER/$FIREBASE_API_KEY/g" js/env-config.js
           
           echo "API Key replacement completed"
-          echo "Checking firebase-config.js:"
-          grep -n "apiKey" js/firebase-config.js || echo "No apiKey found"
+          echo "Checking env-config.js after replacement:"
+          grep -A 2 -B 2 "FIREBASE_API_KEY" js/env-config.js || echo "No FIREBASE_API_KEY found"
           
       - name: Build
         run: |

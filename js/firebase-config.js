@@ -3,23 +3,19 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebas
 import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 import { getStorage } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js';
+import { FIREBASE_CONFIG } from './env-config.js';
 
-// Firebase-Konfiguration - wird zur Build-Zeit durch GitHub Actions ersetzt
-const firebaseConfig = {
-    apiKey: "API_KEY_RAUSHI", // Wird zur Build-Zeit ersetzt
-    authDomain: "rosenrasch.firebaseapp.com",
-    projectId: "rosenrasch",
-    storageBucket: "rosenrasch.firebasestorage.app",
-    messagingSenderId: "238261942819",
-    appId: "1:238261942819:web:3294f6c8031303f423cf96"
-};
+console.log('🔧 Verwende Build-Zeit-Konfiguration');
+
+// Firebase-Konfiguration von env-config.js verwenden
+const firebaseConfig = FIREBASE_CONFIG;
 
 // Firebase initialisieren
 console.log('🔧 Firebase-Konfiguration wird geladen...');
 console.log('📊 Config:', firebaseConfig);
 
 // Prüfe Konfiguration
-if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER' || firebaseConfig.apiKey === 'API_KEY_RAUSHI') {
+if (!firebaseConfig || !firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE' || firebaseConfig.apiKey === 'DEIN_ECHTER_API_KEY_HIER' || firebaseConfig.apiKey === 'API_KEY_RAUSHI') {
     console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
     console.log('💡 Bitte echte Firebase-Konfigurationswerte eintragen.');
 } else {
