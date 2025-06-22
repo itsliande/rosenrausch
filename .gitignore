@@ -1,8 +1,17 @@
 # ...existing gitignore content...
 
-# Environment variables
+# Umgebungsvariablen (NICHT in Git committen!)
 .env
 .env.local
 .env.production
+.env.development
 
-# ...existing gitignore content...
+# Lokale Firebase-Konfiguration
+js/firebase-config.local.js
+firebase-config.local.js
+firebase-api-key.js
+
+# API-Keys und Secrets
+firebase-config.local.js
+**/secrets/
+**/.secrets/
