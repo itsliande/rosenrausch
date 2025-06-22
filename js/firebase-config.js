@@ -14,7 +14,7 @@ try {
     console.log('⚠️ Keine Build-Zeit-Konfiguration gefunden, verwende Fallback');
     // Fallback-Konfiguration für lokale Entwicklung
     firebaseConfig = {
-        apiKey: "DEIN_ECHTER_API_KEY_HIER", // Wird zur Build-Zeit ersetzt
+        apiKey: "API_KEY_RAUSHI", // Wird zur Build-Zeit ersetzt
         authDomain: "rosenrasch.firebaseapp.com",
         projectId: "rosenrasch",
         storageBucket: "rosenrasch.firebasestorage.app",
