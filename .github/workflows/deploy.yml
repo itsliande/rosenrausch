@@ -31,26 +31,17 @@ jobs:
         env:
           FIREBASE_API_KEY: ${{ secrets.API_KEY_RAUSHI }}
         run: |
-          echo "Creating environment config file..."
-          cat > js/env-config.js << EOF
-          // Auto-generated environment configuration
-          export const FIREBASE_API_KEY = '$FIREBASE_API_KEY';
-          export const FIREBASE_CONFIG = {
-            apiKey: '$FIREBASE_API_KEY',
-            authDomain: "rosenrasch.firebaseapp.com",
-            projectId: "rosenrasch",
-            storageBucket: "rosenrasch.firebasestorage.app",
-            messagingSenderId: "238261942819",
-            appId: "1:238261942819:web:3294f6c8031303f423cf96"
-          };
+          echo "Replacing API Keys in JavaScript files..."
           
-          // Debug-Information
-          console.log('✅ Firebase API-Key ist konfiguriert (Production Build)');
-          console.log('🔧 Environment-Konfiguration geladen');
-          EOF
+          # Replace in firebase-config.js
+          sed -i "s/API_KEY_RAUSHI/$FIREBASE_API_KEY/g" js/firebase-config.js
           
-          echo "Environment config created:"
-          cat js/env-config.js
+          # Replace in env-config.js
+          sed -i "s/DEIN_ECHTER_API_KEY_HIER/$FIREBASE_API_KEY/g" js/env-config.js
+          
+          echo "API Key replacement completed"
+          echo "Checking firebase-config.js:"
+          grep -n "apiKey" js/firebase-config.js || echo "No apiKey found"
           
       - name: Build
         run: |

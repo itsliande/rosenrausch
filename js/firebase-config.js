@@ -4,24 +4,15 @@ import { getAuth } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 import { getStorage } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js';
 
-// Versuche, die Build-Zeit-Konfiguration zu laden
-let firebaseConfig;
-try {
-    const envConfig = await import('./env-config.js');
-    firebaseConfig = envConfig.FIREBASE_CONFIG;
-    console.log('🔧 Verwende Build-Zeit-Konfiguration');
-} catch (error) {
-    console.log('⚠️ Keine Build-Zeit-Konfiguration gefunden, verwende Fallback');
-    // Fallback-Konfiguration für lokale Entwicklung
-    firebaseConfig = {
-        apiKey: "API_KEY_RAUSHI", // Wird zur Build-Zeit ersetzt
-        authDomain: "rosenrasch.firebaseapp.com",
-        projectId: "rosenrasch",
-        storageBucket: "rosenrasch.firebasestorage.app",
-        messagingSenderId: "238261942819",
-        appId: "1:238261942819:web:3294f6c8031303f423cf96"
-    };
-}
+// Firebase-Konfiguration - wird zur Build-Zeit durch GitHub Actions ersetzt
+const firebaseConfig = {
+    apiKey: "API_KEY_RAUSHI", // Wird zur Build-Zeit ersetzt
+    authDomain: "rosenrasch.firebaseapp.com",
+    projectId: "rosenrasch",
+    storageBucket: "rosenrasch.firebasestorage.app",
+    messagingSenderId: "238261942819",
+    appId: "1:238261942819:web:3294f6c8031303f423cf96"
+};
 
 // Firebase initialisieren
 console.log('🔧 Firebase-Konfiguration wird geladen...');
