@@ -1,6 +1,6 @@
 // Firebase Admin Authentication Manager
 import { auth } from './firebase-config.js';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 
 class AdminAuth {
     constructor() {
