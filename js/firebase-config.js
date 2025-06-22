@@ -7,7 +7,7 @@ import { getStorage } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-s
 // Firebase Konfiguration
 // WICHTIG: Diese Werte müssen durch echte Firebase-Konfiguration ersetzt werden
 const firebaseConfig = {
-  apiKey: "API_KEY_RAUSHI",
+  apiKey: process.env.API_KEY_RAUSHI,
   authDomain: "rosenrasch.firebaseapp.com",
   projectId: "rosenrasch",
   storageBucket: "rosenrasch.firebasestorage.app",

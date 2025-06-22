@@ -1,0 +1,8 @@
+# ...existing gitignore content...
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# ...existing gitignore content...
