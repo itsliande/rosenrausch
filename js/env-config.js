@@ -21,6 +21,7 @@ if (FIREBASE_API_KEY === 'DEIN_ECHTER_API_KEY_HIER') {
     console.log('🚀 Für Production: GitHub Secret API_KEY_RAUSHI wird automatisch verwendet');
 } else {
     console.log('✅ Firebase API-Key ist konfiguriert');
+    console.log('🔑 API-Key beginnt mit:', FIREBASE_API_KEY.substring(0, 10) + '...');
 }
 
 console.log('🔧 Environment-Konfiguration geladen');
