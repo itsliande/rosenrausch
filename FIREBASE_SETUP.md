@@ -169,3 +169,66 @@ Firebase bietet einen großzügigen kostenlosen Tarif:
 - Storage: 5GB kostenfrei
 
 Für ein kleines Admin Panel mehr als ausreichend.
+
+# Schnelle Firebase Setup Anleitung
+
+## 1. Firebase Projekt erstellen
+
+1. Gehe zu [Firebase Console](https://console.firebase.google.com/)
+2. Klicke auf "Projekt hinzufügen"
+3. Projektname: "rosenrausch-admin" (oder einen anderen Namen)
+4. Google Analytics kannst du deaktivieren
+
+## 2. Authentication aktivieren
+
+1. In der Firebase Console: "Authentication" → "Get started"
+2. "Sign-in method" → "E-Mail/Passwort" aktivieren
+3. Speichern
+
+## 3. Firestore Database aktivieren
+
+1. "Firestore Database" → "Datenbank erstellen"
+2. "Testmodus starten" wählen (später auf Produktionsmodus ändern)
+3. Region wählen (z.B. europe-west3)
+
+## 4. Web-App konfigurieren
+
+1. In Projektübersicht: Web-App hinzufügen (</> Symbol)
+2. App-Name: "Rosenrausch Admin"
+3. Hosting nicht aktivieren
+4. **WICHTIG**: Kopiere die Konfigurationswerte
+
+Ersetze in `/workspaces/rosenrausch/js/firebase-config.js`:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "deine-echte-api-key",
+  authDomain: "dein-projekt-id.firebaseapp.com",
+  projectId: "dein-projekt-id",
+  storageBucket: "dein-projekt-id.appspot.com",
+  messagingSenderId: "deine-sender-id",
+  appId: "deine-app-id"
+};
+```
+
+## 5. Admin-Benutzer erstellen
+
+1. In Firebase Console: "Authentication" → "Users" → "Add user"
+2. E-Mail: contact@rosenrausch.xyz (oder deine gewünschte Admin-E-Mail)
+3. Passwort setzen
+
+**Wichtig**: Die E-Mail muss mit der in `js/admin-auth.js` in der `adminEmails` Liste übereinstimmen!
+
+## 6. Test
+
+Nach der Konfiguration sollte der Login funktionieren. Prüfe die Browser-Konsole für Fehlermeldungen.
+
+## Debugging-Tipps
+
+- Öffne Browser-Entwicklertools (F12)
+- Gehe zum Console-Tab
+- Versuche den Login - dort siehst du detaillierte Fehlermeldungen
+- Häufige Fehler:
+  - "Firebase ist nicht konfiguriert" → Schritt 4 wiederholen
+  - "auth/user-not-found" → Admin-Benutzer in Schritt 5 erstellen
+  - "Kein Admin-Zugriff" → E-Mail in adminEmails Liste hinzufügen

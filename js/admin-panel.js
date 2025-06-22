@@ -119,18 +119,22 @@ class AdminPanel {
         const password = document.getElementById('password').value;
         const errorDiv = document.getElementById('login-error');
 
+        // Verstecke vorherige Fehlermeldungen
+        errorDiv.style.display = 'none';
+
         try {
             this.showLoading();
+            console.log('Starte Login-Prozess für:', email);
+            
             await this.auth.login(email, password);
             
-            // Update UI
-            document.getElementById('admin-user-info').textContent = `Eingeloggt als: ${email}`;
-            document.getElementById('logout-btn').style.display = 'block';
+            console.log('Login erfolgreich, lade Daten');
             
             // Load initial data
             await this.loadInitialData();
             
         } catch (error) {
+            console.error('Login Fehler:', error);
             errorDiv.textContent = error.message;
             errorDiv.style.display = 'block';
             setTimeout(() => {

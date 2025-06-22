@@ -5,14 +5,14 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 // Firebase Konfiguration
+// WICHTIG: Diese Werte müssen durch echte Firebase-Konfiguration ersetzt werden
 const firebaseConfig = {
-  // Diese Werte müssen durch echte Firebase-Konfiguration ersetzt werden
-  apiKey: "API_KEY_RAUSHI",
-  authDomain: "rosenrasch.firebaseapp.com",
-  projectId: "rosenrasch",
-  storageBucket: "rosenrasch.firebasestorage.app",
-  messagingSenderId: "238261942819",
-  appId: "1:238261942819:web:3294f6c8031303f423cf96",
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
 // Firebase initialisieren
