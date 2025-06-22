@@ -16,12 +16,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,10 +26,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          
-      - name: Replace API Key in env-config.js
-        run: |
-          sed -i "s/DEIN_ECHTER_API_KEY_HIER/${{ secrets.API_KEY_RAUSHI }}/g" js/env-config.js
           
       - name: Replace API Key in firebase-config.js
         run: |
@@ -52,7 +44,15 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
-          
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
