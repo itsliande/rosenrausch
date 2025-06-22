@@ -1,84 +1,117 @@
 # Firebase Admin Panel Setup Anleitung
 
-## 1. Firebase Projekt erstellen
+## Problem: Invalid API Key Error
+
+Der Fehler "auth/api-key-not-valid" bedeutet, dass Firebase noch nicht korrekt konfiguriert ist.
+
+## Schritt-für-Schritt Firebase Setup
+
+### 1. Firebase Projekt erstellen
 
 1. Gehe zu [Firebase Console](https://console.firebase.google.com/)
 2. Klicke auf "Projekt hinzufügen"
-3. Benenne das Projekt "rosenrausch-admin"
-4. Folge den Einrichtungsschritten
+3. Projektname: "rosenrausch" (oder einen anderen Namen)
+4. Google Analytics kannst du deaktivieren
 
-## 2. Firebase Services aktivieren
+### 2. Web-App konfigurieren
 
-### Authentication
-1. Gehe zu "Authentication" → "Get started"
-2. Wähle "Sign-in method"
-3. Aktiviere "E-Mail/Passwort"
-4. Erstelle Admin-Benutzer:
-   - E-Mail: contact@rosenrausch.xyz
-   - Passwort: [Sicheres Passwort wählen]
+1. In der Firebase Console: Projektübersicht → Web-App hinzufügen (</> Symbol)
+2. App-Name: "Rosenrausch Admin Panel"
+3. Hosting nicht aktivieren
+4. **WICHTIG**: Kopiere die echten Konfigurationswerte!
 
-### Firestore Database
-1. Gehe zu "Firestore Database" → "Datenbank erstellen"
-2. Wähle "Produktionsmodus starten"
-3. Wähle eine Region (z.B. europe-west3)
-
-### Storage (Optional für Bilder)
-1. Gehe zu "Storage" → "Erste Schritte"
-2. Wähle Produktionsmodus
-
-## 3. Firebase Konfiguration
-
-1. Gehe zu Projekteinstellungen (Zahnrad-Symbol)
-2. Scrolle zu "Ihre Apps" → "Web-App hinzufügen"
-3. App-Name: "Rosenrausch Admin Panel"
-4. Kopiere die Konfiguration
-
-## 4. Konfiguration einfügen
-
-Ersetze in `js/firebase-config.js` die Platzhalter-Werte:
-
+Die Konfiguration sieht etwa so aus:
 ```javascript
 const firebaseConfig = {
-  apiKey: "DEINE_API_KEY",
-  authDomain: "rosenrausch-admin.firebaseapp.com",
-  projectId: "rosenrausch-admin",
-  storageBucket: "rosenrausch-admin.appspot.com",
-  messagingSenderId: "DEINE_SENDER_ID",
-  appId: "DEINE_APP_ID"
+  apiKey: "AIzaSyC1234567890abcdefg1234567890abcdefg",
+  authDomain: "dein-projekt-name.firebaseapp.com",
+  projectId: "dein-projekt-name",
+  storageBucket: "dein-projekt-name.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef1234567890abcdef"
 };
 ```
 
-## 5. Firestore Sicherheitsregeln
+### 3. Konfiguration einfügen
 
-Füge diese Regeln in Firestore hinzu:
+Ersetze in `/workspaces/rosenrausch/js/firebase-config.js` die Platzhalter:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "DEINE_ECHTE_API_KEY_HIER",          // ← Von Firebase Console
+  authDomain: "dein-projekt-id.firebaseapp.com", // ← Von Firebase Console
+  projectId: "dein-projekt-id",                   // ← Von Firebase Console
+  storageBucket: "dein-projekt-id.appspot.com",  // ← Von Firebase Console
+  messagingSenderId: "deine-sender-id",           // ← Von Firebase Console
+  appId: "deine-app-id"                          // ← Von Firebase Console
+};
+```
+
+### 4. Authentication aktivieren
+
+1. Firebase Console → "Authentication" → "Get started"
+2. "Sign-in method" → "E-Mail/Passwort" aktivieren
+3. Speichern
+
+### 5. Firestore Database aktivieren
+
+1. "Firestore Database" → "Datenbank erstellen"
+2. "Testmodus starten" wählen (später auf Produktionsmodus ändern)
+3. Region wählen (z.B. europe-west3)
+
+### 6. Admin-Benutzer erstellen
+
+1. Firebase Console → "Authentication" → "Users" → "Add user"
+2. E-Mail: contact@rosenrausch.xyz (oder deine gewünschte Admin-E-Mail)
+3. Passwort setzen
+
+**Wichtig**: Die E-Mail muss mit der in `js/admin-auth.js` in der `adminEmails` Liste übereinstimmen!
+
+### 7. Test der Konfiguration
+
+Nach der Konfiguration:
+1. Lade die admin.html Seite neu
+2. Öffne Browser-Entwicklertools (F12) → Console-Tab
+3. Du solltest sehen: "✅ Firebase apiKey ist konfiguriert"
+4. Versuche den Login
+
+## Debugging-Tipps
+
+### Häufige Fehler:
+
+- **"auth/api-key-not-valid"** → Schritt 2-3 wiederholen, echte Werte eintragen
+- **"Firebase ist nicht konfiguriert"** → firebase-config.js prüfen
+- **"auth/user-not-found"** → Admin-Benutzer in Schritt 6 erstellen
+- **"Kein Admin-Zugriff"** → E-Mail in adminEmails Liste hinzufügen
+
+### Console-Meldungen prüfen:
+
+Korrekte Konfiguration zeigt:
+```
+🔧 Firebase-Konfiguration wird geladen...
+✅ Firebase apiKey ist konfiguriert
+✅ Firebase projectId: dein-projekt-name
+✅ Firebase App erfolgreich initialisiert
+```
+
+Fehlerhafte Konfiguration zeigt:
+```
+❌ FEHLER: Firebase apiKey ist nicht konfiguriert!
+💡 Bitte echte Firebase-Konfigurationswerte eintragen.
+```
+
+## Sicherheitsregeln (später)
+
+Nach dem ersten erfolgreichen Login kannst du die Firestore-Sicherheitsregeln einrichten:
 
 ```javascript
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Nur authentifizierte Admin-Nutzer können lesen/schreiben
     match /{document=**} {
       allow read, write: if request.auth != null 
         && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
-        ];
-    }
-  }
-}
-```
-
-## 6. Storage Sicherheitsregeln (falls verwendet)
-
-```javascript
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /{allPaths=**} {
-      allow read, write: if request.auth != null
-        && request.auth.token.email in [
-          'contact@rosenrausch.xyz',
-          'admin@rosenrausch.xyz'
+          'contact@rosenrausch.xyz'
         ];
     }
   }

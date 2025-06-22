@@ -34,10 +34,16 @@ if (!firebaseConfig.projectId) {
 }
 
 // App und Services initialisieren
-const app = initializeApp(firebaseConfig);
-console.log('✅ Firebase App erfolgreich initialisiert');
-console.log('📱 App Name:', app.name);
-console.log('🔧 App Options:', app.options);
+let app;
+try {
+    app = initializeApp(firebaseConfig);
+    console.log('✅ Firebase App erfolgreich initialisiert');
+    console.log('📱 App Name:', app.name);
+    console.log('🔧 App Options:', app.options);
+} catch (error) {
+    console.error('❌ Firebase App Initialisierung fehlgeschlagen:', error);
+    throw new Error('Firebase konnte nicht initialisiert werden. Bitte prüfen Sie die Konfiguration.');
+}
 
 // Services exportieren
 export const auth = getAuth(app);

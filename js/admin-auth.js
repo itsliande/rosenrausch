@@ -50,7 +50,7 @@ class AdminAuth {
     showConfigError() {
         const errorDiv = document.getElementById('login-error');
         if (errorDiv) {
-            errorDiv.textContent = 'Firebase ist nicht konfiguriert. Bitte die echten Konfigurationswerte in firebase-config.js eintragen.';
+            errorDiv.textContent = 'Firebase ist nicht konfiguriert. Bitte die echten Firebase-Konfigurationswerte in firebase-config.js eintragen (siehe FIREBASE_SETUP.md).';
             errorDiv.style.display = 'block';
         }
     }
@@ -80,6 +80,8 @@ class AdminAuth {
                 throw new Error('Falsches Passwort');
             } else if (error.code === 'auth/invalid-email') {
                 throw new Error('Ungültige E-Mail-Adresse');
+            } else if (error.code === 'auth/api-key-not-valid') {
+                throw new Error('Firebase API-Schlüssel ist ungültig. Bitte die echten Firebase-Konfigurationswerte in firebase-config.js eintragen.');
             } else if (error.code === 'auth/too-many-requests') {
                 throw new Error('Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es später noch einmal.');
             } else {
