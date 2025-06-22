@@ -1,8 +1,6 @@
 /**
  * Lokale Entwicklungskonfiguration für Firebase
  * 
- * WICHTIG: Diese Datei wird von .gitignore ausgeschlossen!
- * 
  * Für lokale Entwicklung:
  * 1. Kopiere diese Datei zu: firebase-config.local.js
  * 2. Ersetze 'DEIN_ECHTER_API_KEY_HIER' mit deinem echten Firebase API-Key
@@ -14,7 +12,7 @@
  */
 
 // Setze den API-Key im window-Objekt für lokale Entwicklung
-window.FIREBASE_API_KEY = 'DEIN_ECHTER_API_KEY_HIER';
+window.FIREBASE_API_KEY = 'AIzaSyDSj2Xi-qOnTiDOSYM-jZb_Dfpk7DWGEtE';
 
 console.log('🔧 Lokale Firebase-Konfiguration geladen');
 console.log('💡 Für Produktion wird dieser Key durch GitHub Actions ersetzt');
