@@ -94,7 +94,7 @@
                 <div id="team-tab" class="tab-pane active">
                     <div class="section-header">
                         <h2><i class="fas fa-users"></i> Team Management</h2>
-                        <button class="add-btn" onclick="adminPanel.openModal('team')">
+                        <button class="add-btn" onclick="adminDashboard.openModal('team')">
                             <i class="fas fa-plus"></i> Neues Mitglied
                         </button>
                     </div>
@@ -107,7 +107,7 @@
                 <div id="news-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-newspaper"></i> News Management</h2>
-                        <button class="add-btn" onclick="adminPanel.openModal('news')">
+                        <button class="add-btn" onclick="adminDashboard.openModal('news')">
                             <i class="fas fa-plus"></i> Neue News
                         </button>
                     </div>
@@ -120,7 +120,7 @@
                 <div id="events-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-calendar-alt"></i> Events Management</h2>
-                        <button class="add-btn" onclick="adminPanel.openModal('events')">
+                        <button class="add-btn" onclick="adminDashboard.openModal('events')">
                             <i class="fas fa-plus"></i> Neues Event
                         </button>
                     </div>
@@ -133,7 +133,7 @@
                 <div id="quotes-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-quote-left"></i> Quotes Management</h2>
-                        <button class="add-btn" onclick="adminPanel.openModal('quotes')">
+                        <button class="add-btn" onclick="adminDashboard.openModal('quotes')">
                             <i class="fas fa-plus"></i> Neues Zitat
                         </button>
                     </div>
@@ -149,7 +149,7 @@
                     </div>
                     <div class="export-section">
                         <p>Exportiere alle Daten als JSON-Dateien für die statische Website.</p>
-                        <button class="export-btn" onclick="adminPanel.exportData()">
+                        <button class="export-btn" onclick="adminDashboard.exportData()">
                             <i class="fas fa-download"></i> Alle Daten exportieren
                         </button>
                         <div id="export-status" class="export-status"></div>
@@ -186,9 +186,31 @@
         </div>
     </div>
 
-    <!-- Firebase lokale Konfiguration (falls vorhanden) -->
+    <!-- Scripts in der richtigen Reihenfolge -->
     <script src="js/firebase-config.local.js"></script>
-    <!-- Firebase Admin Panel -->
-    <script type="module" src="js/firebase-admin.js"></script>
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/admin-auth.js"></script>
+    <script type="module" src="js/admin-dashboard.js"></script>
+    <script src="js/admin-security.js"></script>
+    
+    <script>
+        // Tab Switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    btn.classList.add('active');
+                    const tabName = btn.getAttribute('data-tab');
+                    const pane = document.getElementById(`${tabName}-tab`);
+                    if (pane) pane.classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
