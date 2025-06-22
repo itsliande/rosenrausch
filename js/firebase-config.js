@@ -15,8 +15,16 @@ const firebaseConfig = {
   appId: "1:238261942819:web:3294f6c8031303f423cf96"
 };
 
+// Entwicklungs-Konfiguration
+const DEV_MODE = true; // Auf false setzen für Produktion
+
 // Firebase initialisieren
 const app = initializeApp(firebaseConfig);
+
+// Schutz vor Entwicklertools (nur wenn nicht im Entwicklungsmodus)
+if (!DEV_MODE) {
+    // ...existing protection code...
+}
 
 // Services exportieren
 export const auth = getAuth(app);
