@@ -37,7 +37,7 @@ const apiKey = getSecureApiKey();
 
 // Firebase-Konfiguration
 const firebaseConfig = {
-    apiKey: apiKey,
+    apiKey: API_KEY_RAUSHI,
     authDomain: "rosenrasch.firebaseapp.com",
     projectId: "rosenrasch",
     storageBucket: "rosenrasch.firebasestorage.app",
