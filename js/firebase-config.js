@@ -15,14 +15,43 @@ const firebaseConfig = {
   appId: "1:238261942819:web:3294f6c8031303f423cf96"
 };
 
-// Entwicklungs-Konfiguration
-const DEV_MODE = true; // Auf false setzen für Produktion
-
 // Firebase initialisieren
-const app = initializeApp(firebaseConfig);
+console.log('🔧 Firebase-Konfiguration wird geladen...');
+console.log('📊 Config:', firebaseConfig);
+
+// Prüfe Konfiguration
+if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY_HERE') {
+    console.error('❌ FEHLER: Firebase apiKey ist nicht konfiguriert!');
+    console.log('💡 Bitte echte Firebase-Konfigurationswerte eintragen.');
+} else {
+    console.log('✅ Firebase apiKey ist konfiguriert');
+}
+
+if (!firebaseConfig.projectId) {
+    console.error('❌ FEHLER: Firebase projectId fehlt!');
+} else {
+    console.log('✅ Firebase projectId:', firebaseConfig.projectId);
+}
+
+try {
+    const app = initializeApp(firebaseConfig);
+    console.log('✅ Firebase App erfolgreich initialisiert');
+    console.log('📱 App Name:', app.name);
+    console.log('🔧 App Options:', app.options);
+} catch (error) {
+    console.error('❌ FEHLER beim Initialisieren von Firebase:', error);
+    throw error;
+}
 
 // Services exportieren
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+// Debug-Informationen für Services
+console.log('🔐 Auth Service:', auth ? '✅ Geladen' : '❌ Fehler');
+console.log('🗄️ Firestore:', db ? '✅ Geladen' : '❌ Fehler');
+console.log('💾 Storage:', storage ? '✅ Geladen' : '❌ Fehler');
+console.log('🚀 Firebase-Setup abgeschlossen!');
+
 export default app;
