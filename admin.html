@@ -33,8 +33,7 @@
                 <div class="login-header">
                     <img src="profile.jpg" alt="Rosenrausch" class="login-logo">
                     <h1>Admin Panel</h1>
-                    <p>Vereinfachte Admin-Oberfläche</p>
-                    <p><small>Demo Login: contact@rosenrausch.xyz / admin123</small></p>
+                    <p>Firebase-gesicherte Admin-Oberfläche</p>
                 </div>
                 
                 <form id="login-form" class="login-form">
@@ -67,7 +66,7 @@
         <div id="admin-panel" class="admin-panel" style="display: none;">
             <div class="admin-header">
                 <h1><i class="fas fa-cogs"></i> Rosenrausch Admin Panel</h1>
-                <p>Vereinfachte Verwaltung aller Website-Inhalte</p>
+                <p>Firebase-gesicherte Verwaltung aller Website-Inhalte</p>
             </div>
 
             <!-- Tab Navigation -->
@@ -95,7 +94,7 @@
                 <div id="team-tab" class="tab-pane active">
                     <div class="section-header">
                         <h2><i class="fas fa-users"></i> Team Management</h2>
-                        <button class="add-btn" onclick="simpleAdmin.editItem('team', 'new')">
+                        <button class="add-btn" onclick="adminPanel.openModal('team')">
                             <i class="fas fa-plus"></i> Neues Mitglied
                         </button>
                     </div>
@@ -108,7 +107,7 @@
                 <div id="news-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-newspaper"></i> News Management</h2>
-                        <button class="add-btn" onclick="simpleAdmin.editItem('news', 'new')">
+                        <button class="add-btn" onclick="adminPanel.openModal('news')">
                             <i class="fas fa-plus"></i> Neue News
                         </button>
                     </div>
@@ -121,7 +120,7 @@
                 <div id="events-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-calendar-alt"></i> Events Management</h2>
-                        <button class="add-btn" onclick="simpleAdmin.editItem('events', 'new')">
+                        <button class="add-btn" onclick="adminPanel.openModal('events')">
                             <i class="fas fa-plus"></i> Neues Event
                         </button>
                     </div>
@@ -134,7 +133,7 @@
                 <div id="quotes-tab" class="tab-pane">
                     <div class="section-header">
                         <h2><i class="fas fa-quote-left"></i> Quotes Management</h2>
-                        <button class="add-btn" onclick="simpleAdmin.editItem('quotes', 'new')">
+                        <button class="add-btn" onclick="adminPanel.openModal('quotes')">
                             <i class="fas fa-plus"></i> Neues Zitat
                         </button>
                     </div>
@@ -150,7 +149,7 @@
                     </div>
                     <div class="export-section">
                         <p>Exportiere alle Daten als JSON-Dateien für die statische Website.</p>
-                        <button class="export-btn" onclick="simpleAdmin.exportData()">
+                        <button class="export-btn" onclick="adminPanel.exportData()">
                             <i class="fas fa-download"></i> Alle Daten exportieren
                         </button>
                         <div id="export-status" class="export-status"></div>
@@ -160,25 +159,36 @@
         </div>
     </div>
 
-    <script src="js/simple-admin.js"></script>
-    
-    <script>
-        // Tab Switching
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabBtns = document.querySelectorAll('.tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    // Remove active class from all tabs
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-                    
-                    // Add active class to clicked tab
-                    btn.classList.add('active');
-                    const tabName = btn.getAttribute('data-tab');
-                    document.getElementById(`${tabName}-tab`).classList.add('active');
-                });
-            });
-        });
-    </script>
+    <!-- Modal -->
+    <div id="edit-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Element bearbeiten</h3>
+                <button id="modal-close" class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Form content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button id="modal-cancel" class="btn-secondary">Abbrechen</button>
+                <button id="modal-save" class="btn-primary">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Lade...</p>
+        </div>
+    </div>
+
+    <!-- Firebase lokale Konfiguration (falls vorhanden) -->
+    <script src="js/firebase-config.local.js"></script>
+    <!-- Firebase Admin Panel -->
+    <script type="module" src="js/firebase-admin.js"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
-// Admin Panel Main Script
+//// Diese Datei wurde durch firebase-admin.js ersetzt
+// Siehe js/firebase-admin.js für das neue komplett überarbeitete Admin Panelin Script
 import AdminAuth from './admin-auth.js';
 import AdminDataManager from './admin-data-manager.js';
 

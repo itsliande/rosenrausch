@@ -41,6 +41,8 @@ jobs:
           echo "Verifying firebase-config.js replacement:"
           if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
             echo "❌ API Key replacement FAILED - placeholder still exists"
+            echo "Content check:"
+            grep -n "API_KEY_RAUSHI" js/firebase-config.js || echo "No matches found"
           else
             echo "✅ API Key replacement SUCCESS - placeholder replaced"
           fi
