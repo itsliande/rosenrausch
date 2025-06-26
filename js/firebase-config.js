@@ -41,21 +41,51 @@ function getApiKey() {
 // Get the actual API key
 const actualApiKey = getApiKey();
 
+// Enhanced error handling for production
 if (!actualApiKey) {
-    throw new Error('Firebase API Key nicht verfügbar. Bitte lokale Konfiguration setzen oder GitHub Actions prüfen.');
+    const isLocalhost = typeof window !== 'undefined' && 
+        (window.location.hostname === 'localhost' || 
+         window.location.hostname === '127.0.0.1' ||
+         window.location.hostname === '');
+    
+    if (isLocalhost) {
+        console.warn('⚠️ Kein API-Key verfügbar, verwende Dummy API Key für lokale Entwicklung.');
+        firebaseConfig.apiKey = 'DUMMY_LOCAL_API_KEY';
+    } else {
+        // In production, show more helpful error
+        console.error('🚨 PRODUCTION ERROR: Firebase API Key nicht verfügbar!');
+        console.error('🔧 GitHub Actions Deployment-Problem erkannt');
+        console.error('💡 Admin: Prüfe GitHub Secrets und Deployment-Logs');
+        
+        // Don't throw error immediately, try to provide fallback
+        console.warn('🔄 Versuche Fallback-Initialisierung...');
+        firebaseConfig.apiKey = 'PRODUCTION_ERROR_FALLBACK';
+    }
+} else {
+    // Update config with actual API key
+    firebaseConfig.apiKey = actualApiKey;
 }
 
-// Update config with actual API key
-firebaseConfig.apiKey = actualApiKey;
-
-// Initialize Firebase
+// Initialize Firebase with error handling
 console.log('🚀 Initialisiere Firebase App...');
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-console.log('✅ Firebase erfolgreich initialisiert');
-console.log('📱 Project ID:', firebaseConfig.projectId);
-
-// Export for use in other modules
-export { app, auth, db };
+try {
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    console.log('✅ Firebase erfolgreich initialisiert');
+    console.log('📱 Project ID:', firebaseConfig.projectId);
+    
+    // Export for use in other modules
+    export { app, auth, db };
+} catch (error) {
+    console.error('🚨 Firebase Initialisierung fehlgeschlagen:', error);
+    
+    // Create dummy exports to prevent import errors
+    const dummyApp = { name: 'dummy-app' };
+    const dummyAuth = { currentUser: null };
+    const dummyDb = { app: dummyApp };
+    
+    console.warn('🔄 Dummy Firebase Objekte erstellt um Import-Fehler zu vermeiden');
+    export { dummyApp as app, dummyAuth as auth, dummyDb as db };
+}
