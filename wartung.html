@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wartungsarbeiten - Seite nicht erreichbar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
+
+        .maintenance-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 2rem;
+        }
+
+        .icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 400;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+
+        .apology {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .contact-info {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 2rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .icon {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            .maintenance-container {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="maintenance-container">
+    <div class="icon">🔧</div>
+    <h1>Wartungsarbeiten</h1>
+    <h2>Diese Seite ist momentan nicht erreichbar</h2>
+
+    <div class="message">
+        <p>Aufgrund des Neuaufbaus unserer Website sind wir derzeit nicht verfügbar.
+            Wir arbeiten daran, Ihnen ein noch besseres Erlebnis zu bieten.</p>
+    </div>
+
+    <div class="apology">
+        <strong>Wir bitten um Entschuldigung für die Unannehmlichkeiten.</strong>
+    </div>
+
+    <div class="contact-info">
+        <p>Vielen Dank für Ihr Verständnis.<br>
+            Wir sind bald wieder für Sie da!</p>
+    </div>
+</div>
+</body>
+</html>
+
