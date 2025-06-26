@@ -46,8 +46,15 @@ jobs:
           # Backup der Original-Datei
           cp js/firebase-config.js js/firebase-config.js.backup
           
-          # Ersetze API_KEY_RAUSHI in firebase-config.js - WICHTIG: Verwende doppelte Anführungszeichen
-          sed -i "s/API_KEY_RAUSHI/${API_KEY_RAUSHI}/g" js/firebase-config.js
+          # Ersetze API_KEY_RAUSHI in firebase-config.js - ESCAPE SPECIAL CHARACTERS
+          escaped_key=$(printf '%s\n' "$API_KEY_RAUSHI" | sed 's/[[\.*^$()+?{|]/\\&/g')
+          sed -i "s/API_KEY_RAUSHI/$escaped_key/g" js/firebase-config.js
+          
+          # Also try alternative replacement method as fallback
+          if grep -q "API_KEY_RAUSHI" js/firebase-config.js; then
+            echo "🔄 Trying alternative replacement method..."
+            perl -pi -e "s/API_KEY_RAUSHI/\Q$API_KEY_RAUSHI\E/g" js/firebase-config.js
+          fi
           
           # Debug: Show file after replacement
           echo "📄 Nach Ersetzung (API key area):"
