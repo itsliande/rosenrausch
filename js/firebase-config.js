@@ -41,12 +41,18 @@ function getApiKey() {
 // Get the actual API key
 const actualApiKey = getApiKey();
 
+// Replace error throw with a local-host check and dummy key fallback
 if (!actualApiKey) {
-    throw new Error('Firebase API Key nicht verfügbar. Bitte lokale Konfiguration setzen oder GitHub Actions prüfen.');
+    if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        console.warn('⚠️ Kein API-Key verfügbar, verwende Dummy API Key für lokale Entwicklung.');
+        firebaseConfig.apiKey = 'DUMMY_LOCAL_API_KEY'; // Fallback-Dummy-Key
+    } else {
+        throw new Error('Firebase API Key nicht verfügbar. Bitte lokale Konfiguration setzen oder GitHub Actions prüfen.');
+    }
+} else {
+    // Update config with actual API key
+    firebaseConfig.apiKey = actualApiKey;
 }
-
-// Update config with actual API key
-firebaseConfig.apiKey = actualApiKey;
 
 // Initialize Firebase
 console.log('🚀 Initialisiere Firebase App...');
